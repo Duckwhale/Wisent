@@ -1,5 +1,5 @@
-local Bison = LibStub( 'AceAddon-3.0'):GetAddon( 'Bison')
-local L = LibStub( 'AceLocale-3.0'):GetLocale( 'Bison')
+local Wisent = LibStub( 'AceAddon-3.0'):GetAddon( 'Wisent')
+local L = LibStub( 'AceLocale-3.0'):GetLocale( 'Wisent')
 	
 local function OptionTable( name, order)
 	return {
@@ -14,7 +14,7 @@ local function OptionTable( name, order)
 end
 
 local function LayoutTable( name, order)
-	local max = Bison:GetMaxButton( name)
+	local max = Wisent:GetMaxButton( name)
 	return {
 		type = 'group', order = order, name = L.BarName, inline = true, 
 		args = {
@@ -39,9 +39,9 @@ local function BarTable( name, order)
 end
 
 local options = {
-	type = 'group', name = Bison.localizedname, handler = Bison,
+	type = 'group', name = Wisent.localizedname, handler = Wisent,
 	args = {
-		release     = { type = 'description', order = 2,  name = Bison.version, cmdHidden = true, },
+		release     = { type = 'description', order = 2,  name = Wisent.version, cmdHidden = true, },
 		description = { type = 'description', order = 3,  name = L.Description, cmdHidden = true, },
 		space 		= { type = 'description', order = 4,  name = '',            cmdHidden = true, },
 		enable 		= { type = 'toggle', order = 14, name = L.EnabledName, desc = L.EnabledDesc, width = 'full', get = 'IsEnabled',    set = 'ToggleEnabled', },
@@ -59,23 +59,23 @@ local function OnCommand( input)
 	if input and input:trim() ~= '' then
 		LibStub( 'AceConfigCmd-3.0'):HandleCommand( 'bison', 'bison', input)
 	else
-		InterfaceOptionsFrame_OpenToCategory( 'Bison')
+		InterfaceOptionsFrame_OpenToCategory( 'Wisent')
 	end
 end
 
-function Bison:InitConfig()
+function Wisent:InitConfig()
 	options.args.profile = LibStub( 'AceDBOptions-3.0'):GetOptionsTable( self.db)
 	options.args.profile.dialogHidden = true
 	options.args.profile.dialogInline = true
 	options.args.profile.args.desc.dialogHidden = true
 	LibStub('AceConfig-3.0'):RegisterOptionsTable( 'bison', options)
 	local dialog = LibStub( 'AceConfigDialog-3.0')
-	dialog:SetDefaultSize( 'Bison', 600, 400)
-	dialog:AddToBlizOptions( 'bison', 'Bison')
-	dialog:AddToBlizOptions( 'bison', L.BarBuff,   'Bison', 'buff')
-	dialog:AddToBlizOptions( 'bison', L.BarDebuff, 'Bison', 'debuff')
-	dialog:AddToBlizOptions( 'bison', L.BarWeapon, 'Bison', 'weapon')
-	dialog:AddToBlizOptions( 'bison', L.Profile,   'Bison', 'profile')
+	dialog:SetDefaultSize( 'Wisent', 600, 400)
+	dialog:AddToBlizOptions( 'bison', 'Wisent')
+	dialog:AddToBlizOptions( 'bison', L.BarBuff,   'Wisent', 'buff')
+	dialog:AddToBlizOptions( 'bison', L.BarDebuff, 'Wisent', 'debuff')
+	dialog:AddToBlizOptions( 'bison', L.BarWeapon, 'Wisent', 'weapon')
+	dialog:AddToBlizOptions( 'bison', L.Profile,   'Wisent', 'profile')
 	self:RegisterChatCommand( 'bison', OnCommand)
 	self:RegisterChatCommand( 'bi', OnCommand)
 end

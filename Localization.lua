@@ -1,7 +1,7 @@
 local al = LibStub('AceLocale-3.0')
 
 do
-	local L = al:NewLocale('Bison', 'enUS', true)
+	local L = al:NewLocale('Wisent', 'enUS', true)
 	L.Description    = 'Free positioning and presentation of all user buffs, debuffs and weapon enchantments.'
 	L.Version        = 'Version: %s %s(%s)%s'
 	L.VersionDesc    = 'Prints the current version'
@@ -19,7 +19,7 @@ do
 	L.FlashingName   = 'Enable Flashing'
 	L.FlashingDesc   = 'Flashing at end.'
 	L.TimerName      = 'Timer Presentation'
-	L.TimerDesc      = 'Change the time between Bison or Blizzard style.'
+	L.TimerDesc      = 'Change the time between Wisent or Blizzard style.'
 	L.ScaleName      = 'Scale'
 	L.ScaleDesc      = 'Size of the buttons.'
 	L.XPaddingName   = 'Horizontal Space'
@@ -53,7 +53,7 @@ do
 end
 
 do
-	local L = al:NewLocale('Bison', 'deDE')
+	local L = al:NewLocale('Wisent', 'deDE')
 	if L then 
 		L.Description    = 'Freie Positionierung und Darstellung aller User Buffs, Debuffs und Waffen Verzauberungen.'
 		L.Version        = 'Version: %s %s(%s)%s'
@@ -72,7 +72,7 @@ do
 		L.FlashingName   = 'Blinken Erlauben'
 		L.FlashingDesc   = 'Blinken bei Ablauf des Buffs'
 		L.TimerName      = 'Zeitdarstellung'
-		L.TimerDesc      = 'Zeit in Bison- oder Blizzard-Art darstellen'
+		L.TimerDesc      = 'Zeit in Wisent- oder Blizzard-Art darstellen'
 		L.ScaleName      = 'Größe'
 		L.ScaleDesc      = 'Größe des Buttons'
 		L.XPaddingName   = 'horizontaler Zwischenraum'
@@ -107,42 +107,42 @@ do
 end
 
 do
-	local L = al:NewLocale('Bison', 'frFR')
+	local L = al:NewLocale('Wisent', 'frFR')
 	if L then 
 -- I need help on this translation
 	end
 end
 
 do
-	local L = al:NewLocale('Bison', 'esES')
+	local L = al:NewLocale('Wisent', 'esES')
 	if L then 
 -- I need help on this translation
 	end
 end
 
 do
-	local L = al:NewLocale('Bison', 'ruRU')
+	local L = al:NewLocale('Wisent', 'ruRU')
 	if L then 
 -- I need help on this translation
 	end
 end
 
 do
-	local L = al:NewLocale('Bison', 'koKR')
+	local L = al:NewLocale('Wisent', 'koKR')
 	if L then 
 -- I need help on this translation
 	end
 end
 
 do
-	local L = al:NewLocale('Bison', 'zhCN')
+	local L = al:NewLocale('Wisent', 'zhCN')
 	if L then 
 -- I need help on this translation
 	end
 end
 
 do
-	local L = al:NewLocale('Bison', 'zhTW')
+	local L = al:NewLocale('Wisent', 'zhTW')
 	if L then 
 -- I need help on this translation
 	end

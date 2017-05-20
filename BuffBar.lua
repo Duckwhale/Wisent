@@ -1,4 +1,4 @@
-local Bison = LibStub( 'AceAddon-3.0'):GetAddon( 'Bison')
+local Wisent = LibStub( 'AceAddon-3.0'):GetAddon( 'Wisent')
 
 local UPDATE_TIME_BUFF = 0.2
 local UPDATE_TIME_WEAPON = 0.2
@@ -10,11 +10,11 @@ local updateTimeBuff = 0
 local updateTimeWeapon = 0.1
 
 --[[---------------------------------------------------------------------------------
-  BisonButton
+  WisentButton
 ------------------------------------------------------------------------------------]]
-local BisonButton = Bison:CreateClass( 'Button')
+local WisentButton = Wisent:CreateClass( 'Button')
 
-function BisonButton:New( bar, id, name, template)
+function WisentButton:New( bar, id, name, template)
 	local b = self:Bind( CreateFrame( 'Button', name, bar, template))
 	b.bar = bar
  	b.timeLeft = nil
@@ -43,7 +43,7 @@ function BisonButton:New( bar, id, name, template)
 	return b
 end
 
-function BisonButton:NewBuff( bar, id, name)
+function WisentButton:NewBuff( bar, id, name)
 	local b = self:New( bar, id, name)-- , 'SecureActionButtonTemplate')
 --	b:SetAttribute('type', 'cancelaura')
 --	b:SetAttribute('unit', PlayerFrame.unit);
@@ -56,7 +56,7 @@ function BisonButton:NewBuff( bar, id, name)
 	return b
 end
 
-function BisonButton:NewDebuff( bar, id, name)
+function WisentButton:NewDebuff( bar, id, name)
 	local b = self:New( bar, id, name)
 	b:AddBorderDebuff()
 	b:SetScript( 'OnEnter', self.OnEnter)
@@ -65,7 +65,7 @@ function BisonButton:NewDebuff( bar, id, name)
 	return b
 end
 
-function BisonButton:NewWeapon( bar, id, name)
+function WisentButton:NewWeapon( bar, id, name)
 	local b = self:New( bar, id, name) -- , 'SecureActionButtonTemplate')
 --	b:SetAttribute('unit', PlayerFrame.unit);
 	b:AddBorderWeapon()
@@ -75,7 +75,7 @@ function BisonButton:NewWeapon( bar, id, name)
 	return b
 end
 
-function BisonButton:AddBorderDebuff()
+function WisentButton:AddBorderDebuff()
 	self.border = self:CreateTexture( self:GetName()..'Border', 'OVERLAY')
 	self.border:SetTexture( 'Interface\\Buttons\\UI-Debuff-Overlays')
 	self.border:SetTexCoord( 0.296875, 0.5703125, 0, 0.515625)
@@ -84,7 +84,7 @@ function BisonButton:AddBorderDebuff()
 --	self.border:SetHeight( 32)
 end
 
-function BisonButton:AddBorderWeapon()
+function WisentButton:AddBorderWeapon()
 	self.border = self:CreateTexture( self:GetName()..'Border', 'OVERLAY')
 	self.border:SetTexture( 'Interface\\Buttons\\UI-TempEnchant-Border')
 	self.border:SetAllPoints( self)
@@ -92,44 +92,44 @@ function BisonButton:AddBorderWeapon()
 --	self.border:SetHeight( 32)
 end
 
-function BisonButton:SetGhost( id, r, g, b)
+function WisentButton:SetGhost( id, r, g, b)
 	self.ghostlabel:SetText( id)
 	self.ghosticon:SetTexture( r, g, b, 1)
 end
 
-function BisonButton:OnMouseDown()
+function WisentButton:OnMouseDown()
 	self.bar:OnMouseDown()
 end
 
-function BisonButton:OnMouseUp()
+function WisentButton:OnMouseUp()
 	self.bar:OnMouseUp()
 end
 
-function BisonButton:OnEnter()
+function WisentButton:OnEnter()
 	GameTooltip:SetOwner( self, 'ANCHOR_BOTTOMLEFT')
 	GameTooltip:SetUnitAura( PlayerFrame.unit, self:GetID(), self.buffFilter)
 end
 
-function BisonButton:OnEnterWeapon()
+function WisentButton:OnEnterWeapon()
 	if self.timeLeft then
 		GameTooltip:SetOwner( self, 'ANCHOR_BOTTOMLEFT')
 		GameTooltip:SetInventoryItem( PlayerFrame.unit, self:GetID())
 	end
 end
 
-function BisonButton:OnLeave()
+function WisentButton:OnLeave()
 	GameTooltip:Hide()
 end
 
-function BisonButton:OnClick()
+function WisentButton:OnClick()
 	CancelUnitBuff( PlayerFrame.unit, self:GetID(), self.buffFilter);
 end
 
-function BisonButton:OnClickWeapon()
+function WisentButton:OnClickWeapon()
 	CancelItemTempEnchantment( self:GetID() - 15);
 end
 
-function BisonButton:OnUpdate( elapsed)
+function WisentButton:OnUpdate( elapsed)
 	if self.timeLeft then
 		self.timeLeft = max( self.timeLeft - elapsed, 0);
 		if updateTimeBuff < 0 then
@@ -140,9 +140,9 @@ function BisonButton:OnUpdate( elapsed)
 	self:SetFlashing()
 end
 
-function BisonButton:Duration()
+function WisentButton:Duration()
 	if SHOW_BUFF_DURATIONS == '1' and self.timeLeft then
-		self.left:SetFormattedText( BisonDurationString( self.timeLeft, self.bar.values.timer))
+		self.left:SetFormattedText( WisentDurationString( self.timeLeft, self.bar.values.timer))
 		if self.timeLeft < BUFF_DURATION_WARNING_TIME then
 			self.left:SetVertexColor( HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
 		else
@@ -154,7 +154,7 @@ function BisonButton:Duration()
 	end
 end
 
-function BisonButton:Texture( texture)
+function WisentButton:Texture( texture)
 	if texture then
 		self.icon:SetTexture( texture)
 		self.icon:Show()
@@ -163,7 +163,7 @@ function BisonButton:Texture( texture)
 	end
 end
 
-function BisonButton:SetFlashing()
+function WisentButton:SetFlashing()
 	local shouldFlash = self.bar.values.flashing and self.timeLeft
 	if shouldFlash then
 		if self.duration and self.duration < BUFF_WARNING_TIME then
@@ -183,7 +183,7 @@ function BisonButton:SetFlashing()
 	end
 end
 
-function BisonButton:Count( count)
+function WisentButton:Count( count)
 	if count and count > 1 then
 		self.count:SetText( count)
 		self.count:Show()
@@ -192,7 +192,7 @@ function BisonButton:Count( count)
 	end
 end
 
-function BisonButton:Border( name, type)
+function WisentButton:Border( name, type)
 	if self.border then
 		if type then
 			local color = DebuffTypeColor[type]
@@ -206,19 +206,19 @@ function BisonButton:Border( name, type)
 	end
 end
 
-function BisonButton:Tooltip()
+function WisentButton:Tooltip()
 	if GameTooltip:IsOwned( self) then
 		GameTooltip:SetUnitAura( PlayerFrame.unit, self:GetID(), self.buffFilter)
 	end
 end
 
-function BisonButton:TooltipWeapon()
+function WisentButton:TooltipWeapon()
 	if GameTooltip:IsOwned( self) then
 		GameTooltip:SetInventoryItem( PlayerFrame.unit, self:GetID())
 	end
 end
 
-function BisonButton:Update()
+function WisentButton:Update()
  	local name, rank, texture, count, debuffType, duration, expiration = UnitAura( PlayerFrame.unit, self:GetID(), self.buffFilter)
  	if name then
 		self.buffName = name
@@ -243,7 +243,7 @@ function BisonButton:Update()
 		self:Texture( nil)
 	 	self:Count( 0)
 	 	self:Border( nil, nil)
-		if Bison:IsLocked() then
+		if Wisent:IsLocked() then
 			self:Hide()
 		end
 		if GameTooltip:IsOwned( self) then
@@ -252,7 +252,7 @@ function BisonButton:Update()
 	end
 end
 
-function BisonButton:UpdateWeapon( hasEnchant, timeLeft, charges)
+function WisentButton:UpdateWeapon( hasEnchant, timeLeft, charges)
 	if hasEnchant then
 		self.buffName = ''
 		self.timeLeft = timeLeft and (timeLeft / 1000)
@@ -268,7 +268,7 @@ function BisonButton:UpdateWeapon( hasEnchant, timeLeft, charges)
 		self:Duration()
 		self:Texture( nil)
 	 	self:Count( 0)
-		if Bison:IsLocked() then
+		if Wisent:IsLocked() then
 			self:Hide()
 		end
 	end
@@ -368,13 +368,13 @@ local SORT = {
 }
 
 --[[---------------------------------------------------------------------------------
-BisonBar
+WisentBar
 ------------------------------------------------------------------------------------]]
 local LBF = LibStub('LibButtonFacade', true)
-local BisonBar = Bison:CreateClass( 'Frame')
-Bison.BisonBar = BisonBar
+local WisentBar = Wisent:CreateClass( 'Frame')
+Wisent.WisentBar = WisentBar
 
-function BisonBar:New( values, barName)
+function WisentBar:New( values, barName)
 	local f = self:Bind( CreateFrame( 'Frame', nil, UIParent))
 	f:SetToplevel( true)
 	f:SetFrameStrata( 'LOW')
@@ -387,7 +387,7 @@ function BisonBar:New( values, barName)
 	return f
 end
 
-function BisonBar:AddHelpTexture()
+function WisentBar:AddHelpTexture()
 	local tex = self:CreateTexture( nil, 'OVERLAY')
 	tex:SetBlendMode( 'ADD')
 	tex:SetTexture( 1, 0, 0, 1)
@@ -395,7 +395,7 @@ function BisonBar:AddHelpTexture()
 	tex:SetPoint( 'BOTTOMLEFT')
 end
 
-function BisonBar:NewBuffBar( values, barName)
+function WisentBar:NewBuffBar( values, barName)
 	local f = self:New( values, barName)
 	f:RegisterEvent( 'UNIT_AURA')
 	f:SetScript( 'OnEvent', self.OnEvent)
@@ -405,7 +405,7 @@ function BisonBar:NewBuffBar( values, barName)
 	return f
 end
 
-function BisonBar:NewDebuffBar( values, barName)
+function WisentBar:NewDebuffBar( values, barName)
 	local f = self:New( values, barName)
 	f:RegisterEvent( 'UNIT_AURA')
 	f:SetScript( 'OnEvent', self.OnEvent)
@@ -414,7 +414,7 @@ function BisonBar:NewDebuffBar( values, barName)
 	return f
 end
 
-function BisonBar:NewWeaponBar( values, barName)
+function WisentBar:NewWeaponBar( values, barName)
 	local f = self:New( values, barName)
 	f:SetScript( 'OnUpdate', self.OnUpdateWeapon)
 	f.name    = 'weapon'
@@ -422,28 +422,28 @@ function BisonBar:NewWeaponBar( values, barName)
 	return f
 end
 
-function BisonBar:CreateButtons( size, offset)
+function WisentBar:CreateButtons( size, offset)
 	for i = 1, size do
 		local b
 		if self.name == 'buff' then
-			b = BisonButton:NewBuff( self, i + offset, 'BisonBuff'..i)
+			b = WisentButton:NewBuff( self, i + offset, 'WisentBuff'..i)
 			b:SetGhost( tostring( b:GetID()), 0.2, 0.8, 0.2)
 		elseif self.name == 'debuff' then
-			b = BisonButton:NewDebuff( self, i + offset, 'BisonDebuff'..i)
+			b = WisentButton:NewDebuff( self, i + offset, 'WisentDebuff'..i)
 			b:SetGhost( tostring( b:GetID()), 0.8, 0.2, 0.2)
 		elseif self.name == 'weapon' then
-			b = BisonButton:NewWeapon( self, i + offset, 'BisonWeapon'..i)
+			b = WisentButton:NewWeapon( self, i + offset, 'WisentWeapon'..i)
 			b:SetGhost( (b:GetID() == 17) and 'MH' or 'OH', 0.2, 0.2, 0.2)
 		end
 		b:Update()
 		table.insert( self.buttons, b)
 		if LBF then
-			LBF:Group( 'Bison', self.barName):AddButton( b)
+			LBF:Group( 'Wisent', self.barName):AddButton( b)
 		end
 	end
 end
 
-function BisonBar:OnEvent( event, unit)
+function WisentBar:OnEvent( event, unit)
 	if event == 'UNIT_AURA' and unit == PlayerFrame.unit then
 		for _, b in pairs( self.buttons) do
 			b:Update()
@@ -453,7 +453,7 @@ function BisonBar:OnEvent( event, unit)
 	self:SetAnchors()
 end
 
-function BisonBar:OnUpdate( elapsed)
+function WisentBar:OnUpdate( elapsed)
 	if updateTimeBuff < 0 then
 		updateTimeBuff = updateTimeBuff + UPDATE_TIME_BUFF
 	else
@@ -461,7 +461,7 @@ function BisonBar:OnUpdate( elapsed)
 	end
 end
 
-function BisonBar:OnUpdateWeapon( elapsed)
+function WisentBar:OnUpdateWeapon( elapsed)
 	local btnMain, btnOff = self.buttons[1], self.buttons[2]
 	if btnMain:GetID() == 17 then
 		btnMain, btnOff = btnOff, btnMain
@@ -478,28 +478,28 @@ function BisonBar:OnUpdateWeapon( elapsed)
 	btnOff:SetFlashing()
 end
 
-function BisonBar:AddButtons( biGrp)
+function WisentBar:AddButtons( biGrp)
 	for i,b in pairs( self.buttons) do
 		biGrp:AddButton( b)
 	end
 end
 
-function BisonBar:Sort()
+function WisentBar:Sort()
 	table.sort( self.buttons, SORT[self.values.sort])
 end
 
-function BisonBar:RestoreSettings( locked, values)
+function WisentBar:RestoreSettings( locked, values)
 	self.values = values
 	self:ClearAllPoints()
 	self:SetPoint( 'BOTTOMLEFT', UIParent, 'BOTTOMLEFT', self.values.xPos, self.values.yPos)
 	self:SetAnchors()
 	self:UpdateLock( locked)
 	if LBF then
-		LBF:Group( 'Bison', self.barName):Skin( unpack( values.style))
+		LBF:Group( 'Wisent', self.barName):Skin( unpack( values.style))
 	end
 end
 
-function BisonBar:SetAnchors()
+function WisentBar:SetAnchors()
 	local last, lastFirst
 	local row = 1
 	local col = 1
@@ -570,7 +570,7 @@ function BisonBar:SetAnchors()
 	end
 end
 
-function BisonBar:UpdateVisible( show)
+function WisentBar:UpdateVisible( show)
 	if show then
 		self:Show()
 	else
@@ -578,7 +578,7 @@ function BisonBar:UpdateVisible( show)
 	end
 end
 
-function BisonBar:UpdateLock( locked)
+function WisentBar:UpdateLock( locked)
 	if locked then
 		self:SetMovable( false)
 		for i, b in pairs( self.buttons) do
@@ -598,13 +598,13 @@ function BisonBar:UpdateLock( locked)
 	end
 end
 
-function BisonBar:OnMouseDown()
+function WisentBar:OnMouseDown()
 	if self:IsMovable() then
 		self:StartMoving()
 	end
 end
 
-function BisonBar:OnMouseUp()
+function WisentBar:OnMouseUp()
 	if self:IsMovable() then
 		self:StopMovingOrSizing()
 		self.values.xPos = self:GetLeft()
