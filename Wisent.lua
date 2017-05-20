@@ -131,7 +131,7 @@ end
 
 function Wisent:PrintHelp()
 	local function PrintCmd( cmd, desc) self:Print( format( SUB_HELP_MSG, cmd, desc)) end
-	self:Print( 'Commands (/bi, /bison)')
+	self:Print( 'Commands (/bi, /wisent)')
 	PrintCmd( 'enable', L.EnabledDesc)
 	PrintCmd( 'lock', L.LockDesc)
 	PrintCmd( 'debug', L.DebugDesc)
