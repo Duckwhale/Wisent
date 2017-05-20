@@ -1,21 +1,33 @@
-## Interface: 70200
-## Version: 1.0
-## Author: Grayal, Cakechart
-
-## Title: Wisent |cff7f7fff -Ace3-|r
+## Interface: 40300
+## Title: Wisent
 ## Notes: Customizing your buff display
+## Notes-ruRU: Настройка отображения ваших (де)баффов
 ## Notes-deDE: Anpassung der Buff Anzeige
+## Author: Grayal
 ## DefaultState: enabled
 ## SavedVariables: WisentDB
 ## OptionalDeps: Ace3, LibDebugLog-1.0, ButtonFacade
 ## X-Name: Wisent
-## X-Embeds: Ace3, LibDebugLog-1.0, ButtonFacade
+## X-Embeds: Ace3, LibDebugLog-1.0
+## X-Email: grayal@gmx.de
 ## X-Category: Buffs
-## X-CompatibleLocales: enUS, enGB, deDE
+## X-CompatibleLocales: enUS, enGB, deDE, ruRU
+## X-Revision: 216
+## Version: 2.4.4-release
+
 
 embeds.xml
 
+WisentWidget-Buff.lua
+WisentContainer-Group.lua
 Localization.lua
 Wisent.lua
-BuffBar.lua
 Options.lua
+Prototype.lua
+Buffs.lua
+Debuffs.lua
+Weapons.lua
+#Hidden.lua
+Progs.lua
+Combo.lua
+Profile.lua

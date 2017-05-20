@@ -1,468 +1,350 @@
-Wisent = LibStub( 'AceAddon-3.0'):NewAddon( 'Wisent', 'AceEvent-3.0', 'AceConsole-3.0', 'LibDebugLog-1.0')
-if not Wisent then return end -- already loaded and no upgrade necessary
+--[[
+Wisent - a framework for free positioning of buffs.
 
-local L = LibStub( 'AceLocale-3.0'):GetLocale( 'Wisent')
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to:
+	
+Free Software Foundation, I.,
+51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301, USA.
+--]]
+
+local MAJOR = "Wisent"
+local Addon = LibStub( "AceAddon-3.0"):NewAddon( MAJOR, "AceEvent-3.0", "AceConsole-3.0", "AceHook-3.0", "LibDebugLog-1.0")
+if not Addon then return end -- already loaded and no upgrade necessary
+
+local L      = LibStub( "AceLocale-3.0"):GetLocale( MAJOR)
+local LBF    = LibStub( "LibButtonFacade", true)
+-- MOD: TODO: Change "Enable LBF" option to "Use Masque"
+local Masque = LibStub("Masque", true)
+-- /MOD
+
+Addon.name, Addon.localizedname = GetAddOnInfo( MAJOR)
+Addon.version = format( "%s: %s |cFF20FF20(Cata)|r", L.Version, GetAddOnMetadata( MAJOR, "Version") or "unknown")
+
+local NOTHING = {}
 local DEFAULTS = { 
 	profile = {
-		buff   = { xPos = 400, yPos = 500, xPadding = 5, yPadding = 15, scale = 1.0, rows = 2, cols = 16, show = true, flashing = true, timer = true, horizontal = true, sort = 'dec',  style = { 'Blizzard', 0, nil }, },
-		debuff = { xPos = 400, yPos = 250, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 16, show = true, flashing = true, timer = true, horizontal = true, sort = 'dec',  style = { 'Blizzard', 0, nil }, },
-		weapon = { xPos = 400, yPos = 200, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 2,  show = true, flashing = true, timer = true, horizontal = true, sort = 'none', style = { 'Blizzard', 0, nil }, },
-		locked  = true,
-		enabled = true,
-		debug   = false,
+		["*"]  = { xPos = 400, yPos = 300, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 16, number = 16, show = true,  horizontal = true, sort = "dec",   timer = 2, flashing = true,  style = {}, },
+		buff   = { xPos = 400, yPos = 400, xPadding = 5, yPadding = 15, scale = 1.0, rows = 2, cols = 20, number = 40, show = true,  horizontal = true, sort = "dec",   timer = 2, flashing = true,  style = {}, },
+		debuff = { xPos = 400, yPos = 250, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 16, number = 16, show = true,  horizontal = true, sort = "dec",   timer = 2, flashing = true,  style = {}, },
+		weapon = { xPos = 400, yPos = 200, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols =  3, number =  3, show = true,  horizontal = true, sort = "none",  timer = 2, flashing = true,  style = {}, },
+		prog   = { xPos = 400, yPos = 150, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 16, number = 16, show = true,  horizontal = true, sort = "alpha", timer = 2, flashing = true,  style = {}, },
+		hidden = { xPos = 400, yPos = 100, xPadding = 5, yPadding = 15, scale = 1.0, rows = 2, cols =  8, number = 16, show = true,  horizontal = true, sort = "dec",   timer = 2, flashing = true,  style = {}, },
+		combo  = { xPos = 400, yPos = 150, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols =  5, number =  5, show = false, horizontal = true, sort = "none",  timer = 2, flashing = false, style = {}, bigger = 1.0, },
+		blizzard = false,
+		locked   = true,
+		enabled  = true,
+		lbf      = false,
+		masque = true
 	} 
 }
-local MAX_BUTTONS = {
-	buff   = 40,
-	debuff = 16,
-	weapon = 2,
-}
-local BAR_NAMES = {
-	[L.BarBuff]   = 'buff',
-	[L.BarDebuff] = 'debuff',
-	[L.BarWeapon] = 'weapon',
-}
-local SORT_TYPES = {
-	['none']   = 1,
-	['alpha']  = 2,
-	['revert'] = 3,
-	['inc']    = 4,
-	['dec']    = 5,
-	['durationasc']  = 6,
-	['durationdesc'] = 7,
-	
-}
-local SORT_DESC = {
-	[1] = L.SortNone,
-	[2] = L.SortAlpha,
-	[3] = L.SortRevert,
-	[4] = L.SortInc,
-	[5] = L.SortDec,
-	[6] = L.SortDurationAsc,
-	[7] = L.SortDurationDesc
-}
-local HIDE_BLIZZ_BARS = true -- for tests false
-local SUB_HELP_MSG = ' - |cFF33FF99%s|r: %s'
+local ENCHANT_UPDATE_TIME = 1/7
 
---[[---------------------------------------------------------------------------------
-  Class Setup
-------------------------------------------------------------------------------------]]
-Wisent.name, Wisent.localizedname = GetAddOnInfo( 'Wisent')
-Wisent.version = format( L.Version, GetAddOnMetadata( 'Wisent', 'Version') or 'unknown', RED_FONT_COLOR_CODE, 'WotLK', FONT_COLOR_CODE_CLOSE)
+local auras = {
+	buff = {},
+	debuff = {},
+	weapon = {}
+}
+local options = {
+	type = "group", name = Addon:GetName(), childGroups = "tree", args = {}
+}
+local updateTime = 0
 
-function Wisent:OnInitialize()
-	self.db = LibStub( 'AceDB-3.0'):New( 'WisentDB', DEFAULTS, 'Default')
-	self:ToggleDebugLog( self.db.profile.debug)
-	self:InitConfig()
+------------------------------------------------------------------------------------
+-- Local
+------------------------------------------------------------------------------------
+local function InitAuraArray()
+	for i = 1,40 do
+		tinsert( auras.buff, { id = i })
+	end
+	for i = 1,16 do
+		tinsert( auras.debuff, { id = i })
+	end
+	for i = 1,3 do
+		tinsert( auras.weapon, { id = i })
+	end
 end
 
-function Wisent:OnEnable()
-	self.buff   = self.WisentBar:NewBuffBar(   self.db.profile.buff,   L.BarBuff)
-	self.debuff = self.WisentBar:NewDebuffBar( self.db.profile.debuff, L.BarDebuff)
-	self.weapon = self.WisentBar:NewWeaponBar( self.db.profile.weapon, L.BarWeapon)
-	self.buff:CreateButtons(   MAX_BUTTONS.buff, 0)
-	self.debuff:CreateButtons( MAX_BUTTONS.debuff, 0)
-	self.weapon:CreateButtons( MAX_BUTTONS.weapon, 15)
-	self:Update()
-	self.db.RegisterCallback( self, 'OnNewProfile')
-	self.db.RegisterCallback( self, 'OnProfileChanged')
-	self.db.RegisterCallback( self, 'OnProfileCopied')
-	self.db.RegisterCallback( self, 'OnProfileReset')
-	self.db.RegisterCallback( self, 'OnProfileDeleted')
-	local LBF = LibStub( 'LibButtonFacade', true)
+local function UpdateAura( id, aura, filter, now)
+	name, rank, texture, count, debuffType, duration, expiration, unitCaster, isStealable, consolidate, spellID = UnitAura( PlayerFrame.unit, id, filter)
+	local timeLeft = name and expiration and (expiration - now) or nil
+	aura.id      = id
+	aura.filter  = filter
+	aura.name    = name
+	aura.rank    = rank
+	aura.texture = texture
+	aura.count   = count
+	aura.type    = debuffType
+	aura.duration    = duration
+	aura.expiration  = expiration
+	aura.timeLeft    = timeLeft and (timeLeft > 0) and timeLeft or nil
+	aura.duration    = duration
+	aura.unitCaster  = unitCaster
+	aura.isStealable = isStealable
+	aura.consolidate = consolidate
+	aura.spellID     = spellID
+end
+
+local function UpdateWaepon( id, enchant, timeLeft, charges)
+	timeLeft    = enchant and timeLeft and (timeLeft / 1000)
+	local aura = auras.weapon[id]
+	aura.id       = id
+	aura.name     = enchant and tostring( id) or nil
+	aura.count    = charges 
+	aura.texture  = enchant and GetInventoryItemTexture( PlayerFrame.unit, 15 + id) 
+	aura.timeLeft = timeLeft and (timeLeft > 0) and timeLeft or nil
+end
+
+local function UpdateEnchant()
+	if PlayerFrame.unit or PlayerFrame.unit == "player" then
+		local mainEnchant, mainTimeLeft, mainCharges, offEnchant, offTimeLeft, offCharges, thrEnchant, thrTimeLeft, thrCharges = GetWeaponEnchantInfo()
+		UpdateWaepon( 1, mainEnchant, mainTimeLeft, mainCharges)
+		UpdateWaepon( 2, offEnchant,  offTimeLeft,  offCharges)
+		UpdateWaepon( 3, thrEnchant,  thrTimeLeft,  thrCharges)
+	else
+		UpdateWaepon( 1, nil, nil, nil)
+		UpdateWaepon( 2, nil, nil, nil)
+		UpdateWaepon( 3, nil, nil, nil)
+	end
+end
+
+local function UpdateAllAuras()
+	Addon:Debug( "UpdateAllAuras")
+	local now = GetTime()
+	for id,aura in pairs( auras.buff) do
+		UpdateAura( id, aura, "HELPFUL", now)
+	end
+	for id,aura in pairs( auras.debuff) do
+		UpdateAura( id, aura, "HARMFUL", now)
+	end
+end
+
+local function DurationString( seconds, timer, color)
+	if not seconds then
+		return ""
+	end
+	if timer == 3 then
+		local min = math.floor( seconds / 60)
+		if seconds < 3600 then 
+			return "|c%s%d:%02d|r", color, min, seconds % 60
+		end 
+		return "|c%s%d:%02d:%02d|r", color, math.floor( min / 60), min % 60, seconds % 60
+	end
+	if timer == 2 then
+		if seconds < 60 then 
+			return "|c%s%ds|r", color, seconds 
+		end
+		local min = math.floor( seconds / 60)
+		if seconds < 600 then 
+			return "|c%s%d:%02d|r", color, min, seconds % 60 
+		end
+		if seconds < 3600 then 
+			return "|c%s%dm|r",color,  min 
+		end
+		return "|c%s%d:%02dh|r", color, math.floor( min / 60), min % 60
+	end
+	return SecondsToTimeAbbrev( seconds)
+end
+
+------------------------------------------------------------------------------------
+-- Class
+------------------------------------------------------------------------------------
+function Addon:OnInitialize()
+	self:ToggleDebugLog( false)
+	InitAuraArray()
+	self.db = LibStub( "AceDB-3.0"):New( "WisentDB", DEFAULTS, "Default")
+	if type( self.db.profile.timer) ~= "number" then
+		self.db.profile.timer = self.db.profile.timer and 2 or 1
+	end
+	self:SetEnabledState( self.db.profile.enabled)
+	LibStub( "AceConfig-3.0"):RegisterOptionsTable( "WisentDialog", options)
+	self:RegisterChatCommand( "wisent", "ShowDialog")
+	self:RegisterChatCommand( "bi", "ShowDialog")
 	if LBF then
-		LBF:RegisterSkinCallback( 'Wisent', self.OnSkin, self)
+		LBF:RegisterSkinCallback( "Wisent", self.OnSkin, self)
 	end
-	self:Debug( 'Wisent enabled')
-	self:Print( self.version, 'loaded')
+	-- MOD
+	if Masque then
+		MasqueGroup = Masque:Group("Wisent", "Buffs");
+		MasqueGroup = Masque:Group("Wisent", "Debuffs");
+		MasqueGroup = Masque:Group("Wisent", "Weapons"); -- TODO: Remove, as weapon enchants aren't a thing anymore (rogue poisons = regular buff)
+		MasqueGroup = Masque:Group("Wisent", "Progs"); -- WTF is this?
+		MasqueGroup = Masque:Group("Wisent", "Combos") ;-- WTF is this?
+		Masque:Register("Wisent", self.OnSkin, self);
+		local buttonData = {
+			--Icon = button.ShinyRainbowThing,
+			Cooldown = false,
+			Flash = false,
+			Pushed = false,
+			Normal = nil,
+			Disabled = nil,
+			Checked = false,
+			Border = nil,
+			AutoCastable = false,
+			Highlight = false,
+			Hotkey = false,
+			Count = false,
+			Name = false,
+			Duration = false,
+			Autocast = false,
+		};
+		
+		--mybutton = CreateFrame("Button","mybutton",UIParent,"UIPanelButtonTemplate")
+		--mybutton:SetPoint("CENTER",0,0)
+		--mybutton:SetWidth(80)
+	--	mybutton:SetHeight(22)
+		
+		local BuffButton1 = CreateFrame("Button", "WisentBuffButton1", BuffButton1, "UIPanelButtonTemplate");
+		--MasqueGroup:AddButton(WisentBuff1.name, buttonData);
+	end
+	-- /MOD
 end
 
-function Wisent:OnDisable()
-	self:HideFrames()
+function Addon:OnEnable()
+	self:Debug( "OnEnable")
+	UpdateAllAuras()
+	UpdateEnchant()
+	self:SecureHook( "BuffFrame_UpdateAllBuffAnchors", "OnUpdateBuffs")
+	self:SecureHook( "DebuffButton_UpdateAnchors", "OnUpdateDebuff")
+	self:SecureHook( "AuraButton_UpdateDuration", "OnUpdateDuration")
+	self:SecureHookScript( TemporaryEnchantFrame, "OnUpdate", "OnUpdateEnchantFrame")
+	self:Print( self.version, "loaded")
 end
 
-function Wisent:OnSkin( skin, gloss, backdrop, group, button, colors)
-	if group and BAR_NAMES[group] then
-		local bar = BAR_NAMES[group]
-		local pro = self.db.profile[bar]
-		if type(pro.style) ~= 'table' then pro.style = {} end
-		pro.style[1] = skin
-		pro.style[2] = gloss
-		pro.style[3] = backdrop
-		pro.style[4] = colors
+function Addon:OnDisable()
+	self:Debug( "OnDisable")
+	self:Unhook( "BuffFrame_UpdateAllBuffAnchors")
+	self:Unhook( "DebuffButton_UpdateAnchors")
+	self:Unhook( "AuraButton_UpdateDuration")
+	self:Unhook( TemporaryEnchantFrame, "OnUpdate")
+end
+
+function Addon:OnUpdateBuffs()
+--	self:Debug( self, ":OnUpdateBuffs")
+--	BuffFrame_UpdateAllBuffAnchors()
+	UpdateAllAuras()
+	for _,mod in self:IterateModules() do
+		if mod.UpdateBuffAnchors and mod:IsEnabled() then
+			mod:UpdateBuffAnchors()
+		end
 	end
 end
 
---[[---------------------------------------------------------------------------------
-  Main Methods
-------------------------------------------------------------------------------------]]
-function Wisent:Update()
-	if self.db.profile.enabled then
-		self:ShowFrames()
-		self:RestoreSettings()
+function Addon:OnUpdateDebuff( buttonName, index)
+--	self:Debug( self, ":OnUpdateDebuff", buttonName, index)
+--	DebuffButton_UpdateAnchors( buttonName, index)
+	for _,mod in self:IterateModules() do
+		if mod.UpdateDebuffAnchors and mod:IsEnabled() then
+			mod:UpdateDebuffAnchors(  buttonName, index)
+		end
+	end
+end
+
+function Addon:OnUpdateEnchantFrame( frame, elapsed)
+--	self:Debug( self, ":OnUpdateEnchantFrame", elapsed)
+--	TemporaryEnchantFrame_OnUpdate( elapsed)
+	if updateTime > 0 then
+		updateTime = updateTime - elapsed
 	else
-		self:HideFrames()
-	end
-end
-
-function Wisent:RestoreSettings()
-	self.buff:RestoreSettings( self.db.profile.locked, self.db.profile.buff)
-	self.debuff:RestoreSettings( self.db.profile.locked, self.db.profile.debuff)
-	self.weapon:RestoreSettings( self.db.profile.locked, self.db.profile.weapon)
-end
-
-function Wisent:ShowFrames()
-	self.buff:UpdateVisible( self.db.profile.buff.show)
-	self.debuff:UpdateVisible( self.db.profile.debuff.show)
-	self.weapon:UpdateVisible( self.db.profile.weapon.show)
-	if HIDE_BLIZZ_BARS then
-		BuffFrame:Hide()
-		TemporaryEnchantFrame:Hide()
-	end
-end
-
-function Wisent:HideFrames()
-	self.buff:UpdateVisible( false)
-	self.debuff:UpdateVisible( false)
-	self.weapon:UpdateVisible( false)
-	BuffFrame:Show()
-	TemporaryEnchantFrame:Show()
-end
-
-function Wisent:PrintHelp()
-	local function PrintCmd( cmd, desc) self:Print( format( SUB_HELP_MSG, cmd, desc)) end
-	self:Print( 'Commands (/bi, /wisent)')
-	PrintCmd( 'enable', L.EnabledDesc)
-	PrintCmd( 'lock', L.LockDesc)
-	PrintCmd( 'debug', L.DebugDesc)
-	PrintCmd( '<bar> show', L.ShowDesc)
-	PrintCmd( '<bar> flashing', L.FlashingDesc)
-	PrintCmd( '<bar> timer', L.TimerDesc)
-	PrintCmd( '<bar> scale <value>', L.ScaleDesc)
-	PrintCmd( '<bar> rows <value>', L.RowsDesc)
-	PrintCmd( '<bar> cols <value>', L.ColsDesc)
-	PrintCmd( '<bar> horizontal', L.HorizontalDesc)
-	PrintCmd( '<bar> xPadding <value>', L.XPaddingDesc)
-	PrintCmd( '<bar> yPadding <value>', L.YPaddingDesc)
-	PrintCmd( '<bar> sort <value>', L.SortDesc)
-	PrintCmd( 'version', L.VersionDesc)
-end
-
-function Wisent:PrintVersion() 
-	self:Print( self.version) 
-end
-
-local function GetBar( info)
-	return (type(info) == 'table') and info.arg or tostring(info)
-end
-
-function Wisent:AddButtons( biGrp, info)
-	self:Debug(info)
-	local bar = GetBar( info)
-	self:Debug(bar)
-	if self.db.profile[bar] then
-		self[bar]:AddButtons( biGrp)
-	end
-end
-
---[[---------------------------------------------------------------------------------
-  Set/Get Methods
-------------------------------------------------------------------------------------]]
-function Wisent:IsLocked()
-	return self.db.profile.locked
-end
-
-function Wisent:SetLocked( value)
-	self.db.profile.locked = value
-	self.buff:UpdateLock( value)
-	self.debuff:UpdateLock( value)
-	self.weapon:UpdateLock( value)
-end
-
-function Wisent:ToggleLocked() 
-	self:SetLocked( not self:IsLocked()) 
-end
-
-function Wisent:IsDebug()
-	return self.db.profile.debug
-end
-
-function Wisent:SetDebug( value)
-	self.db.profile.debug = value
-	self:ToggleDebugLog( value)
-end
-
-function Wisent:ToggleDebug() 
-	self:SetDebug( not self:IsDebug()) 
-end
-
-function Wisent:IsEnabled()
-	return self.db.profile.enabled
-end
-
-function Wisent:SetEnabled( value)
-	self.db.profile.enabled = value
-	if value then
-		self:ShowFrames()
-	else
-		self:HideFrames()
-	end
-end
-
-function Wisent:ToggleEnabled() 
-	self:SetEnabled( not self:IsEnabled()) 
-end
-
-function Wisent:IsVisible( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].show
-end
-
-function Wisent:SetVisible( info, value)
-	local bar = GetBar( info)
-	if self.db.profile[bar] then
-		self.db.profile[bar].show = value
-		self[bar]:UpdateVisible( value)
-	end
-end
-
-function Wisent:ToggleVisible( info)
-	local bar = GetBar( info)
-	self:SetVisible( bar, not self:IsVisible( bar))
-end
-
-function Wisent:IsFlashing( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].flashing
-end
-
-function Wisent:SetFlashing( info, value)
-	local bar = GetBar( info)
-	if self.db.profile[bar] then
-		self.db.profile[bar].flashing = value
-	end
-end
-
-function Wisent:ToggleFlashing( info) 
-	local bar = GetBar( info)
-	self:SetFlashing( bar, not self:IsFlashing( bar)) 
-end
-
-function Wisent:IsTimer( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].timer
-end
-
-function Wisent:SetTimer( info, value)
-	local bar = GetBar( info)
-	if self.db.profile[bar] then
-		self.db.profile[bar].timer = value
-	end
-end
-
-function Wisent:ToggleTimer( info) 
-	local bar = GetBar( info)
-	self:SetTimer( bar, not self:IsTimer( bar)) 
-end
-
-function Wisent:GetScale( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].scale or 1
-end
-
-function Wisent:SetScale( info, value)
-	local bar = GetBar( info)
-	value = tonumber(value)
-	if self.db.profile[bar] and value and value > 0 and value <= 2 then
-		self.db.profile[bar].scale = value
-		self[bar]:SetAnchors()
-	end
-end
-
-function Wisent:GetMaxButton( bar)
-	return MAX_BUTTONS[bar] or 16
-end
-
-function Wisent:GetRows( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].rows or 1
-end
-
-function Wisent:SetRows( info, value)
-	local bar = GetBar( info)
-	value = tonumber(value)
-	if self.db.profile[bar] and value and value > 0 and value <= MAX_BUTTONS[bar] then
-		value = math.floor( value)
-		self.db.profile[bar].rows = value
-		self.db.profile[bar].cols = math.ceil( MAX_BUTTONS[bar] / value)
-		self[bar]:SetAnchors()
-	end
-end
-
-function Wisent:GetCols( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].cols or 16
-end
-
-function Wisent:SetCols( info, value)
-	local bar = GetBar( info)
-	value = tonumber(value)
-	if self.db.profile[bar] and value and value > 0 and value <= MAX_BUTTONS[bar] then
-		value = math.floor( value)
-		self.db.profile[bar].cols = value
-		self.db.profile[bar].rows = math.ceil( MAX_BUTTONS[bar] / value)
-		self[bar]:SetAnchors()
-	end
-end
-
-function Wisent:IsHorizontal( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].horizontal
-end
-
-function Wisent:SetHorizontal( info, value)
-	local bar = GetBar( info)
-	if self.db.profile[bar] then
-		self.db.profile[bar].horizontal = value
-		self[bar]:SetAnchors()
-	end
-end
-
-function Wisent:ToggleHorizontal( info) 
-	local bar = GetBar( info)
-	self:SetHorizontal( bar, not self:IsHorizontal( bar)) 
-end
-
-function Wisent:GetXPadding( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].xPadding
-end
-
-function Wisent:SetXPadding( info, value)
-	local bar = GetBar( info)
-	value = tonumber(value)
-	if self.db.profile[bar] and value and value >= -20 and value <= 20 then
-		self.db.profile[bar].xPadding = math.floor( value)
-		self[bar]:SetAnchors()
-	end
-end
-
-function Wisent:GetYPadding( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and self.db.profile[bar].yPadding
-end
-
-function Wisent:SetYPadding( info, value)
-	local bar = GetBar( info)
-	value = tonumber(value)
-	if self.db.profile[bar] and value and value >= -50 and value <= 50 then
-		self.db.profile[bar].yPadding = math.floor( value)
-		self[bar]:SetAnchors()
-	end
-end
-
-function Wisent:GetSort( info)
-	local bar = GetBar( info)
-	return self.db.profile[bar] and SORT_TYPES[self.db.profile[bar].sort]
-end
-
-function Wisent:SetSort( info, value)
-	local bar = GetBar( info)
-	value = tonumber(value)
-	if self.db.profile[bar] and value then
-		for k,v in pairs(SORT_TYPES) do
-			if v == value then
-				self.db.profile[bar].sort = k
-				self[bar]:Sort()
-				self[bar]:SetAnchors()
-				break
+		updateTime = updateTime + ENCHANT_UPDATE_TIME
+		UpdateEnchant()
+		for _,mod in self:IterateModules() do
+			if mod.UpdateEnchantAnchors and mod:IsEnabled() then
+				mod:UpdateEnchantAnchors( elapsed)
 			end
 		end
 	end
 end
 
-function Wisent:SortTypes()
-	return SORT_DESC
-end
-
---[[---------------------------------------------------------------------------------
-  timer string
-------------------------------------------------------------------------------------]]
-function WisentDurationString( seconds, timer)
-	if not timer then
-		return SecondsToTimeAbbrev( seconds)
-	end
-	if not seconds then
-		return ''
-	end
-	local negative, time
-	if seconds < 0 then 
-		negative = '-'
-		time = -seconds
-	else
-		negative = ''
-		time = seconds
-	end
-	local min = math.floor( time / 60)
-	if time < 600 then 
-		return string.format( '|cffffffff%s%d:%02d|r', negative, min, time % 60) 
-	end
-	if time < 3600 then 
-		return string.format( '|cffffffff%s%dm|r', negative, min) 
-	end
-	return string.format( '|cffffffff%s%d:%02dh|r', negative, math.floor( min / 60), min % 60)
-end
-
---[[---------------------------------------------------------------------------------
-  Profile Functions
-------------------------------------------------------------------------------------]]
-function Wisent:ListProfiles()
-	self:Print( L.AvailableProfiles)
-	local current = self.db:GetCurrentProfile()
-	for _,name in ipairs(self.db:GetProfiles()) do
-		self:Print( format( (name == current) and ' - |cFFFFFF00%s|r' or ' - %s', name))
+function Addon:OnUpdateDuration( buff, timeLeft)
+--	self:Debug( self, ":OnUpdateDuration", buff, timeLeft)
+--	AuraButton_UpdateDuration( buff, timeLeft)
+	if SHOW_BUFF_DURATIONS == "1" and timeLeft then
+		local proName = buff.proName
+		local profile = proName and self.db.profile[proName] or NOTHING
+		buff.duration:SetFormattedText( DurationString( timeLeft, profile.timer or 0, "FFFFFFFF"))
+--		buff:SetScale( profile.scale or 1)
+		if profile.flashing == false then
+			buff:SetAlpha( 1.0)
+		end
 	end
 end
 
-function Wisent:OnNewProfile( event, db, name)
-	self:Update()
-	self:Print( format( L.ProfileCreated, name))
-end
 
-function Wisent:OnProfileChanged( event, db, name)
-	self:Update()
-	self:Print( format( L.ProfileLoaded, name))
-end
+-- MOD: Interaction with Masque instead of the old LBF/BF addons that no longer work
+-- function Addon:OnSkin( skin, gloss, backdrop, group, button, colors) SkinID, Gloss, Backdrop, Group, Button, Colors
+-- Format: groupName:String, skinName:String, glossIntensity:int (glossPct), isBackdropEnabled:boolean, colorsTable:table, isDisabled
+function Addon:OnSkin(group, skin, gloss, backdrop, colors, disabled)
 
-function Wisent:OnProfileCopied( event, db, name)
-	self:Update()
-	self:Print( format( L.ProfileCopied, name))
-end
 
-function Wisent:OnProfileReset( event, db)
-	self:Update()
-	self:Print( format( L.ProfileReset, db:GetCurrentProfile()))
-end
-
-function Wisent:OnProfileDeleted( event, db, name)
-	self:Print( format( L.ProfileDeleted, name))
-end
-
---[[---------------------------------------------------------------------------------
-create a widget class
-------------------------------------------------------------------------------------]]
-function Wisent:CreateClass( kind, parentClass)
-	local class = CreateFrame( kind)
-	class.mt = { __index = class }
-	if parentClass then
-		class = setmetatable( class, { __index = parentClass })
-		class.super = parentClass
+ -- TODO: saved vars notice
+	if not group then
+		group = "All"
 	end
+	DEFAULT_CHAT_FRAME:AddMessage("OnSkin event with parameters: "  .. group.. " " .. skin .. " " .. gloss .. " " .. tostring(backdrop) .. " " .. tostring(colors) .. " " .. tostring(disabled) )
 
-	function class:Bind( o)
-		return setmetatable( o, self.mt)
+	-- Added for 7.1.
+	-- TODO: Hide groups when told so by Masque. Which one, though? All of them? 
+	if disabled then
+	DEFAULT_CHAT_FRAME:AddMessage("Wisent: Received <disabled> notice from Masque after OnSkin event)")
 	end
+	
+	--[[ original code:
+	local profile = group and self.db.profile[group]
+	if profile then
+		if type( profile.style) ~= "table" then
+			profile.style = {}
+		end
+		local style = profile.style
+		style.skin     = skin
+		style.gloss    = gloss
+		style.backdrop = backdrop
+		style.colors   = colors
+	]]--
+	
+	-- For now, a Masque update changes ALL groups. What is the point in registering them, then? That should be fixed, or changed to only provide Masque with one catchall group
+--	local groups = { "buffs", "debuffs",  "weapon", "prog",  "hidden", "combo"}
+--	for i = 0, #groups do
+	--	local group = groups[i]  
+		local profile = group and self.db.profile[group]
+		if profile then
+			if type( profile.style) ~= "table" then
+				profile.style = {}
+			end
+			local style = profile.style
+			style.skin     = skin
+			style.gloss    = gloss
+			style.backdrop = backdrop
+			style.colors   = colors
+--DEFAULT_CHAT_FRAME:AddMessage("skin = " .. skin .. ", gloss = " .. gloss .. ", backdrops = " .. backdrop .. ", colors = " .. colors .. ", group = " .. group .. ", button = " .. button)
+		end
+--	end
+end
+-- /MOD
 
-	return class
+------------------------------------------------------------------------------------
+-- Main
+------------------------------------------------------------------------------------
+function Addon:CloneAura( dst, name)
+	for _,aura in pairs( auras[name] or NOTHING) do
+		tinsert( dst, aura)
+	end 
 end
 
+function Addon:ShowDialog()
+	for name,mod in self:IterateModules() do
+		options.args[name] = mod.GetOptionTable and mod:GetOptionTable() or nil
+	end
+	LibStub( "AceConfigDialog-3.0"):Open( "WisentDialog")
+end

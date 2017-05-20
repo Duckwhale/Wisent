@@ -1,81 +1,112 @@
-local Wisent = LibStub( 'AceAddon-3.0'):GetAddon( 'Wisent')
-local L = LibStub( 'AceLocale-3.0'):GetLocale( 'Wisent')
+--[[
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to:
 	
-local function OptionTable( name, order)
-	return {
-		type = 'group', order = order, name = L.OptionName, inline = true, 
-		args = {
-			show  = { type = 'toggle', order = 1, name = L.ShowName,     desc = L.ShowDesc,     width = 'full', arg = name, get = 'IsVisible',  set = 'ToggleVisible', },
-			flash = { type = 'toggle', order = 2, name = L.FlashingName, desc = L.FlashingDesc, width = 'full', arg = name, get = 'IsFlashing', set = 'ToggleFlashing', },
-			timer = { type = 'toggle', order = 3, name = L.TimerName,    desc = L.TimerDesc,    width = 'full', arg = name, get = 'IsTimer',    set = 'ToggleTimer', },
-			sort  = { type = 'select', order = 4, name = L.SortName,     desc = L.SortDesc,                     arg = name, get = 'GetSort',    set = 'SetSort', values = 'SortTypes', },
-		},
-	}
-end
+Free Software Foundation, I.,
+51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301, USA.
+--]]
 
-local function LayoutTable( name, order)
-	local max = Wisent:GetMaxButton( name)
-	return {
-		type = 'group', order = order, name = L.BarName, inline = true, 
-		args = {
-			horizontal = { type = 'toggle', order = 1, name = L.HorizontalName, desc = L.HorizontalDesc, arg = name, get = 'IsHorizontal', set = 'ToggleHorizontal', },
-			scale      = { type = 'range',  order = 2, name = L.ScaleName,      desc = L.ScaleDesc,      arg = name, get = 'GetScale',     set = 'SetScale',    min = 0.01, max = 2,   step = 0.01, isPercent = true, },
-			cols       = { type = 'range',  order = 3, name = L.ColsName,       desc = L.ColsDesc,       arg = name, get = 'GetCols',      set = 'SetCols',     min = 1,    max = max, step = 1, },
-			rows       = { type = 'range',  order = 5, name = L.RowsName,       desc = L.RowsDesc,       arg = name, get = 'GetRows',      set = 'SetRows',     min = 1,    max = max, step = 1, },
-			xPadding   = { type = 'range',  order = 4, name = L.XPaddingName,   desc = L.XPaddingDesc,   arg = name, get = 'GetXPadding',  set = 'SetXPadding', min = -20,  max = 20,  step = 1, },
-			yPadding   = { type = 'range',  order = 6, name = L.YPaddingName,   desc = L.YPaddingDesc,   arg = name, get = 'GetYPadding',  set = 'SetYPadding', min = -50,  max = 50,  step = 1, },
-		},
-	}
-end
+local Addon  = LibStub( "AceAddon-3.0"):GetAddon( "Wisent")
+local L      = LibStub( "AceLocale-3.0"):GetLocale( "Wisent")
+local Module = Addon:NewModule( "Options", "AceEvent-3.0")
 
-local function BarTable( name, order)
-	return {
-		type = 'group', order = order, name = name, dialogHidden = true, dialogInline = true, 
-		args = {
-			option = OptionTable( name, 1),
-			layout = LayoutTable( name, 2),
-		},
-	}
-end
-
-local options = {
-	type = 'group', name = Wisent.localizedname, handler = Wisent,
-	args = {
-		release     = { type = 'description', order = 2,  name = Wisent.version, cmdHidden = true, },
-		description = { type = 'description', order = 3,  name = L.Description, cmdHidden = true, },
-		space 		= { type = 'description', order = 4,  name = '',            cmdHidden = true, },
-		enable 		= { type = 'toggle', order = 14, name = L.EnabledName, desc = L.EnabledDesc, width = 'full', get = 'IsEnabled',    set = 'ToggleEnabled', },
-		lock 		= { type = 'toggle', order = 15, name = L.LockName,    desc = L.LockDesc,    width = 'full', get = 'IsLocked',     set = 'ToggleLocked', },
-		debug 		= { type = 'toggle', order = 16, name = L.DebugName,   desc = L.DebugDesc,   width = 'full', get = 'IsDebug',      set = 'ToggleDebug', },
-		version 	= { type = 'toggle', order = 17, name = 'version',     dialogHidden = true, disabled = true, get = 'PrintVersion', set = false, },
-		help 		= { type = 'toggle', order = 18, name = 'help',        dialogHidden = true, disabled = true, get = 'PrintHelp',    set = false, },
-		buff 		= BarTable( 'buff',   20),
-		debuff      = BarTable( 'debuff', 21),
-		weapon      = BarTable( 'weapon', 22),
-	},
-}
-
-local function OnCommand( input)
-	if input and input:trim() ~= '' then
-		LibStub( 'AceConfigCmd-3.0'):HandleCommand( 'bison', 'bison', input)
-	else
-		InterfaceOptionsFrame_OpenToCategory( 'Wisent')
+------------------------------------------------------------------------------------
+-- Local
+------------------------------------------------------------------------------------
+local function SetEnable( info, value) 
+	Addon:Debug( "SetEnable", Module:GetName())
+	if value ~= Addon:IsEnabled() then
+		if value then
+			Addon:Enable()
+		else
+			Addon:Disable()
+		end
 	end
 end
 
-function Wisent:InitConfig()
-	options.args.profile = LibStub( 'AceDBOptions-3.0'):GetOptionsTable( self.db)
-	options.args.profile.dialogHidden = true
-	options.args.profile.dialogInline = true
-	options.args.profile.args.desc.dialogHidden = true
-	LibStub('AceConfig-3.0'):RegisterOptionsTable( 'bison', options)
-	local dialog = LibStub( 'AceConfigDialog-3.0')
-	dialog:SetDefaultSize( 'Wisent', 600, 400)
-	dialog:AddToBlizOptions( 'bison', 'Wisent')
-	dialog:AddToBlizOptions( 'bison', L.BarBuff,   'Wisent', 'buff')
-	dialog:AddToBlizOptions( 'bison', L.BarDebuff, 'Wisent', 'debuff')
-	dialog:AddToBlizOptions( 'bison', L.BarWeapon, 'Wisent', 'weapon')
-	dialog:AddToBlizOptions( 'bison', L.Profile,   'Wisent', 'profile')
-	self:RegisterChatCommand( 'bison', OnCommand)
-	self:RegisterChatCommand( 'bi', OnCommand)
+local function SetDebug( info, value) 
+	Addon:ToggleDebugLog( value)
 end
+
+local function GetProperty( info)
+	local key = info[#info]
+	return Module.profile[key]
+end
+
+local function SetProperty( info, value)
+	Addon:Debug( "SetProperty", Module:GetName())
+	local key = info[#info]
+	Module.profile[key] = value
+	Module:SendMessage( "BISON_UPDATE")
+end
+
+local function IsForceDisabled()
+	local unitAura = BuffFrame:IsEventRegistered( "UNIT_AURA")
+	local buffFrame = BuffFrame:IsVisible()
+	local enchantFrame = TemporaryEnchantFrame:IsVisible()
+	return unitAura and buffFrame and enchantFrame
+end
+
+local function ForceFrames()
+	BuffFrame:Show()
+	BuffFrame:RegisterEvent( "UNIT_AURA")
+	TemporaryEnchantFrame:Show()
+	Module:SendMessage( "BISON_UPDATE")
+end
+
+local main = {
+	type = "group", order = 10, name = L.DescMain, get = GetProperty, set = SetProperty, handler = Addon, 
+	args = {
+		release     = { type = "description", order = 20,  name = Addon.version, cmdHidden = true, fontSize = "large" },
+		description = { type = "description", order = 30,  name = L.Description, cmdHidden = true, fontSize = "large" },
+		space1      = { type = "description", order = 40,  name = " ", cmdHidden = true },
+		enabled     = { type = "toggle",      order = 140, name = L.EnabledName,  desc = L.EnabledDesc,  get = "IsEnabled",         set = SetEnable, width = "full" },
+		debug       = { type = "toggle",      order = 150, name = L.DebugName,    desc = L.DebugDesc,    get = "IsDebugLogEnabled", set = SetDebug,  width = "full" },
+		lbf         = { type = "toggle",      order = 160, name = L.LBFName,      desc = L.LBFDesc,   width = "full" },
+	-- MOD
+		masque = { type = "toggle", order = 165, name = L.MasqueName, desc = L.MasqueDesc, width = "full" },
+	-- /MOD
+		forceS      = { type = "description", order = 170, name = " ", cmdHidden = true },
+		forceT      = { type = "description", order = 171, name = L.ForceWarn,    hidden = IsForceDisabled, fontSize = "large" },
+		force       = { type = "execute",     order = 172, name = L.ForceName,    desc = L.ForceDesc, func = ForceFrames, disabled = IsForceDisabled },
+		lockedS     = { type = "description", order = 199, name = " ", cmdHidden = true },
+		locked      = { type = "toggle",      order = 200, name = L.LockName,     desc = L.LockDesc,  width = "full" },
+	}
+}
+
+------------------------------------------------------------------------------------
+-- Class
+------------------------------------------------------------------------------------
+function Module:OnInitialize()
+	self:BISON_PROFILE()
+	LibStub( "AceConfig-3.0"):RegisterOptionsTable( Addon:GetName(), main)
+	LibStub( "AceConfigDialog-3.0"):AddToBlizOptions( Addon:GetName(), Addon:GetName())
+end
+
+function Module:OnEnable()
+	self:RegisterMessage( "BISON_PROFILE")
+end
+
+function Module:OnDisable()
+	self:UnregisterMessage( "BISON_PROFILE")
+end
+
+function Module:BISON_PROFILE()
+	self.profile = Addon.db.profile
+end
+
+function Module:GetOptionTable()
+	return main
+end
+

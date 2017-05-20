@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 --]]
 
-local MAJOR, MINOR = "LibDebugLog-1.0", 100000 + tonumber(("$Revision: 20 $"):match("%d+"))
+local MAJOR, MINOR = "LibDebugLog-1.0", 100000 + tonumber(("$Revision: 22 $"):match("%d+"))
 assert(LibStub, MAJOR.." requires LibStub")
 local CBH = LibStub("CallbackHandler-1.0",false)
 assert(CBH, MAJOR.." requires CallbackHandler-1.0")
@@ -71,14 +71,16 @@ do
 	local function LogMessage(self, a1, ...)
 		if lib.globalToggle == false or (lib.globalToggle == nil and not debugging[self]) then return end
 		local message, now, n = "", GetTime(), select('#', ...)
-		for i=1,n do tmp[i] = tostring(select(i, ...)) end
 		a1 = tostring(a1)
-		if a1:find("%%") and n >= 1 then
-			message = a1:format(unpack(tmp))
+		if a1:find("%%") and n > 0 then
+			message = a1:format(tostringall(...))
 		else
+			for i=1,n do 
+				tmp[i] = tostring(select(i, ...)) 
+			end
 			message = a1 .. " " .. table.concat(tmp, " ")
+			wipe(tmp)
 		end
-		for i=1,n do tmp[i] = nil end
 		if lib.quiet then
 			lib.callbacks:Fire("MessageLogged", self, now, message)
 		else
