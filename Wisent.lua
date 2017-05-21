@@ -30,7 +30,7 @@ local Masque = LibStub("Masque", true)
 -- /MOD
 
 Addon.name, Addon.localizedname = GetAddOnInfo( MAJOR)
-Addon.version = format( "%s: %s |cFF20FF20(Cata)|r", L.Version, GetAddOnMetadata( MAJOR, "Version") or "unknown")
+Addon.version = format( "%s: %s |c003C8C3C(Legion)|r", L.Version, GetAddOnMetadata( MAJOR, "Version") or "unknown")
 
 local NOTHING = {}
 local DEFAULTS = { 
