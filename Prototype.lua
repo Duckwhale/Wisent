@@ -167,9 +167,9 @@ local function UpdateBar( bar)
 		Addon:Debug( "UpdateBar2")
 		Renumber( bar)
 		local locked = bar:IsLocked()
-		if locked then
+	--	if locked then // Disabled this, because the frames aren't shown initially when unlocked after a relog/reloadUI
 			bar.group:SetPos( bar.profile.xPos, bar.profile.yPos)
-		end
+	--	end
 		bar.group:SetLock( locked)
 		bar:UpdateAnchors( true)
 	else
