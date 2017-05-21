@@ -337,6 +337,8 @@ local prototype = {
 					buff.duration:Hide()
 				end
 				if not buff.timeLeft then
+					Addon:Debug("AuraButton_OnUpdate for frame " .. buff:GetName() .. " with duration:GetName() = " .. buff.duration:GetName() .. ", aura.timeLeft = " .. aura.timeLeft .. ", aura.name = " .. aura.name)
+					buff.timeMod = 0 -- Necessary to avoid breaking AuraButton_OnUpdate, as regular buff icons have this value (TODO: It could be used to change the accuracy, e.g. timeMod = 0.001 -> display as milliseconds, but then it is formatted in the usual hh:mm format)
 					buff:SetScript( "OnUpdate", AuraButton_OnUpdate)
 				end
 				buff.timeLeft = aura.timeLeft
