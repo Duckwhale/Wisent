@@ -127,7 +127,7 @@ local function Constructor()
 	ghost:SetPoint( "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
 
 	local back = frame:CreateTexture( nil, "OVERLAY")
-	back:SetTexture( 0, 0, 1, 1)
+	back:SetColorTexture( 0, 0, 1, 1)
 	back:SetBlendMode( "ADD")
 	back:SetPoint( "TOPLEFT", frame, "TOPLEFT", 0, 0)
 	back:SetPoint( "BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)

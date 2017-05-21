@@ -49,7 +49,7 @@ local methods = {
 	end,
 
 	["SetGhostColor"] = function( self, color)
-		self.ghost:SetTexture( color.r, color.g, color.b, 1)
+		self.ghost:SetColorTexture( color.r, color.g, color.b, 1)
 	end,
 
 	["SetPos"] = function( self, x, y)

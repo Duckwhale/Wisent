@@ -317,7 +317,7 @@ local prototype = {
 			buff.filter = self.filter
 			buff:SetAlpha( 1.0)
 	--		local back = buff:CreateTexture( nil, "OVERLAY")
-	--		back:SetTexture( 0, 0, 1, 1)
+	--		back:SetColorTexture( 0, 0, 1, 1)
 	--		back:SetBlendMode( "ADD")
 	--		back:SetPoint( "TOPLEFT", buff, "TOPLEFT", 0, 0)
 	--		back:SetPoint( "BOTTOMRIGHT", buff, "BOTTOMRIGHT", 0, 0)

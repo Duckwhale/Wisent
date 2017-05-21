@@ -94,7 +94,7 @@ end
 
 function WisentButton:SetGhost( id, r, g, b)
 	self.ghostlabel:SetText( id)
-	self.ghosticon:SetTexture( r, g, b, 1)
+	self.ghosticon:SetColorTexture( r, g, b, 1)
 end
 
 function WisentButton:OnMouseDown()
@@ -390,7 +390,7 @@ end
 function WisentBar:AddHelpTexture()
 	local tex = self:CreateTexture( nil, 'OVERLAY')
 	tex:SetBlendMode( 'ADD')
-	tex:SetTexture( 1, 0, 0, 1)
+	tex:SetColorTexture( 1, 0, 0, 1)
 	tex:SetPoint( 'TOPRIGHT')
 	tex:SetPoint( 'BOTTOMLEFT')
 end
