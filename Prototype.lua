@@ -235,27 +235,27 @@ local prototype = {
 			self:OnModuleEnable()
 		end
 		UpdateBar( self)
-		self:RegisterMessage( "BISON_UPDATE")
-		self:RegisterMessage( "BISON_PROFILE")
+		self:RegisterMessage( "WISENT_UPDATE")
+		self:RegisterMessage( "WISENT_PROFILE")
 	end,
 	
 	["OnDisable"] = function( self)
 		Addon:Debug( self, ":OnDisable")
-		self:UnregisterMessage( "BISON_UPDATE")
-		self:UnregisterMessage( "BISON_PROFILE")
+		self:UnregisterMessage( "WISENT_UPDATE")
+		self:UnregisterMessage( "WISENT_PROFILE")
 		UpdateBar( self)
 		if type( self.OnModuleDisable) == "function" then
 			self:OnModuleDisable()
 		end
 	end,
 	
-	["BISON_UPDATE"] = function( self)
-		Addon:Debug( self, ":BISON_UPDATE")
+	["WISENT_UPDATE"] = function( self)
+		Addon:Debug( self, ":WISENT_UPDATE")
 		UpdateBar( self)
 	end,
 
-	["BISON_PROFILE"] = function( self)
-		Addon:Debug( self, ":BISON_PROFILE")
+	["WISENT_PROFILE"] = function( self)
+		Addon:Debug( self, ":WISENT_PROFILE")
 		UpdateProfile( self)
 		UpdateBar( self)
 	end,

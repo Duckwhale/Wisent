@@ -48,7 +48,7 @@ local function SetProperty( info, value)
 	Addon:Debug( "SetProperty", Module:GetName())
 	local key = info[#info]
 	Module.profile[key] = value
-	Module:SendMessage( "BISON_UPDATE")
+	Module:SendMessage( "WISENT_UPDATE")
 end
 
 local function IsForceDisabled()
@@ -62,7 +62,7 @@ local function ForceFrames()
 	BuffFrame:Show()
 	BuffFrame:RegisterEvent( "UNIT_AURA")
 	TemporaryEnchantFrame:Show()
-	Module:SendMessage( "BISON_UPDATE")
+	Module:SendMessage( "WISENT_UPDATE")
 end
 
 local main = {
@@ -89,20 +89,20 @@ local main = {
 -- Class
 ------------------------------------------------------------------------------------
 function Module:OnInitialize()
-	self:BISON_PROFILE()
+	self:WISENT_PROFILE()
 	LibStub( "AceConfig-3.0"):RegisterOptionsTable( Addon:GetName(), main)
 	LibStub( "AceConfigDialog-3.0"):AddToBlizOptions( Addon:GetName(), Addon:GetName())
 end
 
 function Module:OnEnable()
-	self:RegisterMessage( "BISON_PROFILE")
+	self:RegisterMessage( "WISENT_PROFILE")
 end
 
 function Module:OnDisable()
-	self:UnregisterMessage( "BISON_PROFILE")
+	self:UnregisterMessage( "WISENT_PROFILE")
 end
 
-function Module:BISON_PROFILE()
+function Module:WISENT_PROFILE()
 	self.profile = Addon.db.profile
 end
 

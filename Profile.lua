@@ -90,22 +90,22 @@ end
 -- Profile
 ------------------------------------------------------------------------------------
 function Module:OnNewProfile( event, db, name)
-	self:SendMessage( "BISON_PROFILE")
+	self:SendMessage( "WISENT_PROFILE")
 	Addon:Print( L.ProfileCreated:format( name))
 end
 
 function Module:OnProfileChanged( event, db, name)
-	self:SendMessage( "BISON_PROFILE")
+	self:SendMessage( "WISENT_PROFILE")
 	Addon:Print( L.ProfileLoaded:format( name))
 end
 
 function Module:OnProfileCopied( event, db, name)
-	self:SendMessage( "BISON_PROFILE")
+	self:SendMessage( "WISENT_PROFILE")
 	Addon:Print( L.ProfileCopied:format( name))
 end
 
 function Module:OnProfileReset( event, db)
-	self:SendMessage( "BISON_PROFILE")
+	self:SendMessage( "WISENT_PROFILE")
 	Addon:Print( L.ProfileReset:format( db:GetCurrentProfile()))
 end
 
