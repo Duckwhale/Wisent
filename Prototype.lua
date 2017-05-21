@@ -167,8 +167,9 @@ local function UpdateBar( bar)
 		Addon:Debug( "UpdateBar2")
 		Renumber( bar)
 		local locked = bar:IsLocked()
+		if locked then
 			bar.group:SetPos( bar.profile.xPos, bar.profile.yPos)
-	--	end
+		end
 		bar.group:SetLock( locked)
 		bar:UpdateAnchors( true)
 	else
