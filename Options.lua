@@ -24,6 +24,18 @@ local Module = Addon:NewModule( "Options", "AceEvent-3.0")
 ------------------------------------------------------------------------------------
 -- Local
 ------------------------------------------------------------------------------------
+local function GetProperty( info)
+	local key = info[#info]
+	return Module.profile[key]
+end
+
+local function SetProperty( info, value)
+	Addon:Debug( "SetProperty", Module:GetName())
+	local key = info[#info]
+	Module.profile[key] = value
+	Module:SendMessage( "WISENT_UPDATE")
+end
+
 local function SetEnable( info, value) 
 	Addon:Debug( "SetEnable", Module:GetName())
 	if value ~= Addon:IsEnabled() then
@@ -37,18 +49,16 @@ end
 
 local function SetDebug( info, value) 
 	Addon:ToggleDebugLog( value)
+	SetProperty(info, value) -- Make sure the changes are persistent, otherwise debug resets after every reloadUI/relog
 end
 
-local function GetProperty( info)
-	local key = info[#info]
-	return Module.profile[key]
-end
-
-local function SetProperty( info, value)
-	Addon:Debug( "SetProperty", Module:GetName())
-	local key = info[#info]
-	Module.profile[key] = value
-	Module:SendMessage( "WISENT_UPDATE")
+-- LibDebugLog seems to constantly reset it despite the options table having the correct value for debug -> Overwriting their function to make sure the toggle is always set correctly
+local function IsDebugLogEnabled(info, value)
+	
+	-- Load debug from savedVars, instead of relying on the non-persistent state of LibDebugLog
+	local isDebug = GetProperty(info, value)
+	
+	return isDebug
 end
 
 local function IsForceDisabled()
@@ -72,7 +82,7 @@ local main = {
 		description = { type = "description", order = 30,  name = L.Description, cmdHidden = true, fontSize = "large" },
 		space1      = { type = "description", order = 40,  name = " ", cmdHidden = true },
 		enabled     = { type = "toggle",      order = 140, name = L.EnabledName,  desc = L.EnabledDesc,  get = "IsEnabled",         set = SetEnable, width = "full" },
-		debug       = { type = "toggle",      order = 150, name = L.DebugName,    desc = L.DebugDesc,    get = "IsDebugLogEnabled", set = SetDebug,  width = "full" },
+		debug       = { type = "toggle",      order = 150, name = L.DebugName,    desc = L.DebugDesc,    get = IsDebugLogEnabled, set = SetDebug,  width = "full" },
 		lbf         = { type = "toggle",      order = 160, name = L.LBFName,      desc = L.LBFDesc,   width = "full" },
 	-- MOD
 		masque = { type = "toggle", order = 165, name = L.MasqueName, desc = L.MasqueDesc, width = "full" },

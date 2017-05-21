@@ -161,9 +161,9 @@ end
 -- Class
 ------------------------------------------------------------------------------------
 function Addon:OnInitialize()
-	self:ToggleDebugLog( false)
-	InitAuraArray()
 	self.db = LibStub( "AceDB-3.0"):New( "WisentDB", DEFAULTS, "Default")
+	self:ToggleDebugLog( self.db.profile.debug )
+	InitAuraArray()
 	if type( self.db.profile.timer) ~= "number" then
 		self.db.profile.timer = self.db.profile.timer and 2 or 1
 	end
