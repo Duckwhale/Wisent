@@ -1,26 +1,32 @@
-## Interface: 40300
-## Title: Wisent
-## Notes: Customizing your buff display
+## Interface: 70200
+## Version: 1.0
+## Author: Grayal, Cakechart
+
+## Title: Wisent - Buff and Debuff tracking
+
+## Notes: Provides an easily customizable display for buffs, debuffs, and spell procs
 ## Notes-ruRU: Настройка отображения ваших (де)баффов
 ## Notes-deDE: Anpassung der Buff Anzeige
-## Author: Grayal
-## DefaultState: enabled
+
+## DefaultState: Enabled
+## LoadOnDemand: 0
+
 ## SavedVariables: WisentDB
-## OptionalDeps: Ace3, LibDebugLog-1.0, ButtonFacade
-## X-Name: Wisent
-## X-Embeds: Ace3, LibDebugLog-1.0
-## X-Email: grayal@gmx.de
+
+## OptionalDeps: Ace3, LibDebugLog-1.0, Masque
+
+## X-Embeds: Ace3, LibDebugLog-1.0, Masque
+## X-Website: http://www.curse.com/addons/wow/wisent
 ## X-Category: Buffs
 ## X-CompatibleLocales: enUS, enGB, deDE, ruRU
-## X-Revision: 216
-## Version: 2.4.4-release
-
 
 embeds.xml
 
 WisentWidget-Buff.lua
 WisentContainer-Group.lua
+
 Localization.lua
+
 Wisent.lua
 Options.lua
 Prototype.lua
