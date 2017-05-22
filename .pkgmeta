@@ -1,0 +1,41 @@
+package-as: Wisent
+
+ignore:
+	- _DEV # ignore the ProjectSite folder
+
+externals:
+    Libs/AceAddon-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
+        tag: latest
+    Libs/AceConfig-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceConfig-3.0
+        tag: latest
+    Libs/AceConsole-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceConsole-3.0
+        tag: latest
+    Libs/AceDB-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
+        tag: latest
+    Libs/AceDBOptions-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceDBOptions-3.0
+        tag: latest
+    Libs/AceEvent-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceEvent-3.0
+        tag: latest
+    Libs/AceGUI-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceGUI-3.0
+        tag: latest
+    Libs/AceLocale-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceLocale-3.0
+        tag: latest
+    Libs/AceHook-3.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/AceHook-3.0
+        tag: latest
+    Libs/CallbackHandler-1.0:
+        url: svn://repos.wowace.com/wow/ace3/trunk/CallbackHandler-1.0
+        tag: latest
+    Libs/LibStub:
+        url: svn://repos.wowace.com/wow/ace3/trunk/LibStub
+        tag: latest
+	Libs/LibDebugLog-1.0:
+		url: svn://repos.wowace.com/wow/libdebuglog-1-0/trunk/LibDebugLog-1.0
