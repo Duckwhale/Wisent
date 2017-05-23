@@ -39,3 +39,6 @@ externals:
         tag: latest
 	Libs/LibDebugLog-1.0:
 		url: svn://repos.wowace.com/wow/libdebuglog-1-0/trunk/LibDebugLog-1.0
+		tag: latest
+		
+manual-changelog: CHANGES.txt
