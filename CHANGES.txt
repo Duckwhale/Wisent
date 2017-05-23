@@ -1,0 +1,13 @@
+------------------------------------------------------------------------
+## Wisent v1.0.0 - Recent changes (1 releases)
+------------------------------------------------------------------------
+
+r0:
+	<Initial release based on the outdated Bison-2.4.4 (which was last updated in Cataclysm) >
+	
+	Fixed an issue that caused spell procs to spam the client with LUA errors while they were active
+	Fixed broken backdrop textures for anchors that are displayed when the addon is unlocked
+	
+	Unlocked group frames are now always shown when enabled (to avoid them bugging out after reloadUI/relog)
+	The "debug" setting is now saved properly across sessions and restored at startup, as it should always have been
+	

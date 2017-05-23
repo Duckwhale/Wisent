@@ -2,7 +2,7 @@ package-as: Wisent
 
 enable-nolib-creation: no
 
-manual-changelog: _DEV/CHANGES.txt
+manual-changelog: CHANGES.txt
 
 externals:
     Libs/AceAddon-3.0:
