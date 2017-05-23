@@ -1,5 +1,5 @@
 ## Interface: 70200
-## Version: 1.0
+## Version: @project-revision@
 ## Author: Grayal, Cakechart
 
 ## Title: Wisent - Buff and Debuff tracking
@@ -15,12 +15,15 @@
 
 ## OptionalDeps: Ace3, LibDebugLog-1.0, Masque
 
+## X-Revision: @project-revision@
 ## X-Embeds: Ace3, LibDebugLog-1.0, Masque
 ## X-Website: http://www.curse.com/addons/wow/wisent
 ## X-Category: Buffs
-## X-CompatibleLocales: enUS, enGB, deDE, ruRU
+## X-CompatibleLocales: enUS, enGB, deDE, frFR, ruRU, zhTW
 
+#@no-lib-strip@
 embeds.xml
+#@end-no-lib-strip@
 
 WisentWidget-Buff.lua
 WisentContainer-Group.lua
