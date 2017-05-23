@@ -1,7 +1,10 @@
 package-as: Wisent
 
+enable-nolib-creation: no
+
+
 ignore:
-	- _DEV # ignore the ProjectSite folder
+    - _DEV/ # ignore the ProjectSite folder
 
 externals:
     Libs/AceAddon-3.0:
@@ -37,8 +40,8 @@ externals:
     Libs/LibStub:
         url: svn://repos.wowace.com/wow/ace3/trunk/LibStub
         tag: latest
-	Libs/LibDebugLog-1.0:
-		url: svn://repos.wowace.com/wow/libdebuglog-1-0/trunk/LibDebugLog-1.0
-		tag: latest
-		
-manual-changelog: _DEV\CHANGES.txt
+    Libs/LibDebugLog-1.0:
+        url: svn://repos.wowace.com/wow/libdebuglog-1-0/trunk/LibDebugLog-1.0
+        tag: latest
+
+manual-changelog: _DEV/CHANGES.txt
