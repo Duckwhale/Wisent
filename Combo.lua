@@ -345,13 +345,26 @@ end
 		},		
 	
 		{  -- 7 		Shaman 	SHAMAN
-			{	-- 1	Elemental > Lava Surge
+			{	-- 1	Elemental > Lava Burst (charges if talented into)
 			["GetCurrentStacks"] = function()
-					return ScanAura("player", 77762, "HELPFUL")
+					
+					return GetSpellCharges(51505)
+	
 				end,
-				["maxStacks"] = 2,
-				["spell"] = 77762,
-				["icon"] = "spell_shaman_lavasurge",
+				["maxStacks"] = function()
+					
+					
+					local id, name, texture, selected, available, spellID, tier, column, unknown = GetTalentInfo(6, 3, GetActiveSpecGroup()) -- Talent: Echo of the Elements -> 2 charges
+					
+					if select(4, GetTalentInfo(6, 3, GetActiveSpecGroup())) then -- Player has 2 charges available instead of just one
+						return 2
+					end
+					
+					return 1
+				
+				end,
+				["spell"] = 51505, -- 77762 = Lava Surge (proc)
+				["icon"] = "spell_shaman_lavaburst", --"spell_shaman_lavasurge",
 			},
 		
 			{	-- 2	Enhancement > Stormbringer
