@@ -378,7 +378,7 @@ end
 				["GetCurrentStacks"] = function()
 					return UnitPower( "player", SPELL_POWER_ARCANE_CHARGES)
 				end,
-				["maxStacks"] = 5,
+				["maxStacks"] = 4,
 				["spell"] = 0,
 				["icon"] = "ability_mage_arcanebarrage",
 			},
