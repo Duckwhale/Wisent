@@ -383,23 +383,25 @@ end
 				["icon"] = "ability_mage_arcanebarrage",
 			},
 		
-			{	-- 2	Frost > Fingers of Frost
-				["GetCurrentStacks"] = function()
-					return ScanAura("player", 112965, "HELPFUL")
-				end,
-				["maxStacks"] = 2,
-				["spell"] = 44544,
-				["icon"] = "ability_mage_wintersgrasp", 
-			},
-		
-			{	-- 3	Fire > Nothing
+			{	-- 2	Fire > Nothing
 				["GetCurrentStacks"] = function()
 					return 0
 				end,
 				["maxStacks"] = 0,
 				["spell"] = 0,
 				["icon"] = "",
-			}
+			},
+			
+			{	-- 3	Frost > Icicles
+				["GetCurrentStacks"] = function()
+					return ScanAura("player", 205473 , "HELPFUL") -- 112965 = Fingers of Frost
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 205473, -- 44544 = Fingers of Frost
+				["icon"] = "spell_frost_iceshard", --"ability_mage_wintersgrasp", 
+			},
+		
+
 		
 		},			
 		
