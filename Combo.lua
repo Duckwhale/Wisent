@@ -88,6 +88,7 @@ end
 function Module:OnModuleEnable()
 	self:ACTIVE_TALENT_GROUP_CHANGED()
 	self:RegisterEvent( "ACTIVE_TALENT_GROUP_CHANGED")
+	self:RegisterEvent( "UPDATE_SHAPESHIFT_FORM")
 end
 
 function Module:GetOptionTable()
@@ -596,7 +597,7 @@ function Module:ACTIVE_TALENT_GROUP_CHANGED()
 
 end
 
--- TODO: Is it still necessary?
+-- If shapeshift forms change, so do the ComboBar icons/spells that need to be displaye
 function Module:UPDATE_SHAPESHIFT_FORM()
 	self:ACTIVE_TALENT_GROUP_CHANGED()
 end
