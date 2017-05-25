@@ -96,7 +96,7 @@ end
 
 function Module:UpdateAnchors( sort)
 --	Addon:Debug( self, ":UpdateAnchors", self.profile.show)
-	if self.profile.show and comboIcon and PlayerFrame.unit == "player" then
+	if self.profile.show and #comboIcon > 0 and PlayerFrame.unit == "player" then
 		local maxStacks = comboFkt and type(comboFkt) == "function" and comboFkt() or 0
 --		Addon:Debug( self, ":UpdateAnchors", maxStacks)
 		for i,a in pairs( self.aura) do
@@ -582,8 +582,8 @@ function Module:ACTIVE_TALENT_GROUP_CHANGED()
 	
 	-- TODO: Rework this to be more universal/reusable? It*s kind of awkward in its original design
 	comboCount = maxStacks
-	comboIcon = "Interface\\Icons\\" .. icon
-	comboSpell = spellID -- will be displayed on icon:mouseover -> set to nil for resources (Combo Points, Holy Power, ...)
+	comboIcon = ((#icon > 0) and ("Interface\\Icons\\" .. icon)) or "" -- Only assemble path if the icon isn't <empty string> (default for "don't display an icon")
+	comboSpell = spellID -- will be displayed on icon:mouseover -> set to 0 for resources that haven't a tooltip text (Combo Points, Holy Power, ...)
 	comboFkt = function() -- This is the function that will be called every time the icon is supposed to update
 		
 		if GetCurrentStacks and type(GetCurrentStacks) == "function" then
