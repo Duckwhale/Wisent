@@ -111,7 +111,7 @@ function Module:UpdateAnchors( sort)
 				self:UpdateMasque(buff)
 				-- /MOD
 				buff:Show()
-				local icon = _G[buff:GetName().."Icon"] -- TODO: Rename to icon1, icon2 etc?
+				local icon = _G[buff:GetName().."Icon"]
 				if icon then
 					icon:SetTexture( a.texture)
 				end
@@ -586,7 +586,7 @@ function Module:ACTIVE_TALENT_GROUP_CHANGED()
 	comboSpell = spellID -- will be displayed on icon:mouseover -> set to nil for resources (Combo Points, Holy Power, ...)
 	comboFkt = function() -- This is the function that will be called every time the icon is supposed to update
 		
-		if GetCurrentStacks then
+		if GetCurrentStacks and type(GetCurrentStacks) == "function" then
 			return GetCurrentStacks() or 0 -- Returns the current stacks for the respective class/spec
 		end
 		
