@@ -577,9 +577,17 @@ function Module:ACTIVE_TALENT_GROUP_CHANGED()
 		return
 	end
 	
-	local GetCurrentStacks, maxStacks, spellID, icon = powers["GetCurrentStacks"], (type(powers["maxStacks"]) == "number" and powers["maxStacks"]) or powers.maxStacks(), powers["spell"], powers["icon"] -- if values are calculated dynamically, type(X) will be "function"
-
-	Addon:Debug(self, format("Updated with stacks = %d, maxStacks = %d, spell = %d (%s), icon = %s", GetCurrentStacks(), maxStacks, spellID, GetSpellInfo(spellID), icon))
+	-- Retrieve class and spec-specific stack sizes/spells to track 
+	
+	-- This is always a function
+	local GetCurrentStacks = powers["GetCurrentStacks"]
+	
+	-- These could be calculated dynamically or just a static value
+	local maxStacks = (type(powers["maxStacks"]) == "function" and powers.maxStacks()) or powers["maxStacks"]
+	local spellID = (type(powers["spell"] ) == "function" and powers.spell()) or powers["spell"]
+	local icon = (type(powers["icon"]) == "function" and powers.icon()) or powers["icon"]
+	
+	Addon:Debug(self, format("Updated with stacks = %d, maxStacks = %d, spell = %d (%s), icon = %s", GetCurrentStacks(), maxStacks, spellID, GetSpellInfo(spellID) or "<NONE>", icon))
 	
 	-- TODO: Rework this to be more universal/reusable? It*s kind of awkward in its original design
 	comboCount = maxStacks
