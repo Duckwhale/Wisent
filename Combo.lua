@@ -490,40 +490,159 @@ end
 		},		
 			
 		{  -- 11 		Druid 	DRUID
-			{	-- 1	Balance > Nothing
+			{	-- 1	Balance > Thrash (Bear) or Combo Points (Cat)
 			["GetCurrentStacks"] = function()
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
 					return 0
-				end,
-				["maxStacks"] = 0,
-				["spell"] = 0,
-				["icon"] = "",
-			},
-		
-			{	-- 2	Feral > Combo Points
-				["GetCurrentStacks"] = function()
-					return UnitPower("player",  SPELL_POWER_COMBO_POINTS)  -- TODO: Cat/bear form differentiation?  ->		if GetShapeshiftFormID() == BEAR_FORM then // 	elseif GetShapeshiftFormID() == CAT_FORM then
+					
 				end,
 				["maxStacks"] = 5,
-				["spell"] = 0,
-				["icon"] = "Ability_DualWield", 
+				["spell"] = function()
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
 			},
 		
-			{	-- 3	Guardian > Thrash
+			{	-- 2	Feral > Thrash (Bear) or Combo Points (Cat)
 				["GetCurrentStacks"] = function()
-					return ScanAura("target", 106830, "HARMFUL") 
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
+					return 0
+					
 				end,
 				["maxStacks"] = 5,
-				["spell"] = 106830,
-				["icon"] = "spell_druid_thrash",
+				["spell"] = function()
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
+			},
+		
+			{	-- 3	Guardian > Thrash (Bear) or Combo Points (Cat)
+				["GetCurrentStacks"] = function()
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
+					return 0
+					
+				end,
+				["maxStacks"] = 5,
+				["spell"] = function()
+				
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
 			},
 			
-			{	-- 4	Restoration > Nothing
+			{	-- 4	Restoration > Thrash (Bear) or Combo Points (Cat)
 				["GetCurrentStacks"] = function()
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
 					return 0
 				end,
-				["maxStacks"] = 0,
-				["spell"] = 0,
-				["icon"] = "",
+				["maxStacks"] = 5,
+				["spell"] = function()
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
 			}
 			
 		},
