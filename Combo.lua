@@ -358,9 +358,19 @@ end
 				["GetCurrentStacks"] = function()
 					return ScanAura("player", 201845, "HELPFUL")
 				end,
-				["maxStacks"] = 2,
+				["maxStacks"] = function()
+				
+					-- GetSpecializationInfo(specID) 1,2,3,4 -> 62,63, ...  and then  id, name, icon, tier, column, currentRank, maxRank, isExceptional, meetsPrereq = GetTalentInfo(rows, columns, GetActiveSpecGroup())
+					
+					if GetTalentInfo(5, 1, GetActiveSpecGroup()) then -- Talent: Tempest -> 2 charges per Stormbringer proc
+						return 2
+					end
+					
+					return 1
+				
+				end,
 				["spell"] = 201845, -- 17364
-				["icon"] = "ability_shaman_stormstrike",  -- spell_nature_stormreach
+				["icon"] = "spell_nature_stormreach",  --  ability_shaman_stormstrike -> Stormstrike
 			},
 		
 			{	-- 3	Restoration > Tidal Waves
