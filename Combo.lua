@@ -484,13 +484,13 @@ end
 				["icon"] = "Ability_DualWield", 
 			},
 		
-			{	-- 3	Guardian > Lacerate
+			{	-- 3	Guardian > Thrash
 				["GetCurrentStacks"] = function()
-					return ScanAura("target", 61896, "HARMFUL") -- TODO: Show one stack with count for different targets?
+					return ScanAura("target", 106830, "HARMFUL") 
 				end,
 				["maxStacks"] = 5,
-				["spell"] = 61896,
-				["icon"] = "ability_druid_lacerate",
+				["spell"] = 106830,
+				["icon"] = "spell_druid_thrash",
 			},
 			
 			{	-- 4	Restoration > Nothing
