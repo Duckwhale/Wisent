@@ -197,22 +197,22 @@ end
 		},
 		
 		{  -- 2		Paladin		PALADIN
-			{	-- 1	Holy > Holy Power
+			{	-- 1	Holy > Nothing
 				["GetCurrentStacks"] = function()
-					return UnitPower( "player", SPELL_POWER_HOLY_POWER)
+					return 0
 				end,
-				["maxStacks"] = 5,
+				["maxStacks"] = 0,
 				["spell"] = 0,
-				["icon"] = "Spell_Holy_HolyBolt",
+				["icon"] = "",
 			},
 		
-			{	-- 2	Protection > Holy Power
+			{	-- 2	Protection > Nothing
 				["GetCurrentStacks"] = function()
-					return UnitPower( "player", SPELL_POWER_HOLY_POWER)
+					return 
 				end,
-				["maxStacks"] = 5,
+				["maxStacks"] = 0,
 				["spell"] = 0,
-				["icon"] = "Spell_Holy_HolyBolt", 
+				["icon"] = "", 
 			},
 		
 			{	-- 3	Retribution > Holy Power
