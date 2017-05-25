@@ -97,7 +97,7 @@ end
 function Module:UpdateAnchors( sort)
 --	Addon:Debug( self, ":UpdateAnchors", self.profile.show)
 	if self.profile.show and comboIcon and PlayerFrame.unit == "player" then
-		local maxStacks = comboFkt and comboFkt() or 0
+		local maxStacks = comboFkt and type(comboFkt) == "function" and comboFkt() or 0
 --		Addon:Debug( self, ":UpdateAnchors", maxStacks)
 		for i,a in pairs( self.aura) do
 			local buff = self:GetUserBuff( "BuffComboButton", a.id)
@@ -541,21 +541,22 @@ end
 function Module:ACTIVE_TALENT_GROUP_CHANGED()
 
 	local localizedClassName, class, classID = UnitClass( "player")
-	local specID = GetSpecialization()
-	local specName = GetSpecializationInfo(specID)
+	local spec = GetSpecialization()
+	local specID, specName = GetSpecializationInfo(spec)
 	
 	Addon:Debug(self, format("ACTIVE_TALENT_GROUP_CHANGED (Current spec: %s - %s for class %s / %s)", specID, specName, class, localizedClassName))
 
 	-- Get info to display with the icon for this class/spec
-	local powers = GetClassPowers(classID, specID)
+	local powers = GetClassPowers(classID, spec)
 	if not powers then -- Not a valid class/spec combination -> Skip update
 		Addon:Debug(self, "Invalid parameters given when calling GetClassPowers")
 		return
 	end
 	
-	-- TODO: Only one power per class is supported?
-	local GetCurrentStacks, maxStacks, spellID, icon = powers["GetCurrentStacks"], powers["maxStacks"], powers["spell"], powers["icon"]
+	local GetCurrentStacks, maxStacks, spellID, icon = powers["GetCurrentStacks"], (type(powers["maxStacks"]) == "number" and powers["maxStacks"]) or powers.maxStacks(), powers["spell"], powers["icon"] -- if values are calculated dynamically, type(X) will be "function"
 
+	Addon:Debug(self, format("Updated with stacks = %d, maxStacks = %d, spell = %d (%s), icon = %s", GetCurrentStacks(), maxStacks, spellID, GetSpellInfo(spellID), icon))
+	
 	-- TODO: Rework this to be more universal/reusable? It*s kind of awkward in its original design
 	comboCount = maxStacks
 	comboIcon = "Interface\\Icons\\" .. icon
