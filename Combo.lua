@@ -248,7 +248,7 @@ end
 		
 			{	-- 3	Survival > Mongoose Fury
 				["GetCurrentStacks"] = function()
-					return ScanAura("player", 190928, "HELPFUL")
+					return ScanAura("player", 190931, "HELPFUL")
 				end,
 				["maxStacks"] = 6,
 				["spell"] = 190931,
@@ -619,6 +619,7 @@ end
 					end
 					
 					return 0
+					
 				end,
 				["maxStacks"] = 5,
 				["spell"] = function()
