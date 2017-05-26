@@ -326,7 +326,20 @@ end
 		{  -- 6		Death Knight		DEATHKNIGHT
 			{	-- 1	Blood > Runes
 				["GetCurrentStacks"] = function()
-					return UnitPower( "player", SPELL_POWER_RUNES)
+					
+					local maxRunes = UnitPower( "player", SPELL_POWER_RUNES)
+					local activeRunes = 0
+					
+					for i=1, maxRunes do -- Check rune status
+						
+						if GetRuneCount(i)> 0 then
+							activeRunes = activeRunes + 1
+						end
+						
+					end	
+					
+					return activeRunes
+					
 				end,
 				["maxStacks"] = 5,
 				["spell"] = 0,
@@ -335,18 +348,44 @@ end
 		
 			{	-- 2	Frost > Runes
 				["GetCurrentStacks"] = function()
-					return UnitPower( "player", SPELL_POWER_RUNES)
+					
+					local maxRunes = UnitPower( "player", SPELL_POWER_RUNES)
+					local activeRunes = 0
+					
+					for i=1, maxRunes do -- Check rune status
+						
+						if GetRuneCount(i)> 0 then
+							activeRunes = activeRunes + 1
+						end
+						
+					end	
+					
+					return activeRunes
+					
 				end,
-				["maxStacks"] = 5,
+				["maxStacks"] = 6,
 				["spell"] = 0,
 				["icon"] = "spell_shadow_rune", 
 			},
 		
 			{	-- 3	Unholy > Runes
 				["GetCurrentStacks"] = function()
-					return UnitPower( "player", SPELL_POWER_RUNES)
+					
+					local maxRunes = UnitPower( "player", SPELL_POWER_RUNES)
+					local activeRunes = 0
+					
+					for i=1, maxRunes do -- Check rune status
+						
+						if GetRuneCount(i)> 0 then
+							activeRunes = activeRunes + 1
+						end
+						
+					end	
+					
+					return activeRunes
+					
 				end,
-				["maxStacks"] = 5,
+				["maxStacks"] = 6,
 				["spell"] = 0,
 				["icon"] = "spell_shadow_rune",
 			}
@@ -653,7 +692,6 @@ end
 					
 				end, 
 			}
-			
 		},
 
 		{	-- 12		Demon Hunter		DEMONHUNTER
