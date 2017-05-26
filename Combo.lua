@@ -27,7 +27,7 @@ local AceGUI = LibStub( "AceGUI-3.0")
 
 local NOTHING = {}
 local UPDATE_TIME = 0.2
-local MAX_BUTTON  = 5
+local MAX_BUTTON  = 10
 
 local Module = Addon:NewBarModule( MAJOR)
 Module.filter  = "HELPFUL"
@@ -80,7 +80,7 @@ local comboCount = 5
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
 	self:RegisterOptions( blizzOptions, L.BarCombo)
-	for i = 1,5 do
+	for i = 1, MAX_BUTTON do -- Create table entries for all ComboBar buttons (even those not currently used or displayed -> templates to be filled later)
 		tinsert( self.aura, { id = i, name = "__combo__", count = 1 })
 	end
 end
@@ -101,9 +101,16 @@ function Module:UpdateAnchors( sort)
 		local maxStacks = comboFkt and type(comboFkt) == "function" and comboFkt() or 0
 --		Addon:Debug( self, ":UpdateAnchors", maxStacks)
 		for i,a in pairs( self.aura) do
+			
+			--Addon:Debug(self, "Updating auras for i = " .. i .. ", value (a) = " .. tostring(a))
+
 			local buff = self:GetUserBuff( "BuffComboButton", a.id)
 			local child = self.group.children[i]
-			child:SetUserData( "bigger", i == comboCount)
+			
+			if child then -- Tag as last icon that may be scaled in size
+				child:SetUserData( "bigger", i == comboCount)
+			end
+			
 			if child and i <= maxStacks then -- Display one icon per power
 				buff:SetScript( "OnEnter", nil)
 				a.texture = comboIcon
