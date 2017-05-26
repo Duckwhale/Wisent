@@ -27,7 +27,7 @@ local AceGUI = LibStub( "AceGUI-3.0")
 
 local NOTHING = {}
 local UPDATE_TIME = 0.2
-local MAX_BUTTON  = 5
+local MAX_BUTTON  = 10
 
 local Module = Addon:NewBarModule( MAJOR)
 Module.filter  = "HELPFUL"
@@ -49,7 +49,7 @@ local args = {
 		type = "group", order = 20, name = L.BarName, inline = true, 
 		args = {
 			horizontal = { type = "toggle", order = 10, name = L.HorizontalName, desc = L.HorizontalDesc, width = "full" },
---			number     = { type = "range",  order = 30, name = L.NumberName,     desc = L.NumberDesc,   set = "SetNumber",   min = 1,    max = MAX_BUTTON, step = 1 },
+			number     = { type = "range",  order = 30, name = L.NumberName,     desc = L.NumberDesc,   set = "SetNumber",   min = 1,    max = MAX_BUTTON, step = 1 },
 			scale      = { type = "range",  order = 40, name = L.ScaleName,      desc = L.ScaleDesc,    set = "SetScale",    min = 0.01, max = 2,          step = 0.01, isPercent = true },
 			cols       = { type = "range",  order = 50, name = L.ColsName,       desc = L.ColsDesc,     set = "SetCols",     min = 1,    max = MAX_BUTTON, step = 1 },
 			xPadding   = { type = "range",  order = 60, name = L.XPaddingName,   desc = L.XPaddingDesc, set = "SetXPadding", min = -20,  max = 20,         step = 1 },
@@ -80,7 +80,7 @@ local comboCount = 5
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
 	self:RegisterOptions( blizzOptions, L.BarCombo)
-	for i = 1,5 do
+	for i = 1, MAX_BUTTON do -- Create table entries for all ComboBar buttons (even those not currently used or displayed -> templates to be filled later)
 		tinsert( self.aura, { id = i, name = "__combo__", count = 1 })
 	end
 end
@@ -88,6 +88,7 @@ end
 function Module:OnModuleEnable()
 	self:ACTIVE_TALENT_GROUP_CHANGED()
 	self:RegisterEvent( "ACTIVE_TALENT_GROUP_CHANGED")
+	self:RegisterEvent( "UPDATE_SHAPESHIFT_FORM")
 end
 
 function Module:GetOptionTable()
@@ -96,20 +97,27 @@ end
 
 function Module:UpdateAnchors( sort)
 --	Addon:Debug( self, ":UpdateAnchors", self.profile.show)
-	if self.profile.show and comboIcon and PlayerFrame.unit == "player" then
-		local combos = comboFkt and comboFkt() or 0
---		Addon:Debug( self, ":UpdateAnchors", combos)
+	if self.profile.show and #comboIcon > 0 and PlayerFrame.unit == "player" then
+		local maxStacks = comboFkt and type(comboFkt) == "function" and comboFkt() or 0
+--		Addon:Debug( self, ":UpdateAnchors", maxStacks)
 		for i,a in pairs( self.aura) do
+			
+			--Addon:Debug(self, "Updating auras for i = " .. i .. ", value (a) = " .. tostring(a))
+
 			local buff = self:GetUserBuff( "BuffComboButton", a.id)
 			local child = self.group.children[i]
-			child:SetUserData( "bigger", i == comboCount)
-			if child and i <= combos then
+			
+			if child then -- Tag as last icon that may be scaled in size
+				child:SetUserData( "bigger", i == comboCount)
+			end
+			
+			if child and i <= maxStacks then -- Display one icon per power
 				buff:SetScript( "OnEnter", nil)
 				a.texture = comboIcon
 				self:UpdateLBF( buff)
-					-- MOD
-			self:UpdateMasque(buff)
-			-- /MOD
+				-- MOD
+				self:UpdateMasque(buff)
+				-- /MOD
 				buff:Show()
 				local icon = _G[buff:GetName().."Icon"]
 				if icon then
@@ -156,158 +164,596 @@ local function ScanAura( unit, id, filter)
 	return count or 0
 end
 
-local function PointsNothing()
-	return 0
-end
 
-local function PointsDeathKnight()
-	return ScanAura( "pet", 91342, "HELPFUL") -- Shadow Infusion
-end
-
-local function PointsDruidBear()
-	return ScanAura( "target", 33745, "HARMFUL") -- Lacerate
-end
-
-local function PointsDruidCat()
-	return GetComboPoints( "player")
-end
-
-local function PointsHunterMarksman()
-	return ScanAura( "player", 82925, "HELPFUL") -- Ready, Set, Aim...
-end
-
-local function PointsHunterBeastMaster()
-	return ScanAura( "pet", 19615, "HELPFUL") -- Frenzy Effect
-end
-
-local function PointsPaladin()
-	return UnitPower( "player", SPELL_POWER_HOLY_POWER)
-end
-
-local function PointsPriestShadow()
-	return ScanAura( "player", 77487, "HELPFUL") -- Shadow Orbs
-end
-
-local function PointsPriestEvangelism()
-	return ScanAura( "player", 81661, "HELPFUL") -- Evangelism
-end
-
-local function PointsRouge()
-	return GetComboPoints( "player")
-end
-
-local function PointsShamanElemental()
-	local count = ScanAura( "player", 324, "HELPFUL") -- Lightning Shield
-	return count > 0 and (4 - count) or 0
-end
-
-local function PointsShamanEnhancement()
-	return ScanAura( "player", 53817, "HELPFUL") -- Maelstrom Weapon
-end
-
-local function PointsWarlock()
-	return UnitPower( "player", SPELL_POWER_SOUL_SHARDS)
-end
+-- local function PointsWarlock()
+	-- return UnitPower( "player", SPELL_POWER_SOUL_SHARDS)
+-- end
 
 ------------------------------------------------------------------------------------
 -- Event
 ------------------------------------------------------------------------------------
-function Module:ACTIVE_TALENT_GROUP_CHANGED()
-	Addon:Debug( self, ":ACTIVE_TALENT_GROUP_CHANGED")
-	local _, class = UnitClass( "player")
-	if class == "DEATHKNIGHT" then
-		comboFkt   = PointsDeathKnight
-		comboIcon  = "Interface\\ICONS\\Spell_Shadow_Requiem"
-		comboSpell = 91342
-		comboCount = 5
---		self:RegisterEvent( "UNIT_AURA", "UpdateAnchors")
-	elseif class == "DRUID" then
-		if GetShapeshiftFormID() == BEAR_FORM then
-			comboFkt   = PointsDruidBear
-			comboIcon  = "Interface\\ICONS\\Ability_Druid_Lacerate"
-			comboSpell = 33745
-			comboCount = 3
---			self:RegisterEvent( "UNIT_AURA", "UpdateAnchors")
---			self:UnRegisterEvent( "UNIT_COMBO_POINTS", "UpdateAnchors")
-		elseif GetShapeshiftFormID() == CAT_FORM then
-			comboFkt   = PointsDruidCat
-			comboIcon  = "Interface\\ICONS\\Ability_DualWield"
-			comboSpell = nil
-			comboCount = 5
---			self:UnRegisterEvent( "UNIT_AURA", "UpdateAnchors")
---			self:RegisterEvent( "UNIT_COMBO_POINTS", "UpdateAnchors")
-		else
-			comboFkt   = PointsNothing
-			comboCount = 5
+
+-- Returns the number of active Runes (Death Knight)
+local function GetActiveRunes()
+				
+	local maxRunes = UnitPower( "player", SPELL_POWER_RUNES)
+	local activeRunes = 0
+	
+	for i=1, maxRunes do -- Check rune status
+		
+		if GetRuneCount(i)> 0 then
+			activeRunes = activeRunes + 1
 		end
---		self:RegisterEvent( "PLAYER_TARGET_CHANGED", "UpdateAnchors")
-		self:RegisterEvent( "UPDATE_SHAPESHIFT_FORM")
-	elseif class == "HUNTER" then
-		if IsSpellKnown( 19434) then		-- Aimed Shot
-			comboFkt   = PointsHunterMarksman
-			comboIcon  = "Interface\\ICONS\\Ability_Hunter_MasterMarksman"
-			comboSpell = 82925
---			self:RegisterEvent( "UNIT_AURA", "UpdateAnchors")
-		elseif IsSpellKnown( 19577) then	-- Intimidation
-			comboFkt   = PointsHunterBeastMaster
-			comboIcon  = "Interface\\ICONS\\INV_Misc_MonsterClaw_03"
-			comboSpell = 19615
---			self:RegisterEvent( "UNIT_AURA", "UpdateAnchors")
-		end
-		comboCount = 5
---	elseif class == "MAGE" then
-	elseif class == "PALADIN" then
-		comboFkt   = PointsPaladin
-		comboIcon = "Interface\\ICONS\\Spell_Holy_HolyBolt"
---		comboSpell = 19615
-		comboCount = 3
---		self:RegisterEvent( "UNIT_POWER", "UpdateAnchors")
-	elseif class == "PRIEST" then
-		if IsSpellKnown( 15407) then -- Mind Flay
-			comboFkt   = PointsPriestShadow
-			comboIcon  = "Interface\\ICONS\\Spell_Priest_ShadowOrbs"
-			comboSpell = 95740
-			comboCount = 3
-		else
-			comboFkt   = PointsPriestEvangelism
-			comboIcon  = "Interface\\ICONS\\Spell_Holy_DivineIllumination"
-			comboSpell = 81661
-			comboCount = 5
-		end
---		self:RegisterEvent( "UNIT_AURA", "UpdateAnchors")
-	elseif class == "ROGUE" then
-		comboFkt   = PointsRouge
-		comboIcon  = "Interface\\ICONS\\Ability_DualWield"
-		comboSpell = nil
-		comboCount = 5
---		self:RegisterEvent( "UNIT_COMBO_POINTS", "UpdateAnchors")
---		self:RegisterEvent( "PLAYER_TARGET_CHANGED", "UpdateAnchors")
-	elseif class == "SHAMAN" then
-		if IsSpellKnown( 51490) then -- Thunderstorm
-			comboFkt   = PointsShamanElemental
-			comboIcon  = "Interface\\ICONS\\Spell_Nature_LightningShield"
-			comboSpell = 324
-		elseif IsSpellKnown( 51528) then -- Maelstrom Weapon
-			comboFkt   = PointsShamanEnhancement
-			comboIcon  = "Interface\\ICONS\\Spell_Shaman_MaelstromWeapon"
-			comboSpell = 53817
-		else
-			comboFkt   = PointsNothing
-		end
-		comboCount = 5
---		self:RegisterEvent( "UNIT_AURA", "UpdateAnchors")
-	elseif class == "WARLOCK" then
-		comboFkt   = PointsWarlock
-		comboIcon  = "Interface\\ICONS\\INV_Misc_Gem_Amethyst_02"
-		comboCount = 3
---		self:RegisterEvent( "UNIT_POWER", "UpdateAnchors")
---	elseif class == "WARRIOR" then
-	else
-		comboFkt   = PointsNothing
-		comboCount = 5
-	end
+		
+	end	
+	
+	return activeRunes
+
 end
 
+	-- LUT for the class powers / GetClassPowers (stored here to avoid excess garbage creation)
+	local classPowers = {
+		{  -- 1		Warrior		WARRIOR
+			{	-- 1	Arms > Nothing
+			["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "",
+			},
+		
+			{	-- 2	Fury > Taste for Blood (from Furious Slash)
+				["GetCurrentStacks"] = function()
+					return ScanAura("player", 206333, "HELPFUL")
+				end,
+				["maxStacks"] = 6,
+				["spell"] = 206333, -- 100130 = Furious Slash
+				["icon"] = "ability_warrior_bloodnova", --"ability_warrior_weaponmastery", 
+			},
+		
+			{	-- 3	Protection > Nothing
+				["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "",
+			}
+		},
+		
+		{  -- 2		Paladin		PALADIN
+			{	-- 1	Holy > Nothing
+				["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "",
+			},
+		
+			{	-- 2	Protection > Nothing
+				["GetCurrentStacks"] = function()
+					return 
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "", 
+			},
+		
+			{	-- 3	Retribution > Holy Power
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_HOLY_POWER)
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 0,
+				["icon"] = "Spell_Holy_HolyBolt",
+			}
+		
+		},		
+
+		{  -- 3 		Hunter 	HUNTER
+			{	-- 1	Beast Mastery > Nothing
+			["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "",
+			},
+		
+			{	-- 2	Marksmanship > Nothing
+				["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "", 
+			},
+		
+			{	-- 3	Survival > Mongoose Fury
+				["GetCurrentStacks"] = function()
+					return ScanAura("player", 190931, "HELPFUL")
+				end,
+				["maxStacks"] = 6,
+				["spell"] = 190931,
+				["icon"] = "ability_hunter_mongoosebite",
+			}
+		},
+
+		{  -- 4		Rogue		ROGUE
+			{	-- 1	Assassination > Combo Points
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_COMBO_POINTS)
+				end,
+				["maxStacks"] = 10,
+				["spell"] = 0,
+				["icon"] = "Ability_DualWield",
+			},
+		
+			{	-- 2	Outlaw > Combo Points
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_COMBO_POINTS)
+				end,
+				["maxStacks"] = 10,
+				["spell"] = 0,
+				["icon"] = "Ability_DualWield", 
+			},
+		
+			{	-- 3	Subtletly > Combo Points
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_COMBO_POINTS)
+				end,
+				["maxStacks"] = 10,
+				["spell"] = 0,
+				["icon"] = "Ability_DualWield",
+			}
+		
+		},		
+	
+		{  -- 5 		Priest 	PRIEST
+			{	-- 1	Discipline > Nothing
+			["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "",
+			},
+		
+			{	-- 2	Holy > Nothing
+				["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "", 
+			},
+		
+			{	-- 3	Shadow > Nothing
+				["GetCurrentStacks"] = function()
+					return 0
+					--return ScanAura("player", 227386, "HELPFUL") -- TODO: Lingering Insanity
+				end,
+				["maxStacks"] = 0, -- 100, -- TODO
+				["spell"] = 0, -- 227386, = Voidform
+				["icon"] = "", -- "spell_priest_voidform",
+			}
+		},
+
+		{  -- 6		Death Knight		DEATHKNIGHT
+			{	-- 1	Blood > Runes
+				["GetCurrentStacks"] = GetActiveRunes,
+				["maxStacks"] = 6,
+				["spell"] = 0,
+				["icon"] = "spell_shadow_rune",
+			},
+		
+			{	-- 2	Frost > Runes
+				["GetCurrentStacks"] = GetActiveRunes,
+				["maxStacks"] = 6,
+				["spell"] = 0,
+				["icon"] = "spell_shadow_rune", 
+			},
+		
+			{	-- 3	Unholy > Runes
+				["GetCurrentStacks"] = GetActiveRunes,
+				["maxStacks"] = 6,
+				["spell"] = 0,
+				["icon"] = "spell_shadow_rune",
+			}
+		
+		},		
+	
+		{  -- 7 		Shaman 	SHAMAN
+			{	-- 1	Elemental > Lava Burst (charges if talented into)
+			["GetCurrentStacks"] = function()
+					
+					return GetSpellCharges(51505)
+	
+				end,
+				["maxStacks"] = function()
+					
+					
+					local id, name, texture, selected, available, spellID, tier, column, unknown = GetTalentInfo(6, 3, GetActiveSpecGroup()) -- Talent: Echo of the Elements -> 2 charges
+					
+					if select(4, GetTalentInfo(6, 3, GetActiveSpecGroup())) then -- Player has 2 charges available instead of just one
+						return 2
+					end
+					
+					return 1
+				
+				end,
+				["spell"] = 51505, -- 77762 = Lava Surge (proc)
+				["icon"] = "spell_shaman_lavaburst", --"spell_shaman_lavasurge",
+			},
+		
+			{	-- 2	Enhancement > Stormbringer
+				["GetCurrentStacks"] = function()
+					return ScanAura("player", 201845, "HELPFUL")
+				end,
+				["maxStacks"] = function()
+				
+					-- GetSpecializationInfo(specID) 1,2,3,4 -> 62,63, ...  and then  id, name, icon, tier, column, currentRank, maxRank, isExceptional, meetsPrereq = GetTalentInfo(rows, columns, GetActiveSpecGroup())
+					
+					if GetTalentInfo(5, 1, GetActiveSpecGroup()) then -- Talent: Tempest -> 2 charges per Stormbringer proc
+						return 2
+					end
+					
+					return 1
+				
+				end,
+				["spell"] = 201845, -- 17364
+				["icon"] = "spell_nature_stormreach",  --  ability_shaman_stormstrike -> Stormstrike
+			},
+		
+			{	-- 3	Restoration > Tidal Waves
+				["GetCurrentStacks"] = function()
+					return ScanAura("player", 53390, "HELPFUL")
+				end,
+				["maxStacks"] = 2,
+				["spell"] = 53390,
+				["icon"] = "spell_shaman_tidalwaves",
+			}
+		},
+
+		{  -- 8		Mage		MAGE
+			{	-- 1	Arcane > Arcane Charges
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_ARCANE_CHARGES)
+				end,
+				["maxStacks"] = 4,
+				["spell"] = 0,
+				["icon"] = "ability_mage_arcanebarrage",
+			},
+		
+			{	-- 2	Fire > Nothing
+				["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "",
+			},
+			
+			{	-- 3	Frost > Icicles
+				["GetCurrentStacks"] = function()
+					return ScanAura("player", 205473 , "HELPFUL") -- 112965 = Fingers of Frost
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 205473, -- 44544 = Fingers of Frost
+				["icon"] = "spell_frost_iceshard", --"ability_mage_wintersgrasp", 
+			},
+		
+
+		
+		},			
+		
+		{  -- 9		Warlock		WARLOCK
+			{	-- 1	Affliction > Soul Shards
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_SOUL_SHARDS)
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 0,
+				["icon"] = "INV_Misc_Gem_Amethyst_02",
+			},
+		
+			{	-- 2	Demonology > Soul Shards
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_SOUL_SHARDS)
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 0,
+				["icon"] = "INV_Misc_Gem_Amethyst_02", 
+			},
+		
+			{	-- 3	Destruction > Soul Shards
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_SOUL_SHARDS)
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 0,
+				["icon"] = "INV_Misc_Gem_Amethyst_02",
+			}
+		
+		},		
+		
+		{  -- 10		Monk		MONK
+			{	-- 1	Brewmaster > Chi
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_CHI)
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 0,
+				["icon"] = "ability_monk_chiwave",
+			},
+		
+			{	-- 2	Mistweaver > Chi
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_CHI)
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 0,
+				["icon"] = "ability_monk_chiwave", 
+			},
+		
+			{	-- 3	Windwalker > Chi
+				["GetCurrentStacks"] = function()
+					return UnitPower( "player", SPELL_POWER_CHI)
+				end,
+				["maxStacks"] = 5,
+				["spell"] = 0,
+				["icon"] = "ability_monk_chiwave",
+			}
+		
+		},		
+			
+		{  -- 11 		Druid 	DRUID
+			{	-- 1	Balance > Thrash (Bear) or Combo Points (Cat)
+			["GetCurrentStacks"] = function()
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
+					return 0
+					
+				end,
+				["maxStacks"] = 5,
+				["spell"] = function()
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
+			},
+		
+			{	-- 2	Feral > Thrash (Bear) or Combo Points (Cat)
+				["GetCurrentStacks"] = function()
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
+					return 0
+					
+				end,
+				["maxStacks"] = 5,
+				["spell"] = function()
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
+			},
+		
+			{	-- 3	Guardian > Thrash (Bear) or Combo Points (Cat)
+				["GetCurrentStacks"] = function()
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
+					return 0
+					
+				end,
+				["maxStacks"] = 5,
+				["spell"] = function()
+				
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
+			},
+			
+			{	-- 4	Restoration > Thrash (Bear) or Combo Points (Cat)
+				["GetCurrentStacks"] = function()
+					
+					if GetShapeshiftFormID() == CAT_FORM then
+						return UnitPower("player",  SPELL_POWER_COMBO_POINTS)
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return ScanAura("target", 106830, "HARMFUL")
+					end
+					
+					return 0
+					
+				end,
+				["maxStacks"] = 5,
+				["spell"] = function()
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return 106830
+					end
+					
+					return 0
+					
+				end, 
+				["icon"] = function()
+				
+					if GetShapeshiftFormID() == CAT_FORM then
+						return "Ability_DualWield"
+					end
+					
+					if GetShapeshiftFormID() == BEAR_FORM then
+						return "spell_druid_thrash"
+					end
+					
+					return ""
+					
+				end, 
+			}
+			
+		},
+
+		{	-- 12		Demon Hunter		DEMONHUNTER
+			{	-- 1	Havoc > Nothing
+			["GetCurrentStacks"] = function()
+					return 0
+				end,
+				["maxStacks"] = 0,
+				["spell"] = 0,
+				["icon"] = "",
+			},
+		
+			{	-- 2	Vengeance > Demon Spikes
+				["GetCurrentStacks"] = function()
+					
+					local pain = UnitPower("player", SPELL_POWER_PAIN)
+					
+					if pain >= 20 then -- is able to cast Demon Spikes (TODO: Could its cost be modified? Can't find an API to draw upon that info and I'm not doing tooltip scanning just for that...)
+						return GetSpellCharges(203720) -- These are the charges of the spell, not the buff (as it doesn't stack)
+					end
+					
+					return 0
+					
+				end,
+				["maxStacks"] = 2,
+				["spell"] = 203819, -- This is the buff applied to the player (different ID)
+				["icon"] = "ability_demonhunter_demonspikes", 
+			},
+		
+		},
+	
+	}
+
+
+-- Returns the updateFunction, maxStacks, spellID, icon for each class/spec
+local function GetClassPowers(classID, specID)
+
+	if not (classID or specID or classPowers[classID] or classPowers[classID][specID]) then return end -- Invalid parameters -> skip and let the caller deal with the nil value/error out
+	
+	return classPowers[classID][specID]
+
+end
+
+-- Update comboBar icons (Called on each buff:update event)
+function Module:ACTIVE_TALENT_GROUP_CHANGED()
+
+	local localizedClassName, class, classID = UnitClass( "player")
+	local spec = GetSpecialization()
+	local specID, specName = GetSpecializationInfo(spec)
+	
+	Addon:Debug(self, format("ACTIVE_TALENT_GROUP_CHANGED (Current spec: %s - %s for class %s / %s)", specID, specName, class, localizedClassName))
+
+	-- Get info to display with the icon for this class/spec
+	local powers = GetClassPowers(classID, spec)
+	if not powers then -- Not a valid class/spec combination -> Skip update
+		Addon:Debug(self, "Invalid parameters given when calling GetClassPowers")
+		return
+	end
+	
+	-- Retrieve class and spec-specific stack sizes/spells to track 
+	
+	-- This is always a function
+	local GetCurrentStacks = powers["GetCurrentStacks"]
+	
+	-- These could be calculated dynamically or just a static value
+	local maxStacks = (type(powers["maxStacks"]) == "function" and powers.maxStacks()) or powers["maxStacks"]
+	local spellID = (type(powers["spell"] ) == "function" and powers.spell()) or powers["spell"]
+	local icon = (type(powers["icon"]) == "function" and powers.icon()) or powers["icon"]
+	
+	Addon:Debug(self, format("Updated with stacks = %d, maxStacks = %d, spell = %d (%s), icon = %s", GetCurrentStacks(), maxStacks, spellID, GetSpellInfo(spellID) or "<NONE>", icon))
+	
+	-- TODO: Rework this to be more universal/reusable? It*s kind of awkward in its original design
+	comboCount = maxStacks
+	comboIcon = ((#icon > 0) and ("Interface\\Icons\\" .. icon)) or "" -- Only assemble path if the icon isn't <empty string> (default for "don't display an icon")
+	comboSpell = spellID -- will be displayed on icon:mouseover -> set to 0 for resources that haven't a tooltip text (Combo Points, Holy Power, ...)
+	comboFkt = function() -- This is the function that will be called every time the icon is supposed to update
+		
+		if GetCurrentStacks and type(GetCurrentStacks) == "function" then
+			return GetCurrentStacks() or 0 -- Returns the current stacks for the respective class/spec
+		end
+		
+		return 0
+		
+	end
+
+end
+
+-- If shapeshift forms change, so do the ComboBar icons/spells that need to be displaye
 function Module:UPDATE_SHAPESHIFT_FORM()
 	self:ACTIVE_TALENT_GROUP_CHANGED()
 end
