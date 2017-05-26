@@ -1,5 +1,5 @@
 ## Interface: 70200
-## Version: @project-version@
+## Version: 1.0.0 (@project-version@)
 ## Author: Grayal, Cakechart
 
 ## Title: Wisent - Buff and Debuff tracking
