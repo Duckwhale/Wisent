@@ -706,10 +706,18 @@ end
 		
 			{	-- 2	Vengeance > Demon Spikes
 				["GetCurrentStacks"] = function()
-					return ScanAura("player", 203720, "HELPFUL")
+					
+					local pain = UnitPower("player", SPELL_POWER_PAIN)
+					
+					if pain >= 20 then -- is able to cast Demon Spikes (TODO: Could its cost be modified? Can't find an API to draw upon that info and I'm not doing tooltip scanning just for that...)
+						return GetSpellCharges(203720) -- These are the charges of the spell, not the buff (as it doesn't stack)
+					end
+					
+					return 0
+					
 				end,
 				["maxStacks"] = 2,
-				["spell"] = 203720,
+				["spell"] = 203819, -- This is the buff applied to the player (different ID)
 				["icon"] = "ability_demonhunter_demonspikes", 
 			},
 		
