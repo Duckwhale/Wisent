@@ -305,13 +305,14 @@ end
 				["icon"] = "", 
 			},
 		
-			{	-- 3	Shadow > Voidform
+			{	-- 3	Shadow > Nothing
 				["GetCurrentStacks"] = function()
-					return ScanAura(227386)
+					return 0
+					--return ScanAura("player", 227386, "HELPFUL") -- TODO: Lingering Insanity
 				end,
-				["maxStacks"] = 100, -- TODO
-				["spell"] = 227386,
-				["icon"] = "spell_priest_voidform",
+				["maxStacks"] = 0, -- 100, -- TODO
+				["spell"] = 0, -- 227386, = Voidform
+				["icon"] = "", -- "spell_priest_voidform",
 			}
 		},
 
