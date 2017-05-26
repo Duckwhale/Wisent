@@ -1,9 +1,13 @@
 ------------------------------------------------------------------------
-## Wisent v1.0.0 - Recent changes (1 releases)
+## Wisent v1.0.0 - Recent changes (2 releases)
 ------------------------------------------------------------------------
 
+r1:
+	Reworked ComboBar to track Legion "combo points" (and spells/buffs that fulfill a similar role) for all classes
+
+	
 r0:
-	<Initial release based on the outdated Bison-2.4.4 (which was last updated in Cataclysm) >
+	This is the initial release based on the outdated Bison-2.4.4 (which was last updated in Cataclysm) 
 	
 	Fixed an issue that caused spell procs to spam the client with LUA errors while they were active
 	Fixed broken backdrop textures for anchors that are displayed when the addon is unlocked
