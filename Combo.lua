@@ -185,13 +185,13 @@ end
 				["icon"] = "",
 			},
 		
-			{	-- 2	Fury > Furious Slash
+			{	-- 2	Fury > Taste for Blood (from Furious Slash)
 				["GetCurrentStacks"] = function()
-					return ScanAura("player", 100130, "HELPFUL")
+					return ScanAura("player", 206333, "HELPFUL")
 				end,
-				["maxStacks"] = 5, -- TODO
-				["spell"] = 100130,
-				["icon"] = "ability_warrior_weaponmastery", 
+				["maxStacks"] = 6,
+				["spell"] = 206333, -- 100130 = Furious Slash
+				["icon"] = "ability_warrior_bloodnova", --"ability_warrior_weaponmastery", 
 			},
 		
 			{	-- 3	Protection > Nothing
