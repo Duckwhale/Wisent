@@ -19,4 +19,4 @@ notifications:
 cache:
   apt: true
   directories:
-- $HOME/.luarocks
+    - $HOME/.luarocks
