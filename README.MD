@@ -1,7 +1,6 @@
 <html><head><title>Wisent 1.0</title>
 <link rel="stylesheet" type="text/css" href="curse.css"/>
 </head><body>
-<img src="https://api.travis-ci.org/SacredDuckwhale/Wisent.png"></img>
 <p><strong>Wisent</strong> provides an easily configurable replacement for the default buff (and debuff) frames.
 It displays buffs, debuffs, spell procs, and class-specific resources, allowing you to align, order, filter, scale, and reposition them in groups.</p>
 
