@@ -1,6 +1,3 @@
-<html><head><title>Wisent 1.0</title>
-<link rel="stylesheet" type="text/css" href="curse.css"/>
-</head><body>
 <p><strong>Wisent</strong> provides an easily configurable replacement for the default buff (and debuff) frames.
 It displays buffs, debuffs, spell procs, and class-specific resources, allowing you to align, order, filter, scale, and reposition them in groups.</p>
 
@@ -121,5 +118,3 @@ It displays buffs, debuffs, spell procs, and class-specific resources, allowing 
 <p>Wisent is based on the Cataclysm-era addon <strong>Bison</strong> by Grayal, which in turn was based on an addon called <strong>Buffalo</strong> by Nimbal (<i>Buff</i>alo... get it? Heh).</p>
 
 <p>Both addons have long been abandoned, and since I maintained a somewhat-working copy for personal use, I figured I'd simply see where it goes from there. In no way do I wish to take credit for their work. </p>
-
-</body></html>
