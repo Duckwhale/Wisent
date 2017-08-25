@@ -715,7 +715,8 @@ function Module:ACTIVE_TALENT_GROUP_CHANGED()
 	local localizedClassName, class, classID = UnitClass( "player")
 	local spec = GetSpecialization()
 	local specID, specName = GetSpecializationInfo(spec)
-	
+
+	if not (specID and classID) then return end
 	Addon:Debug(self, format("ACTIVE_TALENT_GROUP_CHANGED (Current spec: %s - %s for class %s / %s)", specID, specName, class, localizedClassName))
 
 	-- Get info to display with the icon for this class/spec
