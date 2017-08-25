@@ -725,31 +725,31 @@ function Module:ACTIVE_TALENT_GROUP_CHANGED()
 		Addon:Debug(self, "Invalid parameters given when calling GetClassPowers")
 		return
 	end
-	
+
 	-- Retrieve class and spec-specific stack sizes/spells to track 
-	
+
 	-- This is always a function
 	local GetCurrentStacks = powers["GetCurrentStacks"]
-	
+
 	-- These could be calculated dynamically or just a static value
 	local maxStacks = (type(powers["maxStacks"]) == "function" and powers.maxStacks()) or powers["maxStacks"]
 	local spellID = (type(powers["spell"] ) == "function" and powers.spell()) or powers["spell"]
 	local icon = (type(powers["icon"]) == "function" and powers.icon()) or powers["icon"]
-	
+
 	Addon:Debug(self, format("Updated with stacks = %d, maxStacks = %d, spell = %d (%s), icon = %s", GetCurrentStacks(), maxStacks, spellID, GetSpellInfo(spellID) or "<NONE>", icon))
-	
+
 	-- TODO: Rework this to be more universal/reusable? It*s kind of awkward in its original design
 	comboCount = maxStacks
 	comboIcon = ((#icon > 0) and ("Interface\\Icons\\" .. icon)) or "" -- Only assemble path if the icon isn't <empty string> (default for "don't display an icon")
 	comboSpell = spellID -- will be displayed on icon:mouseover -> set to 0 for resources that haven't a tooltip text (Combo Points, Holy Power, ...)
 	comboFkt = function() -- This is the function that will be called every time the icon is supposed to update
-		
+
 		if GetCurrentStacks and type(GetCurrentStacks) == "function" then
 			return GetCurrentStacks() or 0 -- Returns the current stacks for the respective class/spec
 		end
-		
+
 		return 0
-		
+
 	end
 
 end
