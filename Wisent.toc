@@ -28,7 +28,8 @@ embeds.xml
 WisentWidget-Buff.lua
 WisentContainer-Group.lua
 
-Localization.lua
+#Localization.lua
+Locales\Locales.xml
 
 Wisent.lua
 Options.lua
