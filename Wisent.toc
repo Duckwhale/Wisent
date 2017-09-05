@@ -5,8 +5,16 @@
 ## Title: Wisent - Buff and Debuff tracking
 
 ## Notes: Provides an easily customizable display for buffs, debuffs, and spell procs
-## Notes-ruRU: Настройка отображения ваших (де)баффов
-## Notes-deDE: Anpassung der Buff Anzeige
+## Notes-ruRU: @localization(locale="ruRU", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-deDE: @localization(locale="deDE", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-koKR: @localization(locale="koKR", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-esMX: @localization(locale="esMX", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-esES: @localization(locale="esES", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-ptBR: @localization(locale="ptBR", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-zhCN: @localization(locale="zhCN", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-zhTW: @localization(locale="zhTW", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-itIT: @localization(locale="itIT", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
+## Notes-frFR: @localization(locale="frFR", key="Provides an easily customizable display for buffs, debuffs, and spell procs", namespace="")@
 
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
