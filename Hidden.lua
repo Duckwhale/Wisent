@@ -34,33 +34,33 @@ Module.proName = "hidden"
 
 local args = {
 	option = { 
-		type = "group", order = 10, name = L.OptionName, inline = true, 
+		type = "group", order = 10, name = L["General Settings"], inline = true, 
 		args = {
-			show     = { type = "toggle", order = 10, name = L.ShowName,     desc = L.ShowDesc },
-			sort     = { type = "select", order = 40, name = L.SortName,     desc = L.SortDesc, get = "GetSortType", set = "SetSortType", values = "GetSortDesc" },
+			show     = { type = "toggle", order = 10, name = L["Enable Bar"],     desc = L["Toggle this bar and all of its icons"]},
+			sort     = { type = "select", order = 40, name = L["Sorting Behaviour"],     desc = L["Set how the icons should be sorted"], get = "GetSortType", set = "SetSortType", values = "GetSortDesc" },
 		} 
 	},
 	layout = { 
-		type = "group", order = 20, name = L.BarName, inline = true, 
+		type = "group", order = 20, name = L["Appearance and Behaviour"], inline = true, 
 		args = {
-			horizontal = { type = "toggle", order = 10, name = L.HorizontalName, desc = L.HorizontalDesc },
-			number     = { type = "range",  order = 20, name = L.NumberName,     desc = L.NumberDesc,   set = "SetNumber",   min = 1,    max = MAX_BUTTON, step = 1 },
-			scale      = { type = "range",  order = 40, name = L.ScaleName,      desc = L.ScaleDesc,    set = "SetScale",    min = 0.01, max = 2,          step = 0.01, isPercent = true },
-			cols       = { type = "range",  order = 50, name = L.ColsName,       desc = L.ColsDesc,     set = "SetCols",     min = 1,    max = MAX_BUTTON, step = 1 },
-			xPadding   = { type = "range",  order = 60, name = L.XPaddingName,   desc = L.XPaddingDesc, set = "SetXPadding", min = -20,  max = 20,         step = 1 },
-			rows       = { type = "range",  order = 70, name = L.RowsName,       desc = L.RowsDesc,     set = "SetRows",     min = 1,    max = MAX_BUTTON, step = 1 },
-			yPadding   = { type = "range",  order = 80, name = L.YPaddingName,   desc = L.YPaddingDesc, set = "SetYPadding", min = -50,  max = 50,         step = 1 },
+			horizontal = { type = "toggle", order = 10, name = L["Horizontal Alignment"], desc = L["Align buff icons horizontally before moving to a new row"]},
+			number     = { type = "range",  order = 20, name = L["Size"],     desc = L["Number of buttons to display on this bar"],   set = "SetNumber",   min = 1,    max = MAX_BUTTON, step = 1 },
+			scale      = { type = "range",  order = 40, name = L["Scale Factor"],      desc = L["Scale all buff icons by this factor"],    set = "SetScale",    min = 0.01, max = 2,          step = 0.01, isPercent = true },
+			cols       = { type = "range",  order = 50, name = L["Columns"],       desc = L["Number of colums"],     set = "SetCols",     min = 1,    max = MAX_BUTTON, step = 1 },
+			xPadding   = { type = "range",  order = 60, name = L["Horizontal Padding"],   desc = L["Adds additional space between icons. Use negative values to reverse the direction of the bar"], set = "SetXPadding", min = -20,  max = 20,         step = 1 },
+			rows       = { type = "range",  order = 70, name = L["Rows"],       desc = L["Number of rows"],     set = "SetRows",     min = 1,    max = MAX_BUTTON, step = 1 },
+			yPadding   = { type = "range",  order = 80, name = L["Vertical Padding"],   desc = L["Adds additional space between icons. Use negative values to reverse the direction of the bar"], set = "SetYPadding", min = -50,  max = 50,         step = 1 },
 		} 
 	}
 }
 local blizzOptions = {
-	type = "group", order = 60, name = L.DescHidden, handler = Module, get = "GetProperty", set = "SetProperty", args = args
+	type = "group", order = 60, name = L["Consolidate Buffs"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
 }
 local dialogOptions = {
-	type = "group", order = 20, name = L.BarHidden, handler = Module, get = "GetProperty", set = "SetProperty", args = args,
+	type = "group", order = 20, name = L["Hidden"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
 	plugins = {
 		p1 = { 
-			descr = { type = "description", order = 5, name = L.DescHidden, fontSize = "large" }
+			descr = { type = "description", order = 5, name = L["Consolidate Buffs"], fontSize = "large" }
 		}
 	}
 }
@@ -69,7 +69,7 @@ local dialogOptions = {
 -- Main
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
-	self:RegisterOptions( blizzOptions, L.BarHidden)
+	self:RegisterOptions( blizzOptions, L["Hidden"])
 	self:CloneAura( "buff")
 end
 

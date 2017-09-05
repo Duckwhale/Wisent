@@ -30,7 +30,7 @@ if LOCALE == "deDE" then
 	L.ProfileDeleted    = "Lösche Profil '%s'"
 	L.ProfileLoaded     = "Setze Profil auf '%s'"
 	L.ProfileReset      = "Rücksetzen Profil '%s'"
-	L.Version           = "Version"
+	L["Version"]           = "Version"
 elseif LOCALE == "frFR" then
 	L.Profile           = "Profil"
 	L.ProfileCopied     = "Paramètres Copies depuis '%s'"
