@@ -46,6 +46,6 @@ Buffs.lua
 Debuffs.lua
 Weapons.lua
 #Hidden.lua
-Progs.lua
+Procs.lua
 Combo.lua
 Profile.lua
