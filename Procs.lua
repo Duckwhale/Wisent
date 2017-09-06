@@ -213,13 +213,13 @@ local args = {
 	}
 }
 local blizzOptions = {
-	type = "group", order = 50, name = L["SpellProcs Bar Settings"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
+	type = "group", order = 50, name = L["Procs Bar Settings"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
 }
 local dialogOptions = {
-	type = "group", order = 20, name = L["SpellProcs Bar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
+	type = "group", order = 20, name = L["Procs Bar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
 	plugins = {
 		p1 = { 
-			descr = { type = "description", order = 5, name = L["SpellProcs Bar Settings"], fontSize = "large" }
+			descr = { type = "description", order = 5, name = L["Procs Bar Settings"], fontSize = "large" }
 		}
 	}
 }
@@ -228,7 +228,7 @@ local dialogOptions = {
 -- Main
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
-	self:RegisterOptions( blizzOptions, L["SpellProcs Bar"])
+	self:RegisterOptions( blizzOptions, L["Procs Bar"])
 	self:CloneAura( "buff")
 	local _, class = UnitClass( "player")
 	progTable = PROGTABLES[class] or NOTHING

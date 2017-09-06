@@ -50,13 +50,13 @@ local args = {
 	}
 }
 local blizzOptions = {
-	type = "group", order = 20, name = L["BuffBar Settings"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
+	type = "group", order = 20, name = L["Buff Bar Settings"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
 }
 local dialogOptions = {
-	type = "group", order = 20, name = L["BuffBar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
+	type = "group", order = 20, name = L["Buff Bar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
 	plugins = {
 		p1 = { 
-			descr = { type = "description", order = 5, name = L["BuffBar Settings"], fontSize = "large" }
+			descr = { type = "description", order = 5, name = L["Buff Bar Settings"], fontSize = "large" }
 		}
 	}
 }
@@ -78,7 +78,7 @@ end
 -- Main
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
-	self:RegisterOptions( blizzOptions, L["BuffBar"])
+	self:RegisterOptions( blizzOptions, L["Buff Bar"])
 	self:CloneAura( "buff")
 end
 

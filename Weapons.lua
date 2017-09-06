@@ -52,7 +52,7 @@ local blizzOptions = {
 	type = "group", order = 40, name = L["Weapon Enchants"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
 }
 local dialogOptions = {
-	type = "group", order = 20, name = L["WeaponEnchants Bar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
+	type = "group", order = 20, name = L["Weapon Enchants Bar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
 	plugins = {
 		p1 = { 
 			descr = { type = "description", order = 5, name = L["Weapon Enchants"], fontSize = "large" }
@@ -64,7 +64,7 @@ local dialogOptions = {
 -- Main
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
-	self:RegisterOptions( blizzOptions, L["WeaponEnchants Bar"])
+	self:RegisterOptions( blizzOptions, L["Weapon Enchants Bar"])
 	self:CloneAura( "weapon")
 end
 

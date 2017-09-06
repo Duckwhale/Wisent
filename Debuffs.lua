@@ -53,7 +53,7 @@ local blizzOptions = {
 	type = "group", order = 30, name = L["DebuffBar Settings"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
 }
 local dialogOptions = {
-	type = "group", order = 20, name = L["DebuffsBar"] , handler = Module, get = "GetProperty", set = "SetProperty", args = args,
+	type = "group", order = 20, name = L["Debuff Bar"] , handler = Module, get = "GetProperty", set = "SetProperty", args = args,
 	plugins = {
 		p1 = { 
 			descr = { type = "description", order = 5, name = L["DebuffBar Settings"], fontSize = "large" }
@@ -66,7 +66,7 @@ local pivot = {}
 -- Main
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
-	self:RegisterOptions( blizzOptions, L["DebuffsBar"] )
+	self:RegisterOptions( blizzOptions, L["Debuff Bar"] )
 	self:CloneAura( "debuff")
 	for k in pairs( self.aura) do
 		pivot[k] = k

@@ -55,13 +55,13 @@ local args = {
 	}
 }
 local blizzOptions = {
-	type = "group", order = 50, name = L["SpellProcs Bar Settings"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
+	type = "group", order = 50, name = L["Procs Bar Settings"], handler = Module, get = "GetProperty", set = "SetProperty", args = args
 }
 local dialogOptions = {
-	type = "group", order = 20, name = L["ComboBar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
+	type = "group", order = 20, name = L["Combo Bar"], handler = Module, get = "GetProperty", set = "SetProperty", args = args,
 	plugins = {
 		p1 = { 
-			descr = { type = "description", order = 5, name = L["SpellProcs Bar Settings"], fontSize = "large" }
+			descr = { type = "description", order = 5, name = L["Procs Bar Settings"], fontSize = "large" }
 		}
 	}
 }
@@ -74,7 +74,7 @@ local comboCount = 5
 -- Main
 ------------------------------------------------------------------------------------
 function Module:OnModuleInitialize()
-	self:RegisterOptions( blizzOptions, L["ComboBar"])
+	self:RegisterOptions( blizzOptions, L["Combo Bar"])
 	for i = 1, MAX_BUTTON do -- Create table entries for all ComboBar buttons (even those not currently used or displayed -> templates to be filled later)
 		tinsert( self.aura, { id = i, name = "__combo__", count = 1 })
 	end
