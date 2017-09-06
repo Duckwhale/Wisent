@@ -79,7 +79,7 @@ local main = {
 		space1      = { type = "description", order = 40,  name = " ", cmdHidden = true },
 		enabled     = { type = "toggle",      order = 140, name = L["Enabled"],  desc = L["Enable the addon (will disable Blizzard's default buff bars)"],  get = "IsEnabled",         set = SetEnable, width = "full" },
 		debug       = { type = "toggle",      order = 150, name = L["Debug Mode"],    desc = L["Toggle debug mode (not particularly useful unless something has gone terribly wrong)"],    get = IsDebugLogEnabled, set = SetDebug,  width = "full" },
-		lbf         = { type = "toggle",      order = 160, name = L["Enable LBF"],      desc = L["Enable LibButtonFacade if present"] ,   width = "full" },
+		lbf         = { type = "toggle",      order = 160, name = L["Enable LBF Support"],      desc = L["Enable LibButtonFacade if present"] ,   width = "full" },
 	-- MOD
 		masque = { type = "toggle", order = 165, name = L["Enable Masque Support"], desc = L["Enable styling of the buff icons via Masque addon library if present"], width = "full" },
 	-- /MOD

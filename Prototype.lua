@@ -24,18 +24,18 @@ local Masque = LibStub("Masque", true)
 -- /MOD
 local NOTHING = {}
 local TIMER_DESC = {
-	L["Default (Blizzard Style"],
+	L["Default (Blizzard Style)"],
 	L["Short (XXm)"],
 	L["Full (XX:XX)"],
 }
 local SORT_DESC = {
-	L["Default (Blizzard ordering)"],
-	L["Sort by name (ascending)"],
-	L["Sort by name (descending)"],
-	L["Sort by time left (ascending)"],
-	L["Sort by time left (descending)"],
-	L["Sort by duration (ascending)"],
-	L["Sort by duration (descending)"]
+	L["Default (Blizzard Style)"],
+	L["Name"] .. "(" .. L["Ascending"] .. ")",
+	L["Name"].. "(" .. L["Descending"] .. ")",
+	L["Time left"] .. "(" .. L["Ascending"] .. ")",
+	L["Time left"] .. "(" .. L["Descending"] .. ")",
+	L["Duration"] .. "(" .. L["Ascending"] .. ")",
+	L["Duration"] .. "(" .. L["Descending"] .. ")",
 }
 local SORT_TYPES = {
 	["none"]   = 1,
