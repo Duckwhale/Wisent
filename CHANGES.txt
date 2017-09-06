@@ -1,6 +1,11 @@
 ------------------------------------------------------------------------
-## Wisent v1.0.0 - Recent changes (2 releases)
+## Wisent v1.0.0 - Recent changes (3 releases)
 ------------------------------------------------------------------------
+
+r2:
+	Reworked localisation system and integrated it with the CurseForge packager
+	Fixed grammar in the default (English) translation and removed the other, now-obsolete locales (will need new translations)
+
 
 r1:
 	Reworked ComboBar to track Legion "combo points" (and spells/buffs that fulfill a similar role) for all classes
