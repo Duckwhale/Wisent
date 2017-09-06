@@ -1,5 +1,5 @@
 <p><strong>Wisent</strong> provides an easily configurable replacement for the default buff (and debuff) frames.
-It displays buffs, debuffs, spell procs, and class-specific resources, allowing you to align, order, filter, scale, and reposition them in groups.</p>
+It displays buffs, debuffs, spell procs, and class-specific resources, allowing you to align, order, scale, and reposition them in groups.</p>
 
 <p>While there are more extensive buff tracking addons out there, this one is intended to be a simpler alternative, striving to stay close to Blizzard's original design while still providing more customizability and a functional configuration interface.</p>
 
@@ -87,9 +87,10 @@ It displays buffs, debuffs, spell procs, and class-specific resources, allowing 
 
 <h2>Issues/Feature Requests</h2>
 <p>While I try to monitor the comments on this page, I don't always get notified of them. Therefore, I kindly ask you to use the <a href="https://wow.curseforge.com/projects/wisent/issues">Issue Tracker</a> on the Project Site when appropriate (You can use the same Curse account you use to comment here for that).</p>
-
+<p>Alternatively, you can follow the addon's development on <a href="https://github.com/SacredDuckwhale/Wisent">GitHub</a>, where a list of <a href="https://github.com/SacredDuckwhale/Wisent/issues">Known Issues</a> is available. The <a href="https://github.com/SacredDuckwhale/Wisent/projects/1">Project Timeline</a> allows you to see what is currently being worked on and when you can expect any given change to be implemented.</p>
 <h2>Localisation</h2>
-<p>Localisation is implemented, but many locales are not translated (fully). If you can help out, it will be appreciated! You can check on the current translation progress here: <a href="https://wow.curseforge.com/projects/wisent/localization">Project site</a></p>
+<p>A proper localisation system is implemented, but many locales aren't fully translated (yet). If you can help out, it will be appreciated!</p>
+<p>You can check on the current translation progress here: <a href="https://wow.curseforge.com/projects/wisent/localization">Project Site</a></p>
 
 <h2>Acknowledgement</h2>
 <p>Wisent is based on the Cataclysm-era addon <strong>Bison</strong> by Grayal, which in turn was based on an addon called <strong>Buffalo</strong> by Nimbal (<i>Buff</i>alo... get it? Heh).</p>
