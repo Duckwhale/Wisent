@@ -8,29 +8,23 @@ It displays buffs, debuffs, spell procs, and class-specific resources, allowing 
 
 <h3>Aura Groups</h3>
 <p>The following icon groups are implemented:</p>
-<ul>
 
+<ul>
 	<li>
 		Buffs
 	</li>
-
 	<li>
 		Debuffs
 	</li>
-
 	<li>
-		Procs: Ttechnically, they're also buffs, but more flashy and generally important
+		Procs: Technically, they're also buffs, but more flashy and generally important
 	</li>
-
 	<li>
 		Combo Points: Also supports other resources/buffs that can be used in a similar way
 	</li>
-	
 	<li>
 		Weapon Enchants: Technically obsolete, but kept as legacy support in case they make it back into the game
 	</li>
-
-
 </ul>
 
 <h3>Combo Bar</h3>
@@ -40,51 +34,39 @@ It displays buffs, debuffs, spell procs, and class-specific resources, allowing 
 	<li>
 		<strong>Paladin</strong>: Holy Power
 	</li>
-
 	<li>
 		<strong>Rogue</strong>: Combo Points
 	</li>
-
 	<li>
 		<strong>Shaman</strong>: Lava Burst (Elemental), Tidal Waves (Restoration), Stormbringer/Stormstrike (Enhancement)
 	</li>
-
 	<li>
 		<strong>Druid</strong>: Thrash (Bear), Combo Points (Cat)
 	</li>
-
 	<li>
 		<strong>Hunter</strong>: Mongoose Fury (Survival)
 	</li>
-
 	<li>
 		<strong>Mage</strong>: Arcane Charges, Icicles (Frost)
 	</li>
-
 	<li>
 		<strong>Death Knight</strong>: Runes
 	</li>
-
 	<li>
 		<strong>Monk</strong>: Chi
 	</li>
-
 	<li>
 		<strong>Demon Hunter</strong>: Demon Spikes (Vengeance)
 	</li>
-
 	<li>
 		<strong>Warrior</strong>:  Furious Slash/Taste for Blood (Fury)
 	</li>
-
 	<li>
 		<strong>Warlock</strong>: Soul Shards
 	</li>
-
 	<li>
 		<strong>Priest</strong>:  None, for now :|
 	</li>
-
 </ul>
 
 <p>These are not intended to be a replacement for advanced aura icons such as those provided by WeakAuras or TellMeWhen, but for when a simpler alternative is sufficient. They don't require any setting up and still allow for some customization.</p>
@@ -92,19 +74,14 @@ It displays buffs, debuffs, spell procs, and class-specific resources, allowing 
 <h3>Slash Commands</h3>
 <p>The following slash commands are provided: <strong>/wisent</strong> and <strong>/wi</strong> (alias)</p>
 <p>Valid parameters are:
-
 	<ul>
-	
 		<li>
 			lock - Unlock/Lock all groups and show/hide their anchors
 		</li>
-			
 		<li>
 			enable - Toggle the addon's functionality (to replace the default icons)
 		</li>
-
 	</ul>
-
 </p>
 <p>Any functionality provided is also accessible via the addon's GUI.</p>
 
