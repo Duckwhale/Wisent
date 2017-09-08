@@ -25,7 +25,7 @@ function Module:OnInitialize()
 	local db = Addon.db
 	self.profile = LibStub( "AceDBOptions-3.0"):GetOptionsTable( db)
 	LibStub( "AceConfig-3.0"):RegisterOptionsTable( "Wisent_Profile", self.profile)
-	LibStub( "AceConfigDialog-3.0"):AddToBlizOptions( "Wisent_Profile", L["Profile"], Addon:GetName())
+	LibStub( "AceConfigDialog-3.0"):AddToBlizOptions( "Wisent_Profile", L["Profiles"], Addon:GetName())
 	db.RegisterCallback( self, "OnNewProfile")
 	db.RegisterCallback( self, "OnProfileChanged")
 	db.RegisterCallback( self, "OnProfileCopied")
