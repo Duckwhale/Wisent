@@ -30,12 +30,12 @@ local TIMER_DESC = {
 }
 local SORT_DESC = {
 	L["Default (Blizzard Style)"],
-	L["Name"] .. "(" .. L["Ascending"] .. ")",
-	L["Name"].. "(" .. L["Descending"] .. ")",
-	L["Time left"] .. "(" .. L["Ascending"] .. ")",
-	L["Time left"] .. "(" .. L["Descending"] .. ")",
-	L["Duration"] .. "(" .. L["Ascending"] .. ")",
-	L["Duration"] .. "(" .. L["Descending"] .. ")",
+	L["Name"] .. " (" .. L["Ascending"] .. ")",
+	L["Name"].. " (" .. L["Descending"] .. ")",
+	L["Time left"] .. " (" .. L["Ascending"] .. ")",
+	L["Time left"] .. " (" .. L["Descending"] .. ")",
+	L["Duration"] .. " (" .. L["Ascending"] .. ")",
+	L["Duration"] .. " (" .. L["Descending"] .. ")",
 }
 local SORT_TYPES = {
 	["none"]   = 1,
