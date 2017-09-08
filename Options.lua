@@ -74,7 +74,7 @@ end
 local main = {
 	type = "group", order = 10, name = L["Wisent Configuration"], get = GetProperty, set = SetProperty, handler = Addon, 
 	args = {
-		release     = { type = "description", order = 20,  name = Addon.version, cmdHidden = true, fontSize = "large" },
+		release     = { type = "description", order = 20,  name = L["Version"] .. ": " .. Addon.version, cmdHidden = true, fontSize = "large" },
 		description = { type = "description", order = 30,  name = L["Provides an easily customizable display for buffs, debuffs, and spell procs"], cmdHidden = true, fontSize = "large" },
 		space1      = { type = "description", order = 40,  name = " ", cmdHidden = true },
 		enabled     = { type = "toggle",      order = 140, name = L["Enabled"],  desc = L["Enable the addon (will disable Blizzard's default buff bars)"],  get = "IsEnabled",         set = SetEnable, width = "full" },
