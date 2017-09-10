@@ -4,7 +4,7 @@
 
 r2:
 	Reworked localisation system and integrated it with the CurseForge packager
-	Fixed grammar in the default (English) translation and removed the other, now-obsolete locales (will need new translations)
+	Fixed horrible grammar in the default (English) translation and removed the other, now-obsolete locales (will require a re-translation)
 
 
 r1:
