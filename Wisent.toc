@@ -1,8 +1,8 @@
-## Interface: 70200
+## Interface: 70300
 ## Version: 1.0.0 (@project-version@)
 ## Author: Grayal, Cakechart
 
-## Title: Wisent - Buff and Debuff tracking
+## Title: Wisent - Buff and Debuff Tracker
 
 ## Notes: Provides an easily customizable display for buffs, debuffs, and spell procs
 
