@@ -180,6 +180,32 @@ local PROCTABLES = {
 		[87095] = true, --Thunderstruck Rank 1
 		[87096] = true, --Thunderstruck Rank 2
 	},
+	["DEMONHUNTER"] = {
+		-- ALL:
+	[208195] = true, -- Demon Soul (from Shattered Souls passive) -- TODO: Needs testing
+		[203981] = true, -- Soul Fragments (from Shattered Souls passive)
+	
+	-- HAVOC:
+		-- Blade Dance (not really a proc)
+		-- Chaos Blades (active)
+		-- Death Sweep (Blade Dance during Metamorphosis - not really a proc)
+		-- Blur (not really a proc)
+		-- Fel Barrage (not really a proc)
+		-- Metamorphosis (active/Demonic talent uses the same ID)
+		-- Netherwalk (active)
+		-- Momentum (active)
+		-- Nemesis (target?)
+	
+	-- VENGEANCE:
+		[187827] = true, -- Metamorphosis (Artifact trait, even though the active spell is also using the same ID)
+		[247253] = true, -- Blade Turning
+		[212988] = true, -- Painbringer (Artifact trait)
+		[207693] = true, -- Feast of Souls
+		--[178740] = true, -- Immolation Aura (not really a proc)
+		--[227225] = true, -- Soul Barrier (not really a proc)
+		[218561] = true, -- Siphoned Power (from using Empower Wards)
+		
+	}
 }
 
 local Module = Addon:NewBarModule( MAJOR)
