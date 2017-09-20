@@ -13,7 +13,7 @@
     -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ----------------------------------------------------------------------------------------------------------------------
 
-local MAJOR = "prog"
+local MAJOR = "proc"
 
 local Addon  = LibStub( "AceAddon-3.0"):GetAddon( "Wisent")
 local L      = LibStub( "AceLocale-3.0"):GetLocale( "Wisent")
@@ -22,7 +22,7 @@ local AceGUI = LibStub( "AceGUI-3.0")
 local NOTHING = {}
 local UPDATE_TIME = 0.2
 local MAX_BUTTON  = 16
-local PROGTABLES = {
+local PROCTABLES = {
 	["DEATHKNIGHT"] = {
 		[51789] = true, --Blade Barrier Rank 1
 		[64855] = true, --Blade Barrier Rank 2
@@ -185,9 +185,9 @@ local PROGTABLES = {
 local Module = Addon:NewBarModule( MAJOR)
 Module.filter  = "HELPFUL"
 Module.color   = { r=0.2, g=0.4, b=0.2 }
-Module.proName = "prog"
+Module.proName = "proc"
 
-local progTable = NOTHING
+local procTable = NOTHING
 local args = {
 	option = { 
 		type = "group", order = 10, name = L["General Settings"], inline = true, 
@@ -231,7 +231,7 @@ function Module:OnModuleInitialize()
 	self:RegisterOptions( blizzOptions, L["Procs Bar"])
 	self:CloneAura( "buff")
 	local _, class = UnitClass( "player")
-	progTable = PROGTABLES[class] or NOTHING
+	procTable = PROCTABLES[class] or NOTHING
 end
 
 function Module:GetOptionTable()
@@ -246,13 +246,13 @@ function Module:UpdateAnchors( sort)
 		end
 		local spell = self.profile.spell
 		for i,a in pairs( self.aura) do
-			local buff = self:GetUserBuff( "BuffProgButton", a.id)
+			local buff = self:GetUserBuff( "BuffProcButton", a.id)
 			self:UpdateLBF( buff)
 			-- MOD
 			self:UpdateMasque(buff)
 			-- /MOD
 			local child = self.group.children[i]
-			if child and progTable[a.spellID] then
+			if child and procTable[a.spellID] then
 				self:UpdateUserBuff( buff, a)
 				child:SetBuff( buff)
 				child:SetSpell( spell and a.spellID)
@@ -280,7 +280,7 @@ function Module:MoveTo( offset)
 		child:SetBuff( nil)
 	end
 	for id = 1,#self.aura do
-		local buff = self:GetUserBuff( "BuffProgButton", id)
+		local buff = self:GetUserBuff( "BuffProcButton", id)
 		buff:Hide()
 		buff.duration:Hide()
 		buff:SetScript( "OnUpdate", nil)
@@ -290,11 +290,11 @@ end
 
 function Module:AdditionalSort( orig)
 	return function( a, b) 
-		local progA = a.spellID and progTable[a.spellID] or false
-		local progB = b.spellID and progTable[b.spellID] or false
-		if progA == progB then
+		local procA = a.spellID and procTable[a.spellID] or false
+		local procB = b.spellID and procTable[b.spellID] or false
+		if procA == procB then
 			return orig( a, b)
 		end
-		return progA
+		return procA
 	end
 end

@@ -34,7 +34,7 @@ local DEFAULTS = {
 		buff   = { xPos = 400, yPos = 400, xPadding = 5, yPadding = 15, scale = 1.0, rows = 2, cols = 20, number = 40, show = true,  horizontal = true, sort = "dec",   timer = 2, flashing = true,  style = {}, },
 		debuff = { xPos = 400, yPos = 250, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 16, number = 16, show = true,  horizontal = true, sort = "dec",   timer = 2, flashing = true,  style = {}, },
 		weapon = { xPos = 400, yPos = 200, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols =  3, number =  3, show = true,  horizontal = true, sort = "none",  timer = 2, flashing = true,  style = {}, },
-		prog   = { xPos = 400, yPos = 150, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 16, number = 16, show = true,  horizontal = true, sort = "alpha", timer = 2, flashing = true,  style = {}, },
+		proc   = { xPos = 400, yPos = 150, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols = 16, number = 16, show = true,  horizontal = true, sort = "alpha", timer = 2, flashing = true,  style = {}, },
 		hidden = { xPos = 400, yPos = 100, xPadding = 5, yPadding = 15, scale = 1.0, rows = 2, cols =  8, number = 16, show = true,  horizontal = true, sort = "dec",   timer = 2, flashing = true,  style = {}, },
 		combo  = { xPos = 400, yPos = 150, xPadding = 5, yPadding = 15, scale = 1.0, rows = 1, cols =  5, number =  10, show = false, horizontal = true, sort = "none",  timer = 2, flashing = false, style = {}, bigger = 1.0, },
 		blizzard = false,
@@ -174,8 +174,8 @@ function Addon:OnInitialize()
 		MasqueGroup = Masque:Group("Wisent", "Buffs");
 		MasqueGroup = Masque:Group("Wisent", "Debuffs");
 		MasqueGroup = Masque:Group("Wisent", "Weapons"); -- TODO: Remove, as weapon enchants aren't a thing anymore (rogue poisons = regular buff)
-		MasqueGroup = Masque:Group("Wisent", "Progs"); -- WTF is this?
-		MasqueGroup = Masque:Group("Wisent", "Combos") ;-- WTF is this?
+		MasqueGroup = Masque:Group("Wisent", "Procs"); 
+		MasqueGroup = Masque:Group("Wisent", "Combos") ;
 		Masque:Register("Wisent", self.OnSkin, self);
 		local buttonData = {
 			--Icon = button.ShinyRainbowThing,
@@ -309,7 +309,7 @@ function Addon:OnSkin(group, skin, gloss, backdrop, colors, disabled)
 	]]--
 	
 	-- For now, a Masque update changes ALL groups. What is the point in registering them, then? That should be fixed, or changed to only provide Masque with one catchall group
---	local groups = { "buffs", "debuffs",  "weapon", "prog",  "hidden", "combo"}
+--	local groups = { "buffs", "debuffs",  "weapon", "proc",  "hidden", "combo"}
 --	for i = 0, #groups do
 	--	local group = groups[i]  
 		local profile = group and self.db.profile[group]
