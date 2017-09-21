@@ -2,7 +2,7 @@
 ## Version: 1.0.0 (@project-version@)
 ## Author: Grayal, Cakechart
 
-## Title: Wisent - Buff and Debuff Tracker
+## Title: Wisent AKA Bison2 - Buff and Debuff Tracker
 
 ## Notes: Provides an easily customizable display for buffs, debuffs, and spell procs
 
