@@ -214,7 +214,7 @@ local PROCTABLES = {
 	
 	},
 	["DEMONHUNTER"] = {
-		-- ALL:
+		-- SHARED:
 	[208195] = true, -- Demon Soul (from Shattered Souls passive) -- TODO: Needs testing
 		[203981] = true, -- Soul Fragments (from Shattered Souls passive)
 	
