@@ -149,11 +149,29 @@ local PROCTABLES = {
 		[51713] = true, --Shadow Dance
 	},
 	["SHAMAN"] = {
-		[16246] = true, --Clearcasting
-		[53390] = true, --Tital Waves
-		[53817] = true, --Maelstrom Weapon
-		[55198] = true, --Tidal Force
-		[64701] = true, --Elemental Mastery
+	
+	-- SHARED:
+		[77762] = true, -- Lava Surge
+		
+	-- RESTORATION:
+		-- Riptide (active)
+		--[53390] = true, -- Tidal Waves (virtually active)
+		-- Ancestral Vigor (virtually active)
+		-- Ascendance (active)
+		--[108271] = true, -- Astral Shift (active)
+		-- Bloodlust / Heroism (active) -> Sense of Urgency (artifact trait)		
+		[207288] = true, -- Queen Ascendant
+		-- Gift of the Queen (active)
+		--[79206] = true, -- Spiritwalker's Grace (active)
+		-- Caress of the Tidemother (active?) - from Healing Stream Totem / artifact trait
+	
+	-- ELEMENTAL:
+		[16246] = true, -- Elemental Focus
+	
+	-- ENHANCEMENT:
+	[201845] = true, -- Stormbringer
+	[187874] = true, -- Crash Lightning	
+	
 	},
 	["WARLOCK"] = {
 		[17941] = true, --Nightfall
