@@ -180,6 +180,21 @@ local PROCTABLES = {
 		[87095] = true, --Thunderstruck Rank 1
 		[87096] = true, --Thunderstruck Rank 2
 	},
+	["MONK"] = {
+	
+	-- SHARED:
+	
+	-- BREWMASTER
+		-- Elusive Brawler
+	
+	-- MISTWEAVER:
+	
+	-- WINDWALKER:
+		-- Transfer the Power (active)
+		[116768] = true, -- Blackout Kick!
+		[196741] = true, -- Hit Combo
+	
+	},
 	["DEMONHUNTER"] = {
 		-- ALL:
 	[208195] = true, -- Demon Soul (from Shattered Souls passive) -- TODO: Needs testing
