@@ -121,26 +121,22 @@ local PROCTABLES = {
 		[96263] = true, --Geheiligter Schild (Vergelter)
 	},
 	["PRIEST"] = {
-		[14751] = true, --Chakra
-		[33151] = true, --Surge of Light
-		[59887] = true, --Borrowed Time Rank 1
-		[59888] = true, --Borrowed Time Rank 2
-		[59889] = true, --Borrowed Time Rank 3
-		[60062] = true, --Essence of Life
-		[63731] = true, --Serendipity Rank 1
-		[63735] = true, --Serendipity Rank 2
-		[77487] = true, --Shadow Orb
-		[81206] = true, --Chakra: Prayer of Healing
-		[81207] = true, --Chakra: Renew
-		[81208] = true, --Chakra: Heal
-		[81292] = true, --Mind Melt
-		[81660] = true, --Evangelism Rank 1
-		[81661] = true, --Evangelism Rank 2
-		[87117] = true, --Dark Evangelism Rank 1
-		[87118] = true, --Dark Evangelism Rank 2
-		[87152] = true, --Archangel
-		[87153] = true, --Dark Archangel
-		[88688] = true, --Surge of Light
+		
+		-- ALL:
+		[109142] = true, -- Twist of Fate
+		
+		-- DISCIPLINE:
+		
+		-- HOLY:
+			[114255] = true, -- Surge of Light
+			[196644] = true, -- Blessing of T'uure
+			[197030] = true, -- Divinity
+			--[196490] = true, -- Power of the Naaru (virtually active)
+		
+		-- SHADOW:
+			[124430] = true, -- Shadowy Insight
+		-- Mind Quickening (virtually active)
+		
 	},
 	["ROGUE"] = {
 		[13750] = true, --Adrenline Rush
