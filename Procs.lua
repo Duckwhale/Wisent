@@ -164,14 +164,17 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 		[207288] = true, -- Queen Ascendant
 		-- Gift of the Queen (active)
 		--[79206] = true, -- Spiritwalker's Grace (active)
-		-- Caress of the Tidemother (active?) - from Healing Stream Totem / artifact trait
+		-- Caress of the Tidemother (active?)
 	
 	-- ELEMENTAL:
 		[16246] = true, -- Elemental Focus
 	
 	-- ENHANCEMENT:
-	[201845] = true, -- Stormbringer
-	[187874] = true, -- Crash Lightning	
+	[201846] = true, -- Stormbringer
+	-- Gathering Storms (virtually active)
+	 [195222] = true, -- Stormlash
+--	[201900] = true, 	-- Hot Hand	
+	[215785] = true, 
 	
 	},
 	["WARLOCK"] = {
