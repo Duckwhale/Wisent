@@ -22,20 +22,25 @@ local AceGUI = LibStub( "AceGUI-3.0")
 local NOTHING = {}
 local UPDATE_TIME = 0.2
 local MAX_BUTTON  = 16
-local PROCTABLES = {
+local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> Don't have time to test them all right now :|
 	["DEATHKNIGHT"] = {
-		[51789] = true, --Blade Barrier Rank 1
-		[64855] = true, --Blade Barrier Rank 2
-		[64856] = true, --Blade Barrier Rank 3
-		[81141] = true, --Crimson Scourge
-		[55741] = true, --Desecration Rank 1
-		[68766] = true, --Desecration Rank 2
-		[51124] = true, --Killing Machine
-		[81331] = true, --Might of the Frozen Wastes
-		[59052] = true, --Freezing Fog
-		[50421] = true, --Scent of Blood
-		[91342] = true, --Shadow Infusion (max 5)
-		[81340] = true, --Sudden Doom
+
+	-- SHARED:
+		[53365] = true, -- Unholy Strength
+	[178819] = true, 	-- Dark Succor
+	[101568] = true,	-- Dark Succor
+	[222863] = true,	-- Dark Succor
+	
+	-- BLOOD:
+	[81141] = true, -- Crimson Scourge
+	
+	-- FROST:
+	[51124] = true, -- Killing Machine
+	[59052] = true, -- Rime	
+	
+	-- UNHOLY:
+	
+	
 	},
 	["DRUID"] = {
 		[16886] = true, --Nature"s Grace
