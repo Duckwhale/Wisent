@@ -197,7 +197,7 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	-- SHARED:
 	
 	-- BREWMASTER
-		-- Elusive Brawler
+	[195630] = true, -- Elusive Brawler
 	
 	-- MISTWEAVER:
 	
