@@ -180,13 +180,33 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	
 	},
 	["WARRIOR"] = {
-		[12975] = true, --Last Stand
-		[46916] = true, --Bloodsurge
-		[50227] = true, --Sword and Board
-		[52437] = true, --Sudden Death
-		[60503] = true, --Taste for Blood
-		[87095] = true, --Thunderstruck Rank 1
-		[87096] = true, --Thunderstruck Rank 2
+	
+	-- SHARED:
+
+	-- ARMS:
+	[199854] = true,
+	[184783] = true, -- Tactician
+	[167105] = true,
+	[208086] = true,
+	[108126] = true,
+	[164491] = true,
+	[169587] = true,
+	[191100] = true,
+	[198804] = true, -- Colossus Smash
+	
+	-- FURY:
+		[184362] = true, -- Enrage (virtually active?)
+	-- Meat Cleaver (active)
+		[215570] = true, -- Wrecking Ball
+		[200986] = true, -- Odyn's Champion (artifact trait)
+	[206316] = true, -- Massacre -> needs testing
+	-- Frothing Berserker (virtually active)
+	
+	-- PROTECTION:
+		[5302] = true, -- Revenge!
+		[203581] = true, -- Dragon Scales (artifact trait)
+		[189064] = true, -- Scales of Earth (artifact trait)
+
 	},
 	["MONK"] = {
 	
