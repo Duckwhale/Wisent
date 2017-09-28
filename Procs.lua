@@ -168,20 +168,16 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	
 	},
 	["WARLOCK"] = {
-		[17941] = true, --Nightfall
-		[34936] = true, --Backlash
-		[47283] = true, --Empowered Imp
-		[47383] = true, --Molten Core Rank 1
-		[54274] = true, --Backdraft Rank 1
-		[54276] = true, --Backdraft Rank 2
-		[54277] = true, --Backdraft Rank 3
-		[63165] = true, --Decimation Rank 1
-		[63167] = true, --Decimation Rank 2
-		[64368] = true, --Eradication Rank 1
-		[64370] = true, --Eradication Rank 2
-		[64371] = true, --Eradication Rank 3
-		[71162] = true, --Molten Core Rank 2
-		[71165] = true, --Molten Core Rank 3
+	
+	-- SHARED:
+	
+	-- AFFLICTION:
+		[199281] = true, -- Compounding Horror (artifact trait)
+		
+	-- DEMONOLOGY:
+	
+	-- DESTRUCTION:
+	
 	},
 	["WARRIOR"] = {
 		[12975] = true, --Last Stand
