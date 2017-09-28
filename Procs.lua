@@ -85,16 +85,41 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 		[64420] = true, --Sniper Training Rank 3
 	},
 	["MAGE"] = {
-		[12042] = true, --Arcane Power
-		[12472] = true, --Icy Veins
-		[12536] = true, --Clearcasting
-		[31643] = true, --Blazing Speed
-		[36032] = true, --Arcane Blast
-		[44544] = true, --Fingers of Frost
-		[48108] = true, --Hot Streak
-		[54741] = true, --Firestarter
-		[57761] = true, --Brain Freeze
-		[64343] = true, --Impact
+		
+		-- SHARED:
+		
+		-- ARCANE:
+		
+		-- FIRE:
+		-- Heating Up
+		[48107] = true,
+		
+		-- Hot Streak
+		[195283] = true,
+		[48108] = true,
+		
+		-- Enhanced Pyrotechnics (artifact trait)
+		[157642] = true,
+		[157644] = true,
+		
+		-- Warmth of the Phoenix
+		[240671] = true,
+		[238091] = true,
+		
+		-- Pyretic Incantation (artifact trait)
+		[194331] = true,
+		[194329] = true,
+		
+		-- FROST:
+		-- Brain Freeze
+		[190447] = true,
+		[231584] = true,
+		[190446] = true,
+		
+		-- Fingers of Frost
+		[112965] = true,
+		[44544] = true,
+		
 	},
 	["PALADIN"] = {
 	
