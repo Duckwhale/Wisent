@@ -97,33 +97,23 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 		[64343] = true, --Impact
 	},
 	["PALADIN"] = {
-		[20050] = true, --Schuldspruch Rank 1 (Heilig)
-		[20052] = true, --Schuldspruch Rank 2 (Heilig)
-		[20053] = true, --Schuldspruch Rank 3 (Heilig)
-		[20178] = true, --Abrechnung (Schutz)
-		[20424] = true, --Siegel des Befehls (Vergelter)
-		[26017] = true, --Rechtschaffene Schw�chung (Schutz)
---		[53651] = true, --Glaubensflamme (Heilig)
-		[53655] = true, --Richturteile des Reinen Rank 1 (Heilig)
-		[53656] = true, --Richturteile des Reinen Rank 2 (Heilig)
-		[53657] = true, --Richturteile des Reinen Rank 3 (Heilig)
-		[53672] = true, --Lichtenergie Rank 1 (Heilig)
-		[54149] = true, --Lichtenergie Rank 2 (Heilig)
-		[57319] = true, --Refugium Rank 1 (Schutz)
-		[59578] = true, --Die Kunst des Krieges (Vergelter)
-		[84626] = true, --Refugium Rank 2 (Schutz)
-		[84627] = true, --Refugium Rank 3 (Schutz)
-		[85416] = true, --Oberster Kreuzfahrer (Schutz)
-		[85433] = true, --Heilige Pflicht (Schutz)
---		[85509] = true, --Denunzieren (Heilig)
-		[87188] = true, --Erleuchtete Richturteile Rank 1 (Heilig)
-		[87189] = true, --Erleuchtete Richturteile Rank 2 (Heilig)
-		[88819] = true, --Tagesanbruch Rank 1 (Heilig)
-		[88821] = true, --Tagesanbruch Rank 2 (Heilig)
-		[88852] = true, --Turm der Strahlen (Heilig)
-		[89023] = true, --Gesegnetes Leben (Heilig)
-		[94286] = true, --Besch�tzer der Unschuldigen (Heilig)
-		[96263] = true, --Geheiligter Schild (Vergelter)
+	
+		-- SHARED:
+
+		-- HOLY:
+			[54149] = true, -- Infusion of Light
+			[216411] = true, -- Divine Purpose (Holy Shock)
+			[216413] = true, -- Divine Purpose (Light of Dawn)
+		
+		-- Protection:
+		-- [85043] = true, -- Grand Crusader
+		-- [85416] = true,
+		
+		-- Retribution:
+			[209785] = true, -- The Fires of Justice
+			[238996] = true, -- Righteous Verdict
+			[223819] = true, -- Divine Purpose
+		
 	},
 	["PRIEST"] = {
 		
