@@ -75,14 +75,16 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 		[16870] = true, --Clearcasting
 	},
 	["HUNTER"] = {
-		[ 3045] = true, --Rapid Fire
-		[35098] = true, --Rapid Killing Rank 1
-		[35099] = true, --Rapid Killing Rank 2
-		[53220] = true, --Improved Steady Shot
-		[56453] = true, --Lock and Load
-		[64418] = true, --Sniper Training Rank 1
-		[64419] = true, --Sniper Training Rank 2
-		[64420] = true, --Sniper Training Rank 3
+		
+		-- SHARED:
+		
+		-- BEAST MASTERY:
+		
+		-- MARKSMANSHIP:
+		-- Marking Target
+		
+		-- SURVIVAL:
+		
 	},
 	["MAGE"] = {
 		
