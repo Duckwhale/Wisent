@@ -139,8 +139,6 @@ local function Constructor()
 	end
 	frame.obj = widget
 	
-	--DEFAULT_CHAT_FRAME:AddMessage("Ace: Widget " .. name .. " was registered as type " ..  frame.obj.frame .. " with ID "  .. frame.obj.num)
-	
 	return AceGUI:RegisterAsWidget( widget)
 end
 
