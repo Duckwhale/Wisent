@@ -385,7 +385,6 @@ local SORT = {
 --[[---------------------------------------------------------------------------------
 WisentBar
 ------------------------------------------------------------------------------------]]
-local LBF = LibStub('LibButtonFacade', true)
 local WisentBar = Wisent:CreateClass( 'Frame')
 Wisent.WisentBar = WisentBar
 
@@ -452,9 +451,6 @@ function WisentBar:CreateButtons( size, offset)
 		end
 		b:Update()
 		table.insert( self.buttons, b)
-		if LBF then
-			LBF:Group( 'Wisent', self.barName):AddButton( b)
-		end
 	end
 end
 

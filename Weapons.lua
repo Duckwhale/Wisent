@@ -79,10 +79,7 @@ function Module:UpdateAnchors( sort)
 		for i,child in pairs( self.group.children) do
 			local a = self.aura[i]
 			local buff = _G["TempEnchant"..a.id]
-			self:UpdateLBF( buff)
-				-- MOD
-			self:UpdateMasque(buff)
-			-- /MOD
+			self:UpdateMasque(buff, "Enchants")
 			child:SetBuff( buff)
 		end
 	end

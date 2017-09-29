@@ -109,10 +109,7 @@ function Module:UpdateAnchors( sort)
 			if child and i <= maxStacks then -- Display one icon per power
 				buff:SetScript( "OnEnter", nil)
 				a.texture = comboIcon
-				self:UpdateLBF( buff)
-				-- MOD
-				self:UpdateMasque(buff)
-				-- /MOD
+				self:UpdateMasque(buff, "Combos")
 				buff:Show()
 				local icon = _G[buff:GetName().."Icon"]
 				if icon then

@@ -15,6 +15,8 @@ The following icon groups are implemented:
 * Combo Points: Also supports other resources/buffs that can be used in a similar way
 * Weapon Enchants: Technically obsolete, but kept as legacy support in case they make it back into the game
 
+All buff buttons can be styled on a per-group basis using the [Masque](https://mods.curse.com/addons/wow/masque) addon library.
+
 ### Procs Bar
 Now supports Monk and Demon Hunters. Updated for Legion with the following spells:
 
