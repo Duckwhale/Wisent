@@ -286,12 +286,12 @@ function Addon:OnSkin(group, skin, gloss, backdrop, colors, disabled)
 	if not group then
 		group = "All"
 	end
-	DEFAULT_CHAT_FRAME:AddMessage("OnSkin event with parameters: "  .. group.. " " .. skin .. " " .. gloss .. " " .. tostring(backdrop) .. " " .. tostring(colors) .. " " .. tostring(disabled) )
+	Addon:Debug(self, "Called OnSkin event handler with parameters: "  .. group.. " " .. skin .. " " .. gloss .. " " .. tostring(backdrop) .. " " .. tostring(colors) .. " " .. tostring(disabled) )
 
 	-- Added for 7.1.
 	-- TODO: Hide groups when told so by Masque. Which one, though? All of them? 
 	if disabled then
-	DEFAULT_CHAT_FRAME:AddMessage("Wisent: Received <disabled> notice from Masque after OnSkin event)")
+		Addon:Debug(self, "Received <disabled> notice from Masque after OnSkin event")
 	end
 	
 	--[[ original code:
