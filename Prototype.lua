@@ -181,13 +181,22 @@ local function UpdateProfile( bar)
 		local style = bar.profile.style or NOTHING
 		LBF:Group( "Wisent", bar.proName):Skin( style.skin, style.gloss, style.backdrop, style.colors)
 	end
-	-- MOD
-	if Masque then
+	
+	-- Lookup Masque groups (to translate between the official Masque group names and the ones that Wisent uses internally) -> Use these to keep settings consistent even if group names change
+	local masqueLUT = {
+		combo = "Combos",
+		buff = "Buffs",
+		debuff = "Debuffs",
+		proc = "Procs",
+		weapon = "Enchants",
+	}
+	
+	if Masque then -- Update skins (to skin any newly added buttons)
 		local style = bar.profile.style or NOTHING
-		Addon:Debug("Masque update: Not implemented")
-		--Masque:Group("Wisent", bar.proName):Skin(style.skin, style.gloss, style.backdrop, style.colors)
+		Addon:Debug("Masque update for AceDB profile: " .. bar.proName .. " -> lookup results in group: " .. (masqueLUT[bar.proName] or "<all>"))
+		Masque:Group("Wisent", masqueLUT[bar.proName]):ReSkin() -- defaults to nil = All groups via Masque API // style.skin, style.gloss, style.backdrop, style.colors
 	end
-	-- /MOD
+
 	bar.group:SetUserData( "profile", bar.profile)
 end
 
