@@ -2,7 +2,7 @@
 ## Version: 1.0.0 (@project-version@)
 ## Author: Grayal, Cakechart
 
-## Title: Wisent AKA Bison2 - Buff and Debuff Tracker
+## Title: Wisent AKA Bison2 - Buff & Debuff Tracking
 
 ## Notes: Provides an easily customizable display for buffs, debuffs, and spell procs
 
@@ -15,9 +15,8 @@
 
 ## X-Revision: @project-version@
 ## X-Embeds: Ace3, LibDebugLog-1.0, Masque
-## X-Website: http://www.curse.com/addons/wow/wisent
+## X-Website: https://mods.curse.com/addons/wow/268102-wisent
 ## X-Category: Buffs
-## X-CompatibleLocales: enUS, enGB, deDE, frFR, ruRU, zhTW
 
 #@no-lib-strip@
 embeds.xml
@@ -26,7 +25,6 @@ embeds.xml
 WisentWidget-Buff.lua
 WisentContainer-Group.lua
 
-#Localization.lua
 Locales\Locales.xml
 
 Wisent.lua
@@ -34,7 +32,6 @@ Options.lua
 Prototype.lua
 Buffs.lua
 Debuffs.lua
-#Hidden.lua
 Procs.lua
 Combo.lua
 Profile.lua
