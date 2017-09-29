@@ -2,6 +2,12 @@
 ## Wisent v1.0.0 - Recent changes (3 releases)
 ------------------------------------------------------------------------
 
+r3:
+	Updated ProcsBar for Legion with the newest spell IDs. This includes Monk and Demon Hunters, which were still missing. The list is probably not quite complete - let me know if I forgot to include something!
+	
+	Note: Existing settings for the ProcsBar may be reset if you changed them from the defaults. This is a side effect of the update and will only happen once
+	
+
 r2:
 	Reworked localisation system and integrated it with the CurseForge packager
 	Fixed horrible grammar in the default (English) translation and removed the other, now-obsolete locales (will require a re-translation)
@@ -10,13 +16,4 @@ r2:
 r1:
 	Reworked ComboBar to track Legion "combo points" (and spells/buffs that fulfill a similar role) for all classes
 
-	
-r0:
-	This is the initial release based on the outdated Bison-2.4.4 (which was last updated in Cataclysm) 
-	
-	Fixed an issue that caused spell procs to spam the client with LUA errors while they were active
-	Fixed broken backdrop textures for anchors that are displayed when the addon is unlocked
-	
-	Unlocked group frames are now always shown when enabled (to avoid them bugging out after reloadUI/relog)
-	The "debug" setting is now saved properly across sessions and restored at startup, as it should always have been
 	
