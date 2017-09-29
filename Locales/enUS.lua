@@ -21,8 +21,6 @@ L["Descending"] = true
 L["Duration"] = true
 L["Enable Bar"] = true
 L["Enable Flashing"] = true
-L["Enable LBF Support"] = true
-L["Enable LibButtonFacade if present"] = true
 L["Enable Masque Support"] = true
 L["Enable styling of the buff icons via Masque addon library if present"] = true
 L["Enable the addon (will disable Blizzard's default buff bars)"] = true
@@ -64,7 +62,5 @@ L["Toggle debug mode (not particularly useful unless something has gone terribly
 L["Toggle this bar and all of its icons"] = true
 L["Version"] = true
 L["Vertical Padding"] = true
-L["Weapon Enchants"] = true
-L["Weapon Enchants Bar"] = true
 L["When the maximum number of combo points (or spell charges/procs) has been reached, increase the size of the last icon by this amount"] = true
 L["Wisent Configuration"] = true

@@ -34,7 +34,6 @@ Options.lua
 Prototype.lua
 Buffs.lua
 Debuffs.lua
-Weapons.lua
 #Hidden.lua
 Procs.lua
 Combo.lua
