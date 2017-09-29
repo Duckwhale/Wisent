@@ -161,7 +161,7 @@ function Addon:OnInitialize()
 	self:SetEnabledState( self.db.profile.enabled)
 	LibStub( "AceConfig-3.0"):RegisterOptionsTable( "WisentDialog", options)
 	self:RegisterChatCommand( "wisent", "ShowDialog")
-	self:RegisterChatCommand( "bi", "ShowDialog")
+	self:RegisterChatCommand( "wi", "ShowDialog")
 
 	if Masque then -- Masque addon is loaded -> Register bar groups for custom styling (TODO: Should use masqueLUT table that the Prototype class also uses?)
 		MasqueGroup = Masque:Group("Wisent", "Buffs");
