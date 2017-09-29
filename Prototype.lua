@@ -283,32 +283,34 @@ local prototype = {
 		end
 	end,
 	
-	-- MOD
-		["UpdateMasque"] = function( self, buff, groupName) -- Adds the buff's button to Masque if it hasn't been added already
+		--- Adds the buff's button to Masque if it hasn't been added already
+		["UpdateMasque"] = function( self, buff, groupName)
 		
 		if not groupName then -- Can't add button, as it isn't part of a valid group (this will likely only happen if the function is called from legacy code and I missed updating it from Bison's original LBF update routine)
 			Addon:Debug(self, "Can't update button style via Masque because no valid group name was provided for it")
 			return
 		end
 		
-		if LBF and buff then
-			if Addon.db.profile.lbf then
-				if not buff.Masque then
-					Masque:Group( "Wisent", self.proName):AddButton( buff)
-					buff.Masque = true
+		if Masque and buff then -- Register button with Masque
+		
+		groupName = groupName or masqueLUT[self.proName] -- Override the given group name if the button has another saved in its object table -> I guess this is a bit excessive, but I'm not 100% sure if the old Bison code handles the group names properly otherwise... TODO: Remove if not needed and use only the "proName" (ugh)?
+		
+			if Addon.db.profile.masque then -- Masque styling is enabled
+				if not buff.isHandledByMasque then -- Button wasn't yet added to Masque -> Register it
+					Masque:Group( "Wisent", groupName):AddButton( buff)
+					buff.isHandledByMasque = true
 				end
-			else
-				if buff.Masque then
-					Masque:Group( "Wisent", self.proName):RemoveButton( buff)
-					buff.Masque = nil
+			else -- Styling is disabled
+				if buff.isHandledByMasque then -- Button was previously added to Masque -> Unregister it
+					Masque:Group( "Wisent", groupName):RemoveButton( buff)
+					buff.isHandledByMasque = nil
 				end
 			end
 		end
-		if buff then
+		if buff then -- Save group name in the button's container object (? - this part is from the old Bison and I haven't changed it)
 			buff.proName = self.proName
 		end
 	end,
-	-- /MOD
 
 	["RegisterOptions"] = function( self, options, menuName)
 		local modName = "Wisent_"..self.proName
