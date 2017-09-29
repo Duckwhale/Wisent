@@ -161,10 +161,16 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 		
 	},
 	["ROGUE"] = {
-		[13750] = true, --Adrenline Rush
-		[13877] = true, --Blade Flurry
-		[14251] = true, --Riposte
-		[51713] = true, --Shadow Dance
+	
+	-- SHARED:
+	
+	-- ASSASSINATION:
+	
+	-- OUTLAW
+		[195627] = true, -- Opportunity
+	
+	-- SUBTLETLY
+	
 	},
 	["SHAMAN"] = {
 	
