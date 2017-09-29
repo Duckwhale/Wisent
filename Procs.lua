@@ -40,7 +40,6 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	
 	-- UNHOLY:
 	
-	
 	},
 	["DRUID"] = {
 
@@ -196,9 +195,8 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	-- ENHANCEMENT:
 	[201846] = true, -- Stormbringer
 	-- Gathering Storms (virtually active)
-	 [195222] = true, -- Stormlash
---	[201900] = true, 	-- Hot Hand	
-	[215785] = true, 
+	[195222] = true, -- Stormlash
+	[215785] = true, -- Hot Hand	
 	
 	},
 	["WARLOCK"] = {
@@ -247,7 +245,7 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	-- SHARED:
 	
 	-- BREWMASTER
-	[195630] = true, -- Elusive Brawler
+		[195630] = true, -- Elusive Brawler
 	
 	-- MISTWEAVER:
 	
