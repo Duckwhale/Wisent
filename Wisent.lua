@@ -19,9 +19,7 @@ if not Addon then return end -- already loaded and no upgrade necessary
 
 local L      = LibStub( "AceLocale-3.0"):GetLocale( MAJOR)
 local LBF    = LibStub( "LibButtonFacade", true)
--- MOD: TODO: Change "Enable LBF" option to "Use Masque"
 local Masque = LibStub("Masque", true)
--- /MOD
 
 Addon.name, Addon.localizedname = GetAddOnInfo( MAJOR)
 Addon.version = GetAddOnMetadata( MAJOR, "Version") or "unknown"
@@ -168,41 +166,15 @@ function Addon:OnInitialize()
 	if LBF then
 		LBF:RegisterSkinCallback( "Wisent", self.OnSkin, self)
 	end
-	-- MOD
-	if Masque then
+
+	if Masque then -- Masque addon is loaded -> Register bar groups for custom styling (TODO: Should use masqueLUT table that the Prototype class also uses?)
 		MasqueGroup = Masque:Group("Wisent", "Buffs");
 		MasqueGroup = Masque:Group("Wisent", "Debuffs");
 		MasqueGroup = Masque:Group("Wisent", "Enchants"); -- TODO: Remove, as weapon enchants aren't a thing anymore (rogue poisons = regular buff)
 		MasqueGroup = Masque:Group("Wisent", "Procs"); 
 		MasqueGroup = Masque:Group("Wisent", "Combos") ;
-		Masque:Register("Wisent", self.OnSkin, self);
-		local buttonData = {
-			--Icon = button.ShinyRainbowThing,
-			Cooldown = false,
-			Flash = false,
-			Pushed = false,
-			Normal = nil,
-			Disabled = nil,
-			Checked = false,
-			Border = nil,
-			AutoCastable = false,
-			Highlight = false,
-			Hotkey = false,
-			Count = false,
-			Name = false,
-			Duration = false,
-			Autocast = false,
-		};
-		
-		--mybutton = CreateFrame("Button","mybutton",UIParent,"UIPanelButtonTemplate")
-		--mybutton:SetPoint("CENTER",0,0)
-		--mybutton:SetWidth(80)
-	--	mybutton:SetHeight(22)
-		
-		local BuffButton1 = CreateFrame("Button", "WisentBuffButton1", BuffButton1, "UIPanelButtonTemplate");
-		--MasqueGroup:AddButton(WisentBuff1.name, buttonData);
 	end
-	-- /MOD
+
 end
 
 function Addon:OnEnable()
@@ -274,58 +246,6 @@ function Addon:OnUpdateDuration( buff, timeLeft)
 		end
 	end
 end
-
-
--- MOD: Interaction with Masque instead of the old LBF/BF addons that no longer work
--- function Addon:OnSkin( skin, gloss, backdrop, group, button, colors) SkinID, Gloss, Backdrop, Group, Button, Colors
--- Format: groupName:String, skinName:String, glossIntensity:int (glossPct), isBackdropEnabled:boolean, colorsTable:table, isDisabled
-function Addon:OnSkin(group, skin, gloss, backdrop, colors, disabled)
-
-
- -- TODO: saved vars notice
-	if not group then
-		group = "All"
-	end
-	Addon:Debug(self, "Called OnSkin event handler with parameters: "  .. group.. " " .. skin .. " " .. gloss .. " " .. tostring(backdrop) .. " " .. tostring(colors) .. " " .. tostring(disabled) )
-
-	-- Added for 7.1.
-	-- TODO: Hide groups when told so by Masque. Which one, though? All of them? 
-	if disabled then
-		Addon:Debug(self, "Received <disabled> notice from Masque after OnSkin event")
-	end
-	
-	--[[ original code:
-	local profile = group and self.db.profile[group]
-	if profile then
-		if type( profile.style) ~= "table" then
-			profile.style = {}
-		end
-		local style = profile.style
-		style.skin     = skin
-		style.gloss    = gloss
-		style.backdrop = backdrop
-		style.colors   = colors
-	]]--
-	
-	-- For now, a Masque update changes ALL groups. What is the point in registering them, then? That should be fixed, or changed to only provide Masque with one catchall group
---	local groups = { "buffs", "debuffs",  "weapon", "proc",  "hidden", "combo"}
---	for i = 0, #groups do
-	--	local group = groups[i]  
-		local profile = group and self.db.profile[group]
-		if profile then
-			if type( profile.style) ~= "table" then
-				profile.style = {}
-			end
-			local style = profile.style
-			style.skin     = skin
-			style.gloss    = gloss
-			style.backdrop = backdrop
-			style.colors   = colors
---DEFAULT_CHAT_FRAME:AddMessage("skin = " .. skin .. ", gloss = " .. gloss .. ", backdrops = " .. backdrop .. ", colors = " .. colors .. ", group = " .. group .. ", button = " .. button)
-		end
---	end
-end
--- /MOD
 
 ------------------------------------------------------------------------------------
 -- Main

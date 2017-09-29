@@ -192,10 +192,10 @@ local function UpdateProfile( bar)
 		LBF:Group( "Wisent", bar.proName):Skin( style.skin, style.gloss, style.backdrop, style.colors)
 	end
 	
-	if Masque then -- Update skins (to skin any newly added buttons)
+	if Masque then -- Update skins (to update groups with newly added/removed buttons)
 		local style = bar.profile.style or NOTHING
-		Addon:Debug("Masque update for AceDB profile: " .. bar.proName .. " -> lookup results in group: " .. (masqueLUT[bar.proName] or "<all>"))
-		Masque:Group("Wisent", masqueLUT[bar.proName]):ReSkin() -- defaults to nil = All groups via Masque API // style.skin, style.gloss, style.backdrop, style.colors
+		Addon:Debug("Masque update for category: " .. bar.proName .. " -> lookup results in group name: " .. (masqueLUT[bar.proName] or "<all>"))
+		Masque:Group("Wisent", masqueLUT[bar.proName]):ReSkin() -- defaults to nil = All groups (set via Masque API)
 	end
 
 	bar.group:SetUserData( "profile", bar.profile)
