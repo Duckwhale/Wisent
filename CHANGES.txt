@@ -3,9 +3,12 @@
 ------------------------------------------------------------------------
 
 r3:
-	Updated ProcsBar for Legion with the newest spell IDs. This includes Monk and Demon Hunters, which were still missing. The list is probably not quite complete - let me know if I forgot to include something!
+	Updated ProcsBar for Legion with the newest spell IDs. This includes Monk and Demon Hunters, which were still missing (Note: Existing settings for the ProcsBar may be reset if you changed them from the defaults. This is a side effect of the update and will only happen once)
 	
-	Note: Existing settings for the ProcsBar may be reset if you changed them from the defaults. This is a side effect of the update and will only happen once
+	Disabled the obsolete Weapon Enchants Bar. It will be reworked soon™
+	
+	Fixed Masque support - registering buttons already worked, but now they're actually being styled, too
+	Fixed the broken /wi slash command (alias)
 	
 
 r2:
