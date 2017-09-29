@@ -172,7 +172,7 @@ function Addon:OnInitialize()
 	if Masque then
 		MasqueGroup = Masque:Group("Wisent", "Buffs");
 		MasqueGroup = Masque:Group("Wisent", "Debuffs");
-		MasqueGroup = Masque:Group("Wisent", "Weapons"); -- TODO: Remove, as weapon enchants aren't a thing anymore (rogue poisons = regular buff)
+		MasqueGroup = Masque:Group("Wisent", "Enchants"); -- TODO: Remove, as weapon enchants aren't a thing anymore (rogue poisons = regular buff)
 		MasqueGroup = Masque:Group("Wisent", "Procs"); 
 		MasqueGroup = Masque:Group("Wisent", "Combos") ;
 		Masque:Register("Wisent", self.OnSkin, self);
