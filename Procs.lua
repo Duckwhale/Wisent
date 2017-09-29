@@ -43,36 +43,37 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	
 	},
 	["DRUID"] = {
-		[16886] = true, --Nature"s Grace
-		[22842] = true, --Frenzied Regen
-		[48517] = true, --Eclipse (Solar)
-		[48518] = true, --Eclipse (Lunar)
-		[61336] = true, --Survival Instincts
-		[69369] = true, --Predator"s Swiftness
-		
-		[60433] = true, --Earth and Moon
-		[81006] = true, --Lunar Shower Rank 1
-		[81191] = true, --Lunar Shower Rank 2
-		[81192] = true, --Lunar Shower Rank 3
-		[48391] = true, --Owlkin Frenzy
-		[93400] = true, --Shooting Stars
-		[97547] = true, --Solar Beam
-		[50286] = true, --Starfall
-		[61391] = true, --Typhoon
-		[80863] = true, --Blood in the Water
-		[45334] = true, --Feral Charge Effect
-		[50259] = true, --Dazed
-		[80861] = true, --Fury Swipes
-		[58179] = true, --Infected Wounds Rank 1
-		[58180] = true, --Infected Wounds Rank 2
-		[57893] = true, --Natural Reaction Rank 1
-		[59071] = true, --Natural Reaction Rank 2
-		[16958] = true, --Primal Fury Rank 1
-		[16961] = true, --Primal Fury Rank 2
-		[16952] = true, --Blood Frenzy
-		[81262] = true, --Efflorescence
-		[81093] = true, --Fury of Stormrage
-		[16870] = true, --Clearcasting
+
+	-- SHARED:
+	-- Omen of Clarity
+	[16864] = true,
+	[113043] = true,
+	
+	-- Moment of Clarity
+	[155577] = true,
+	[236068] = true,
+	
+	-- BALANCE:
+	
+	-- FERAL:
+	
+	-- GUARDIAN:
+	-- Gory Fur
+	[200854] = true,
+	[201671] = true,
+	
+	-- Galactic Guardian
+	[203964] = true,
+	[213708] = true,
+	
+	-- Gore
+	[210706] = true,
+	[93622] = true,
+	
+	-- Restoration
+	[16870] = true, -- Clearcasting
+	[135700] = true,
+	
 	},
 	["HUNTER"] = {
 		
