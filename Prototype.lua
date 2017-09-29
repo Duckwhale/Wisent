@@ -47,6 +47,16 @@ local SORT_TYPES = {
 	["durationdesc"] = 7,
 }
 
+-- Lookup Masque groups (to translate between the official Masque group names and the ones that Wisent uses internally) -> Use these to keep settings consistent even if group names change
+local masqueLUT = {
+	combo = "Combos",
+	buff = "Buffs",
+	debuff = "Debuffs",
+	proc = "Procs",
+	weapon = "Enchants",
+}
+
+
 ------------------------------------------------------------------------------------
 -- Sorting
 ------------------------------------------------------------------------------------
@@ -181,15 +191,6 @@ local function UpdateProfile( bar)
 		local style = bar.profile.style or NOTHING
 		LBF:Group( "Wisent", bar.proName):Skin( style.skin, style.gloss, style.backdrop, style.colors)
 	end
-	
-	-- Lookup Masque groups (to translate between the official Masque group names and the ones that Wisent uses internally) -> Use these to keep settings consistent even if group names change
-	local masqueLUT = {
-		combo = "Combos",
-		buff = "Buffs",
-		debuff = "Debuffs",
-		proc = "Procs",
-		weapon = "Enchants",
-	}
 	
 	if Masque then -- Update skins (to skin any newly added buttons)
 		local style = bar.profile.style or NOTHING
