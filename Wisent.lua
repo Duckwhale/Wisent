@@ -40,7 +40,6 @@ local DEFAULTS = {
 		blizzard = false,
 		locked   = true,
 		enabled  = true,
-		lbf      = false,
 		masque = true
 	} 
 }
