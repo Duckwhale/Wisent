@@ -13,7 +13,6 @@ The following icon groups are implemented:
 * Debuffs
 * Procs: Technically, they're also buffs, but more flashy and generally important
 * Combo Points: Also supports other resources/buffs that can be used in a similar way
-* Weapon Enchants: Technically obsolete, but kept as legacy support in case they make it back into the game
 
 All buff buttons can be styled on a per-group basis using the [Masque](https://mods.curse.com/addons/wow/masque) addon library.
 
