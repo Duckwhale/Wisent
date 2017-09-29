@@ -111,7 +111,7 @@ function Module:UpdateAnchors( sort)
 				a.texture = comboIcon
 				self:UpdateLBF( buff)
 				-- MOD
-				self:UpdateMasque(buff)
+				self:UpdateMasque(buff, "Combos")
 				-- /MOD
 				buff:Show()
 				local icon = _G[buff:GetName().."Icon"]

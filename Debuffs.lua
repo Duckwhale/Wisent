@@ -88,7 +88,7 @@ function Module:UpdateAnchors( sort)
 			local buff = _G["DebuffButton"..a.id]
 			self:UpdateLBF( buff)
 			-- MOD
-			self:UpdateMasque(buff)
+			self:UpdateMasque(buff, "Debuffs")
 			-- /MOD
 			child:SetBuff( buff)
 		end

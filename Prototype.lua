@@ -283,7 +283,13 @@ local prototype = {
 	end,
 	
 	-- MOD
-		["UpdateMasque"] = function( self, buff)
+		["UpdateMasque"] = function( self, buff, groupName) -- Adds the buff's button to Masque if it hasn't been added already
+		
+		if not groupName then -- Can't add button, as it isn't part of a valid group (this will likely only happen if the function is called from legacy code and I missed updating it from Bison's original LBF update routine)
+			Addon:Debug(self, "Can't update button style via Masque because no valid group name was provided for it")
+			return
+		end
+		
 		if LBF and buff then
 			if Addon.db.profile.lbf then
 				if not buff.Masque then

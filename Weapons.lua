@@ -81,7 +81,7 @@ function Module:UpdateAnchors( sort)
 			local buff = _G["TempEnchant"..a.id]
 			self:UpdateLBF( buff)
 				-- MOD
-			self:UpdateMasque(buff)
+			self:UpdateMasque(buff, "Enchants")
 			-- /MOD
 			child:SetBuff( buff)
 		end

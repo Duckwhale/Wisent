@@ -350,7 +350,7 @@ function Module:UpdateAnchors( sort)
 			local buff = self:GetUserBuff( "BuffProcButton", a.id)
 			self:UpdateLBF( buff)
 			-- MOD
-			self:UpdateMasque(buff)
+			self:UpdateMasque(buff, "Procs")
 			-- /MOD
 			local child = self.group.children[i]
 			if child and procTable[a.spellID] then

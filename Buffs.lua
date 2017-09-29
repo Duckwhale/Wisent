@@ -102,9 +102,7 @@ function Module:UpdateAnchors( sort)
 			end
 			local buff = GetBuff( self, a and a.id or 0)
 			self:UpdateLBF( buff)
-			-- MOD
-			self:UpdateMasque(buff)
-			-- /MOD
+			self:UpdateMasque(buff, "Buffs")
 			local hide = cons and a and a.consolidate
 			if hide then
 				buff = nil
