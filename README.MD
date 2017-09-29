@@ -75,3 +75,7 @@ You can check on the current translation progress here: [Project Site](https://w
 Wisent is based on the Cataclysm-era addon **Bison** by Grayal, which in turn was based on an addon called **Buffalo** by Nimbal (*Buff*alo... get it? Heh).
 
 Both addons have long been abandoned, and since I maintained a somewhat-working copy for personal use, I figured I'd simply see where it goes from there. In no way do I wish to take credit for their work.
+
+PS: Answering the most pressing question you will have last... What the hell is a "Wisent"? *This* is a Wisent:
+
+![Picture of an actual Wisent](https://i.imgur.com/PKBtLrc.jpg "It's a freaking bison. Except, you know, European")
