@@ -348,10 +348,7 @@ function Module:UpdateAnchors( sort)
 		local spell = self.profile.spell
 		for i,a in pairs( self.aura) do
 			local buff = self:GetUserBuff( "BuffProcButton", a.id)
-			self:UpdateLBF( buff)
-			-- MOD
 			self:UpdateMasque(buff, "Procs")
-			-- /MOD
 			local child = self.group.children[i]
 			if child and procTable[a.spellID] then
 				self:UpdateUserBuff( buff, a)

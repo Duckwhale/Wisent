@@ -101,7 +101,6 @@ function Module:UpdateAnchors( sort)
 				a = self.aura[i - 1]
 			end
 			local buff = GetBuff( self, a and a.id or 0)
-			self:UpdateLBF( buff)
 			self:UpdateMasque(buff, "Buffs")
 			local hide = cons and a and a.consolidate
 			if hide then

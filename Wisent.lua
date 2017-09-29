@@ -18,7 +18,6 @@ local Addon = LibStub( "AceAddon-3.0"):NewAddon( MAJOR, "AceEvent-3.0", "AceCons
 if not Addon then return end -- already loaded and no upgrade necessary
 
 local L      = LibStub( "AceLocale-3.0"):GetLocale( MAJOR)
-local LBF    = LibStub( "LibButtonFacade", true)
 local Masque = LibStub("Masque", true)
 
 Addon.name, Addon.localizedname = GetAddOnInfo( MAJOR)
@@ -163,9 +162,6 @@ function Addon:OnInitialize()
 	LibStub( "AceConfig-3.0"):RegisterOptionsTable( "WisentDialog", options)
 	self:RegisterChatCommand( "wisent", "ShowDialog")
 	self:RegisterChatCommand( "bi", "ShowDialog")
-	if LBF then
-		LBF:RegisterSkinCallback( "Wisent", self.OnSkin, self)
-	end
 
 	if Masque then -- Masque addon is loaded -> Register bar groups for custom styling (TODO: Should use masqueLUT table that the Prototype class also uses?)
 		MasqueGroup = Masque:Group("Wisent", "Buffs");

@@ -86,10 +86,7 @@ function Module:UpdateAnchors( sort)
 			local a = self.aura[i]
 			pivot[a.id] = i
 			local buff = _G["DebuffButton"..a.id]
-			self:UpdateLBF( buff)
-			-- MOD
 			self:UpdateMasque(buff, "Debuffs")
-			-- /MOD
 			child:SetBuff( buff)
 		end
 	end

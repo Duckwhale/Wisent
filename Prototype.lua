@@ -18,10 +18,7 @@ local MAJOR = "prototype"
 local Addon  = LibStub( "AceAddon-3.0"):GetAddon( "Wisent")
 local L      = LibStub( "AceLocale-3.0"):GetLocale( "Wisent")
 local AceGUI = LibStub( "AceGUI-3.0")
-local LBF    = LibStub( "LibButtonFacade", true)
--- MOD
 local Masque = LibStub("Masque", true)
--- /MOD
 local NOTHING = {}
 local TIMER_DESC = {
 	L["Default (Blizzard Style)"],
@@ -187,10 +184,6 @@ end
 local function UpdateProfile( bar)
 	Addon:Debug( "UpdateProfile")
 	bar.profile = Addon.db.profile[bar.proName]
-	if LBF then
-		local style = bar.profile.style or NOTHING
-		LBF:Group( "Wisent", bar.proName):Skin( style.skin, style.gloss, style.backdrop, style.colors)
-	end
 	
 	if Masque then -- Update skins (to update groups with newly added/removed buttons)
 		local style = bar.profile.style or NOTHING
@@ -264,27 +257,8 @@ local prototype = {
 		UpdateBar( self)
 	end,
 
-	["UpdateLBF"] = function( self, buff)
-		if LBF and buff then
-			if Addon.db.profile.lbf then
-				if not buff.LBF then
-					LBF:Group( "Wisent", self.proName):AddButton( buff)
-					buff.LBF = true
-				end
-			else
-				if buff.LBF then
-					LBF:Group( "Wisent", self.proName):RemoveButton( buff)
-					buff.LBF = nil
-				end
-			end
-		end
-		if buff then
-			buff.proName = self.proName
-		end
-	end,
-	
-		--- Adds the buff's button to Masque if it hasn't been added already
-		["UpdateMasque"] = function( self, buff, groupName)
+	--- Adds the buff's button to Masque if it hasn't been added already
+	["UpdateMasque"] = function( self, buff, groupName)
 		
 		if not groupName then -- Can't add button, as it isn't part of a valid group (this will likely only happen if the function is called from legacy code and I missed updating it from Bison's original LBF update routine)
 			Addon:Debug(self, "Can't update button style via Masque because no valid group name was provided for it")
@@ -293,7 +267,7 @@ local prototype = {
 		
 		if Masque and buff then -- Register button with Masque
 		
-		groupName = groupName or masqueLUT[self.proName] -- Override the given group name if the button has another saved in its object table -> I guess this is a bit excessive, but I'm not 100% sure if the old Bison code handles the group names properly otherwise... TODO: Remove if not needed and use only the "proName" (ugh)?
+			groupName = groupName or masqueLUT[self.proName] -- Override the given group name if the button has another saved in its object table -> I guess this is a bit excessive, but I'm not 100% sure if the old Bison code handles the group names properly otherwise... TODO: Remove if not needed and use only the "proName" (ugh)?
 		
 			if Addon.db.profile.masque then -- Masque styling is enabled
 				if not buff.isHandledByMasque then -- Button wasn't yet added to Masque -> Register it
