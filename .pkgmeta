@@ -42,3 +42,5 @@ externals:
         url: https://repos.wowace.com/wow/libdebuglog-1-0/trunk
         tag: latest
 
+ignore:
+ - README.MD
