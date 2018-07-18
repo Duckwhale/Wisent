@@ -68,12 +68,12 @@ local function InitAuraArray()
 end
 
 local function UpdateAura( id, aura, filter, now)
-	name, rank, texture, count, debuffType, duration, expiration, unitCaster, isStealable, consolidate, spellID = UnitAura( PlayerFrame.unit, id, filter)
+	name, texture, count, debuffType, duration, expiration, unitCaster, isStealable, consolidate, spellID = UnitAura( PlayerFrame.unit, id, filter)
 	local timeLeft = name and expiration and (expiration - now) or nil
 	aura.id      = id
 	aura.filter  = filter
 	aura.name    = name
-	aura.rank    = rank
+--	aura.rank    = rank -- Removed after 8.0.1 API changes -> Doesn't seem to be used, anyway
 	aura.texture = texture
 	aura.count   = count
 	aura.type    = debuffType
