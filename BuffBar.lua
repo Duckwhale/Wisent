@@ -234,7 +234,7 @@ function WisentButton:TooltipWeapon()
 end
 
 function WisentButton:Update()
- 	local name, rank, texture, count, debuffType, duration, expiration = UnitAura( PlayerFrame.unit, self:GetID(), self.buffFilter)
+ 	local name, texture, count, debuffType, duration, expiration = UnitAura( PlayerFrame.unit, self:GetID(), self.buffFilter)
  	if name then
 		self.buffName = name
 		self.duration = duration
