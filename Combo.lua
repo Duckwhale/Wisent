@@ -151,8 +151,8 @@ end
 -- Local
 ------------------------------------------------------------------------------------
 local function ScanAura( unit, id, filter)
-	local name = GetSpellInfo( id)
-	local _, _, count = UnitAura( unit, name, nil, filter)
+--	local name = GetSpellInfo( id)
+	local _, _, count = UnitAura( unit, id, nil, filter)
 	return count or 0
 end
 
