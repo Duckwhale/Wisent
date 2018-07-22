@@ -165,6 +165,18 @@ end
 -- Event
 ------------------------------------------------------------------------------------
 
+-- Upvalues
+local UnitPower = UnitPower
+
+-- Remapping of the old SPELL_POWER_X constants for BFA (Yes; I'm too lazy to change all the references to them below...)
+local SPELL_POWER_RUNES = Enum.PowerType.Runes -- This format was deprecated in 7.2.5, and removed in 8.0.1
+local SPELL_POWER_PAIN = Enum.PowerType.Pain
+local SPELL_POWER_COMBO_POINTS = Enum.PowerType.ComboPoins
+local SPELL_POWER_CHI = Enum.PowerType.Chi
+local SPELL_POWER_SOUL_SHARDS = Enum.PowerType.SoulShards
+local SPELL_POWER_ARCANE_CHARGES = Enum.PowerType.ArcaneCharges
+local SPELL_POWER_HOLY_POWER = Enum.PowerType.HolyPower
+
 -- Returns the number of active Runes (Death Knight)
 local function GetActiveRunes()
 				
