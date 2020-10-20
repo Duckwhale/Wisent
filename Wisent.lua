@@ -99,10 +99,10 @@ end
 
 local function UpdateEnchant()
 	if PlayerFrame.unit or PlayerFrame.unit == "player" then
-		local mainEnchant, mainTimeLeft, mainCharges, offEnchant, offTimeLeft, offCharges, thrEnchant, thrTimeLeft, thrCharges = GetWeaponEnchantInfo()
-		UpdateWaepon( 1, mainEnchant, mainTimeLeft, mainCharges)
-		UpdateWaepon( 2, offEnchant,  offTimeLeft,  offCharges)
-		UpdateWaepon( 3, thrEnchant,  thrTimeLeft,  thrCharges)
+		local hasMainHandEnchant, mainHandExpiration, mainHandCharges, mainHandEnchantID, hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantId = GetWeaponEnchantInfo()
+		UpdateWaepon( 1, hasMainHandEnchant, mainHandExpiration, mainHandCharges)
+		UpdateWaepon( 2, hasOffHandEnchant,  offHandExpiration,  offHandCharges)
+	--	UpdateWaepon( 3, thrEnchant,  thrTimeLeft,  thrCharges) -- I assume enchants for throwing weapons no longer exist? Not sure and can't test it, though
 	else
 		UpdateWaepon( 1, nil, nil, nil)
 		UpdateWaepon( 2, nil, nil, nil)
