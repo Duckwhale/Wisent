@@ -62,5 +62,7 @@ L["Toggle debug mode (not particularly useful unless something has gone terribly
 L["Toggle this bar and all of its icons"] = true
 L["Version"] = true
 L["Vertical Padding"] = true
+L["Weapon Enchants"] = true
+L["Weapon Enchants Bar"] = true
 L["When the maximum number of combo points (or spell charges/procs) has been reached, increase the size of the last icon by this amount"] = true
 L["Wisent Configuration"] = true

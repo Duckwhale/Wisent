@@ -32,6 +32,7 @@ Options.lua
 Prototype.lua
 Buffs.lua
 Debuffs.lua
+Weapons.lua
 Procs.lua
 Combo.lua
 Profile.lua
