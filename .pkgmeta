@@ -42,3 +42,4 @@ externals:
 
 ignore:
  - README.MD
+ - Changes.lua
