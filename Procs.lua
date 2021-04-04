@@ -176,11 +176,17 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	
 	-- SHARED:
 		[77762] = true, -- Lava Surge
-		
+		[327164] = true, -- Primordial Wave (Necrolord Ability)
+
 	-- RESTORATION:
 		-- Riptide (active)
-		--[53390] = true, -- Tidal Waves (virtually active)
+		[53390] = true, -- Tidal Waves (virtually active)
 		-- Ancestral Vigor (virtually active)
+		[280615] = true, -- Flash Flood (Talent)
+		[335892] = true, -- Spiritwalker's Tidal Totem (Legendary Effect)
+		[73685] = true, -- Unleash Life (Effect)
+		[288675] = true, -- High Tide (Passive Talent)
+		[338340] = true, -- Swirling Currents (Conduit)
 		-- Ascendance (active)
 		--[108271] = true, -- Astral Shift (active)
 		-- Bloodlust / Heroism (active) -> Sense of Urgency (artifact trait)		
