@@ -176,11 +176,25 @@ local PROCTABLES = { -- TODO: Remove duplicate spell entries (outdated IDs) -> D
 	
 	-- SHARED:
 		[77762] = true, -- Lava Surge
-		
+		[327164] = true, -- Primordial Wave (Necrolord Ability)
+		--[338036] = true, -- Thunderous Paws (Conduit)
+		--[337984] = true, -- Vital Accretion (Conduit)
+		[323524] = true, -- Ultimate Form (Necrolord Soulbind)
+		--[342181] = true, -- Lead By Example (Necrolord Soulbind)
+		--[328210] = true, -- Emeni's Magnificent Skin (Necrolord Soulbind)
+
 	-- RESTORATION:
 		-- Riptide (active)
-		--[53390] = true, -- Tidal Waves (virtually active)
+		[53390] = true, -- Tidal Waves (virtually active)
 		-- Ancestral Vigor (virtually active)
+		[280615] = true, -- Flash Flood (Talent)
+		[335892] = true, -- Spiritwalker's Tidal Totem (Legendary Effect)
+		[73685] = true, -- Unleash Life (Effect)
+		[288675] = true, -- High Tide (Passive Talent)
+		[338340] = true, -- Swirling Currents (Conduit)
+		[236502] = true, -- Tidebringer (PvP Talent)
+		[338344] = true, -- Heavy Rainfall (Conduit)
+		[290641] = true, -- Ancestral Gift (PvP Talent)
 		-- Ascendance (active)
 		--[108271] = true, -- Astral Shift (active)
 		-- Bloodlust / Heroism (active) -> Sense of Urgency (artifact trait)		
